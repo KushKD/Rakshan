@@ -8,11 +8,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class Fragment_Manager extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
@@ -44,6 +46,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupTabIcons() {
+        TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        tabOne.setText("ONE");
+        tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_tab_favourite, 0, 0);
+        tabLayout.getTabAt(0).setCustomView(tabOne);
+
+        TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        tabTwo.setText("TWO");
+        tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_tab_call, 0, 0);
+        tabLayout.getTabAt(1).setCustomView(tabTwo);
+
+        TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        tabThree.setText("THREE");
+        tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_tab_contacts, 0, 0);
+        tabLayout.getTabAt(2).setCustomView(tabThree);
+    }
+  /*  private void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
@@ -54,19 +72,19 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(7).setIcon(tabIcons[2]);
         tabLayout.getTabAt(8).setIcon(tabIcons[2]);
         tabLayout.getTabAt(9).setIcon(tabIcons[2]);
-    }
+    }*/
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new OneFragment(), "ONE");
-        adapter.addFragment(new TwoFragment(), "TWO");
-        adapter.addFragment(new ThreeFragment(), "THREE");
-        adapter.addFragment(new FourFragment(), "FOUR");
+        adapter.addFrag(new OneFragment(), "ONE");
+        adapter.addFrag(new TwoFragment(), "TWO");
+        adapter.addFrag(new ThreeFragment(), "THREE");
+       /* adapter.addFragment(new FourFragment(), "FOUR");
         adapter.addFragment(new FiveFragment(), "FIVE");
         adapter.addFragment(new SixFragment(), "SIX");
         adapter.addFragment(new SevenFragment(), "SEVEN");
         adapter.addFragment(new EightFragment(), "EIGHT");
         adapter.addFragment(new NineFragment(), "NINE");
-        adapter.addFragment(new TenFragment(), "TEN");
+        adapter.addFragment(new TenFragment(), "TEN");*/
         viewPager.setAdapter(adapter);
     }
 
@@ -88,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             return mFragmentList.size();
         }
 
-        public void addFragment(Fragment fragment, String title) {
+        public void addFrag(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }

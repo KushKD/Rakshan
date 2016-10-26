@@ -7,13 +7,19 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/MyMaterialTheme">
-        <activity android:name=".MainActivity">
+
+        <activity
+            android:name=".MainActivity_Navigation_Drawer"
+            android:label="@string/title_activity_main__navigation__drawer"
+            android:theme="@style/MyMaterialTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".Fragment_Manager"></activity>
     </application>
 
 </manifest>
