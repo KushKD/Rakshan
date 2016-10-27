@@ -40,16 +40,17 @@ public class MainActivity_Navigation_Drawer extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main__navigation__drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setLogo(R.mipmap.ic_launcher);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+       /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -75,44 +76,28 @@ public class MainActivity_Navigation_Drawer extends AppCompatActivity
     }
     private void setupTabIcons() {
         TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
-        tabOne.setText("ONE");
+        tabOne.setText("HOME");
         tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_tab_favourite, 0, 0);
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
-        tabTwo.setText("TWO");
+        tabTwo.setText("SERVICES");
         tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_tab_call, 0, 0);
         tabLayout.getTabAt(1).setCustomView(tabTwo);
 
         TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
-        tabThree.setText("THREE");
+        tabThree.setText("SOCIAL");
         tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_tab_contacts, 0, 0);
         tabLayout.getTabAt(2).setCustomView(tabThree);
+
+
     }
-    /*  private void setupTabIcons() {
-          tabLayout.getTabAt(0).setIcon(tabIcons[0]);
-          tabLayout.getTabAt(1).setIcon(tabIcons[1]);
-          tabLayout.getTabAt(2).setIcon(tabIcons[2]);
-          tabLayout.getTabAt(3).setIcon(tabIcons[2]);
-          tabLayout.getTabAt(4).setIcon(tabIcons[2]);
-          tabLayout.getTabAt(5).setIcon(tabIcons[2]);
-          tabLayout.getTabAt(6).setIcon(tabIcons[2]);
-          tabLayout.getTabAt(7).setIcon(tabIcons[2]);
-          tabLayout.getTabAt(8).setIcon(tabIcons[2]);
-          tabLayout.getTabAt(9).setIcon(tabIcons[2]);
-      }*/
+
     private void setupViewPager(ViewPager viewPager) {
         MainActivity_Navigation_Drawer.ViewPagerAdapter adapter = new MainActivity_Navigation_Drawer.ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new OneFragment(), "ONE");
-        adapter.addFrag(new TwoFragment(), "TWO");
-        adapter.addFrag(new ThreeFragment(), "THREE");
-       /* adapter.addFragment(new FourFragment(), "FOUR");
-        adapter.addFragment(new FiveFragment(), "FIVE");
-        adapter.addFragment(new SixFragment(), "SIX");
-        adapter.addFragment(new SevenFragment(), "SEVEN");
-        adapter.addFragment(new EightFragment(), "EIGHT");
-        adapter.addFragment(new NineFragment(), "NINE");
-        adapter.addFragment(new TenFragment(), "TEN");*/
+        adapter.addFrag(new OneFragment(), "HOME");
+        adapter.addFrag(new TwoFragment(), "SERVICES");
+        adapter.addFrag(new ThreeFragment(), "SOCIAL");
         viewPager.setAdapter(adapter);
     }
 
