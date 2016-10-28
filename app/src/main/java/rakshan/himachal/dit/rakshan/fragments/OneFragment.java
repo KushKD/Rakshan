@@ -1,4 +1,4 @@
-package rakshan.himachal.dit.rakshan;
+package rakshan.himachal.dit.rakshan.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import rakshan.himachal.dit.rakshan.R;
 
 
 public class OneFragment extends Fragment{

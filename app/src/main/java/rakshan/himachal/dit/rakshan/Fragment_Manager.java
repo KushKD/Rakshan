@@ -14,6 +14,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import rakshan.himachal.dit.rakshan.fragments.OneFragment;
+import rakshan.himachal.dit.rakshan.fragments.ThreeFragment;
+import rakshan.himachal.dit.rakshan.fragments.TwoFragment;
+
 public class Fragment_Manager extends AppCompatActivity {
 
     private Toolbar toolbar;

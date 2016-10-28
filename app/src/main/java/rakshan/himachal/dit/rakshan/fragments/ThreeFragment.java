@@ -1,4 +1,4 @@
-package rakshan.himachal.dit.rakshan;
+package rakshan.himachal.dit.rakshan.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,11 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import rakshan.himachal.dit.rakshan.R;
 
 
-public class TwoFragment extends Fragment{
+public class ThreeFragment extends Fragment{
 
-    public TwoFragment() {
+    public ThreeFragment() {
         // Required empty public constructor
     }
 
@@ -23,7 +24,7 @@ public class TwoFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_two, container, false);
+        return inflater.inflate(R.layout.fragment_three, container, false);
     }
 
 }

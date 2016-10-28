@@ -19,24 +19,6 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/MyMaterialTheme.PopupOverlay" >
 
-            <LinearLayout
-                android:id="@+id/llContainer"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:background="@android:color/black"
-                android:gravity="center"
-                android:layout_height="wrap_content">
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_gravity="bottom"
-                android:id="@+id/searchbox"
-                android:text="Test"
-                android:background="#ffffff"/>
-            </LinearLayout>
-
             </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>-->
