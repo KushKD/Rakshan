@@ -1,5 +1,7 @@
 package rakshan.himachal.dit.rakshan;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -7,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,6 +25,7 @@ import android.widget.Toast;
 
 import java.security.Permission;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import rakshan.himachal.dit.rakshan.fragments.OneFragment;
@@ -40,6 +44,10 @@ public class MainActivity_Navigation_Drawer extends AppCompatActivity
             R.drawable.ic_tab_contacts
     };
 
+    private AlarmManager alarmManager;
+    private PendingIntent notifyIntent;
+
+
     private CircleButton SOS;
 
     @Override
@@ -56,8 +64,15 @@ public class MainActivity_Navigation_Drawer extends AppCompatActivity
             public void onClick(View view) {
 
                // Toast.makeText(MainActivity_Navigation_Drawer.this,"Button Working",Toast.LENGTH_LONG).show();
-                Intent i = new Intent(MainActivity_Navigation_Drawer.this, Permissions.class);
-                startActivity(i);
+              //  Intent i = new Intent(MainActivity_Navigation_Drawer.this, Permissions.class);
+              //  startActivity(i);
+                try{
+                    Log.e("We are in ","Set Alarms");
+                setAlarms();
+                }catch(Exception e){
+                    Log.e("Error in ","Set Alarms");
+
+                }
             }
         });
 
@@ -83,6 +98,21 @@ public class MainActivity_Navigation_Drawer extends AppCompatActivity
 
         setupTabIcons();
     }
+
+    private void setAlarms() {
+        Intent myIntent = new Intent(this,
+                SendLocationService.class);
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        notifyIntent = PendingIntent.getService(this, 0,
+                myIntent, 0);
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE, 1);
+        Log.v("TAG", "Time for alarm trigger:" + calendar.getTime().toString());
+        Toast.makeText(getApplicationContext(),"Time for alarm trigger: "+calendar.getTime().toString(),Toast.LENGTH_LONG).show();
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+                calendar.getTimeInMillis(), 5 * 60 * 1000, notifyIntent);
+    }
+
     private void setupTabIcons() {
         TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
         tabOne.setText("HOME");

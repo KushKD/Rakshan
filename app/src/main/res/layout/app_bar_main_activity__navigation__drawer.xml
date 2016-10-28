@@ -33,7 +33,7 @@
         android:layout_marginTop="90dp"
         android:layout_marginRight="10dp"
         android:src="@drawable/ic_action_tick"
-        app:cb_color="#99CC00" />
+        app:cb_color="#FF4444" />
 
     <!-- FF4444 -->
 
