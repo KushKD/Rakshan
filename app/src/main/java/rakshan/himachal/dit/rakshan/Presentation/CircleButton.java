@@ -1,4 +1,4 @@
-package rakshan.himachal.dit.rakshan;
+package rakshan.himachal.dit.rakshan.Presentation;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -9,6 +9,8 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.ImageView;
+
+import rakshan.himachal.dit.rakshan.R;
 
 /**
  * Created by kuush on 10/27/2016.

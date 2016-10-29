@@ -1,4 +1,4 @@
-package rakshan.himachal.dit.rakshan;
+package rakshan.himachal.dit.rakshan.Helper;
 
 /**
  * Created by kuush on 10/28/2016.
@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import rakshan.himachal.dit.rakshan.R;
+
 public class GPSTracker extends Service implements LocationListener {
     private final Context mContext;
 
@@ -31,8 +33,8 @@ public class GPSTracker extends Service implements LocationListener {
     boolean canGetLocation = false;
 
     Location location;
-    double latitude;
-    double longitude;
+   public double latitude;
+   public double longitude;
 
     //The minimum distance to change updates in metters
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; //10 metters

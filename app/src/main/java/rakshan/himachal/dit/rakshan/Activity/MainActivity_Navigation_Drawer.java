@@ -1,4 +1,4 @@
-package rakshan.himachal.dit.rakshan;
+package rakshan.himachal.dit.rakshan.Activity;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -23,11 +23,13 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.security.Permission;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import rakshan.himachal.dit.rakshan.Presentation.CircleButton;
+import rakshan.himachal.dit.rakshan.R;
+import rakshan.himachal.dit.rakshan.Services.SendLocationService;
 import rakshan.himachal.dit.rakshan.fragments.OneFragment;
 import rakshan.himachal.dit.rakshan.fragments.ThreeFragment;
 import rakshan.himachal.dit.rakshan.fragments.TwoFragment;

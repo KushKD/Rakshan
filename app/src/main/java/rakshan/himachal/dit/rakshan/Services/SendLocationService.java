@@ -1,4 +1,4 @@
-package rakshan.himachal.dit.rakshan;
+package rakshan.himachal.dit.rakshan.Services;
 
 /**
  * Created by kuush on 10/28/2016.
@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.telephony.SmsManager;
 import android.util.Log;
+
+import rakshan.himachal.dit.rakshan.Helper.GPSTracker;
 
 
 public class SendLocationService extends Service{

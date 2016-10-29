@@ -1,4 +1,4 @@
-package rakshan.himachal.dit.rakshan;
+package rakshan.himachal.dit.rakshan.Activity;
 
 import android.Manifest;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import rakshan.himachal.dit.permissions.RakshamPermissionResponse;
 import rakshan.himachal.dit.permissions.RakshamPermissions;
+import rakshan.himachal.dit.rakshan.R;
 
 public class Permissions extends AppCompatActivity implements View.OnClickListener,RakshamPermissions.OnRequestPermissionsBack{
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="rakshan.himachal.dit.rakshan.MainActivity_Navigation_Drawer">
+    tools:context="rakshan.himachal.dit.rakshan.Activity.MainActivity_Navigation_Drawer">
 
     <!--<android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
 
     <include layout="@layout/content_main_activity__navigation__drawer" />
 
-    <rakshan.himachal.dit.rakshan.CircleButton
+    <rakshan.himachal.dit.rakshan.Presentation.CircleButton
         android:id="@+id/fab"
         android:layout_width="72dip"
         android:layout_height="72dip"
