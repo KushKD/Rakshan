@@ -2,6 +2,7 @@ package rakshan.himachal.dit.rakshan.Activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,13 +12,16 @@ import android.widget.TextView;
 
 import rakshan.himachal.dit.permissions.RakshamPermissionResponse;
 import rakshan.himachal.dit.permissions.RakshamPermissions;
+import rakshan.himachal.dit.rakshan.Presentation.Custom_Dialog;
 import rakshan.himachal.dit.rakshan.R;
+import rakshan.himachal.dit.rakshan.Utils.EConstants;
 
 public class Permissions extends AppCompatActivity implements View.OnClickListener,RakshamPermissions.OnRequestPermissionsBack{
 
     private static final String TAG = "MainActivity";
     private TextView camera,gps,call,sms_status,internet_status,imei_status;
     private Button checkButton,proceed;
+    Custom_Dialog CD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,41 +36,51 @@ public class Permissions extends AppCompatActivity implements View.OnClickListen
         camera = (TextView) findViewById(R.id.cameraStatus);
         sms_status = (TextView)findViewById(R.id.sms_status);
         checkButton = (Button) findViewById(R.id.checkButton);
-        proceed = (Button)findViewById(R.id.proceed);
         internet_status = (TextView)findViewById(R.id.internet_status);
         imei_status = (TextView)findViewById(R.id.imei_status);
         checkButton.setOnClickListener(this);
 
-        proceed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Permissions.this,MainActivity_Navigation_Drawer.class);
-                startActivity(i);
-               Permissions.this.finish();
-            }
-        });
+
     }
 
 
     @Override
     public void onClick(View v) {
 
-        new RakshamPermissions.Builder(this)
-                .withPermissions(Manifest.permission.CAMERA,
-                                 Manifest.permission.ACCESS_FINE_LOCATION,
-                                 Manifest.permission.CALL_PHONE,
-                                 Manifest.permission.SEND_SMS,
-                                 Manifest.permission.INTERNET,
-                                 Manifest.permission.READ_PHONE_STATE)
-                .requestId(1)
-                .setListener(this)
-                .check();
+        try {
+
+            new RakshamPermissions.Builder(this)
+                    .withPermissions(Manifest.permission.CAMERA,
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.CALL_PHONE,
+                            Manifest.permission.SEND_SMS,
+                            Manifest.permission.INTERNET,
+                            Manifest.permission.READ_PHONE_STATE)
+                    .requestId(1)
+                    .setListener(this)
+                    .check();
+
+
+
+        }catch(Exception e){
+            CD.showDialog(Permissions.this,"Something Went wrong while setting the permissions.");
+        }
 
     }
 
     @Override
     public void onRequestBack(RakshamPermissionResponse RakshamResponse) {
-        if(RakshamResponse.isGranted(Manifest.permission.CAMERA)) {
+
+        SharedPreferences settings = getSharedPreferences(EConstants.PREF_SHARED, 0); // 0 - for private mode
+        SharedPreferences.Editor editor = settings.edit();
+        //Set "hasLoggedIn" to true
+        editor.putBoolean("PermissionsFlag", true);
+        editor.commit();
+
+        Intent i = new Intent(Permissions.this,Registration.class);
+        startActivity(i);
+        Permissions.this.finish();
+      /*  if(RakshamResponse.isGranted(Manifest.permission.CAMERA)) {
             camera.setText("Allow");
             camera.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
         }
@@ -94,7 +108,7 @@ public class Permissions extends AppCompatActivity implements View.OnClickListen
         }
 
         if(RakshamResponse.isOnNeverAskAgain(Manifest.permission.CAMERA))
-            Log.d(TAG, "onRequestBack: CAMERA");
+            Log.d(TAG, "onRequestBack: CAMERA");*/
     }
 
     }

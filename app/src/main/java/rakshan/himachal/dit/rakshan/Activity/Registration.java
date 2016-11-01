@@ -64,8 +64,11 @@ public class Registration extends AppCompatActivity {
                                 //Save Data
                                 TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
                                String IMEI_SERVER =  telephonyManager.getDeviceId().toString().trim();
-
-                                saveDataSharedPref(Name_Service,PhoneNumber_Service,IMEI_SERVER);
+                                try {
+                                    saveDataSharedPref(Name_Service, PhoneNumber_Service, IMEI_SERVER);
+                                }catch(Exception e){
+                                    CD.showDialog(Registration.this,e.getLocalizedMessage().toString());
+                                }
                             }
 
 
@@ -95,10 +98,13 @@ public class Registration extends AppCompatActivity {
         SharedPreferences settings = getSharedPreferences(EConstants.PREF_SHARED, 0); // 0 - for private mode
         SharedPreferences.Editor editor = settings.edit();
         //Set "hasLoggedIn" to true
-        editor.putBoolean("hasLoggedIn", true);
+        editor.putBoolean("RegistrationFlag", true);
         editor.putString("Name",name_service);
+        Log.e("Name",name_service);
         editor.putString("phonenumber",phoneNumber_service);
+        Log.e("phonenumber",phoneNumber_service);
         editor.putString("IMEI",imei_server);
+        Log.e("IMEI",imei_server);
         // Commit the edits!
         editor.commit();
         Intent i = new Intent(Registration.this,MainActivity_Navigation_Drawer.class);

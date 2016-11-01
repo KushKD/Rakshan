@@ -161,17 +161,12 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Check Permissions"
+        android:text="Give Necessary Permissions"
         android:id="@+id/checkButton"
-        android:layout_weight="1"
+        android:layout_weight="2"
         />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Proceed"
-        android:layout_weight="1"
-        android:id="@+id/proceed" />
+
 </LinearLayout>
 
 
