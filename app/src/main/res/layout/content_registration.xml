@@ -1,0 +1,349 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rightLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#e6e6e6"
+
+    android:weightSum="3">
+
+    <!-- header -->
+
+    <LinearLayout
+        android:id="@+id/lay1"
+        android:layout_margin="5dp"
+        android:background="#282a35"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:gravity="left|center_vertical|center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:text="Registration"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+
+            />
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/regdetails"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_margin="5dp"
+        android:layout_weight="2.4" >
+
+        <ScrollView
+            android:id="@+id/mainScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:background="#e6e6e6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <!-- Name -->
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#40666666"
+                    android:gravity="center|center_vertical|center_horizontal"
+                    android:orientation="horizontal"
+                    android:padding="15dip" >
+
+                    <!-- ListRow Left sied Thumbnail image -->
+
+                    <LinearLayout
+                        android:id="@+id/thumbnail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginRight="3dip"
+                        android:padding="3dip" >
+
+
+                        <ImageView
+                            android:id="@+id/list_image"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="top"
+
+                            android:contentDescription="@string/app_name" />
+
+                        <!--   android:src="@drawable/name" -->
+
+                    </LinearLayout>
+
+                    <!-- Rightend Arrow -->
+                    <ImageButton
+                        android:id="@+id/imageView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:visibility="gone"
+
+                        android:contentDescription="@string/app_name"
+                        />
+
+                    <!--   android:src="@drawable/speaker"
+                       android:background="@drawable/circularbutton"-->
+
+
+
+
+
+
+                    <EditText
+                        android:id="@+id/etname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="50dip"
+                        android:layout_marginRight="5dip"
+                        android:layout_toLeftOf="@+id/imageView1"
+                        android:background="@drawable/rounded_edittext"
+                        android:inputType="textCapWords"
+                        android:hint="Enter Name"
+                        android:textColor="#282a35"
+                        android:textColorHint="#282a35"
+                        android:textSize="18dip" />
+
+                    <!--android:inputType="textCapCharacters-->"
+
+                </RelativeLayout>
+
+                <!-- Phone No -->
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#40666666"
+                    android:gravity="center|center_vertical|center_horizontal"
+                    android:orientation="horizontal"
+                    android:padding="15dip" >
+
+                    <!-- ListRow Left sied Thumbnail image -->
+
+                    <LinearLayout
+                        android:id="@+id/thumbnail2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginRight="3dip"
+                        android:padding="3dip" >
+
+
+                        <ImageView
+                            android:id="@+id/list_image2"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="top"
+
+                            android:contentDescription="@string/app_name" />
+
+                        <!--  android:src="@drawable/mobile" -->
+
+                    </LinearLayout>
+
+                    <!-- Rightend Arrow -->
+                    <ImageButton
+                        android:id="@+id/imageView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:visibility="gone"
+
+                        android:contentDescription="@string/app_name"
+                        />
+
+                    <!--   android:src="@drawable/speaker"
+                       android:background="@drawable/circularbutton"-->
+
+
+
+
+
+
+                    <EditText
+                        android:id="@+id/etmobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="50dip"
+                        android:layout_marginRight="5dip"
+                        android:layout_toLeftOf="@+id/imageView2"
+                        android:background="@drawable/rounded_edittext"
+                        android:hint="Enter Mobile Number"
+                        android:inputType="number"
+                        android:maxLength="10"
+                        android:textColor="#282a35"
+                        android:textColorHint="#282a35"
+                        android:textSize="18dip" />
+
+                </RelativeLayout>
+
+
+                <!-- OTP -->
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#40666666"
+                    android:gravity="center|center_vertical|center_horizontal"
+                    android:orientation="horizontal"
+                    android:padding="15dip" >
+
+                    <!-- ListRow Left sied Thumbnail image -->
+
+                    <LinearLayout
+                        android:id="@+id/otp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginRight="3dip"
+                        android:padding="3dip" >
+
+
+                        <ImageView
+                            android:id="@+id/otp_image2"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="top"
+
+                            android:contentDescription="@string/app_name" />
+
+                        <!--  android:src="@drawable/mobile" -->
+
+                    </LinearLayout>
+
+                    <!-- Rightend Arrow -->
+                    <ImageButton
+                        android:id="@+id/imageViewx"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:visibility="gone"
+
+                        android:contentDescription="@string/app_name"
+                        />
+
+                    <!--   android:src="@drawable/speaker"
+                       android:background="@drawable/circularbutton"-->
+
+
+
+
+
+
+                    <EditText
+                        android:id="@+id/otp_server"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="50dip"
+                        android:layout_marginRight="5dip"
+                        android:layout_toLeftOf="@+id/imageViewx"
+                        android:background="@drawable/rounded_edittext"
+                        android:hint="Enter OTP"
+                        android:textColor="#282a35"
+                        android:textColorHint="#282a35"
+                        android:textSize="18dip" />
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#40666666"
+                    android:layout_marginTop="10dp"
+                    android:gravity="left|center_vertical|center_horizontal"
+                    android:padding="10dip"
+                    android:text="**OTP will be sent on this mobile number for verfification."
+                    android:textColor="#FF545454"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#40666666"
+                    android:layout_marginTop="10dp"
+                    android:gravity="left|center_vertical|center_horizontal"
+                    android:padding="10dip"
+                    android:text="**All fields are mandatory."
+                    android:textColor="#FF545454"/>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#40666666"
+                    android:gravity="left|center_vertical|center_horizontal"
+                    android:padding="10dip"
+                    android:text="**Please input your valid 10 digit Mobile Number. We'll be pushing all our notifications to this number via SMS facility."
+                    android:textColor="#FF545454"/>
+            </LinearLayout>
+
+
+
+
+        </ScrollView>
+
+    </LinearLayout>
+
+
+    <!-- Buttons -->
+    <LinearLayout
+        android:id="@+id/lay3"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="0.3"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_gravity="bottom"
+        android:gravity="right|center_horizontal|center_vertical"
+        android:background="#F2F2F2"
+        android:layout_margin="3dp">
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#282a35"
+            android:textColor="#FFFFFF"
+            android:layout_weight="1"
+            android:text="Quit"
+            android:layout_margin="5dp"
+            android:textSize="14dp"/>
+
+
+        <Button
+            android:id="@+id/register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#282a35"
+            android:layout_margin="5dp"
+            android:text="Register Me"
+            android:layout_weight="1"
+            android:textColor="#FFFFFF"
+            android:textSize="14dp"/>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

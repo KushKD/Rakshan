@@ -16,7 +16,7 @@ import rakshan.himachal.dit.rakshan.R;
 public class Permissions extends AppCompatActivity implements View.OnClickListener,RakshamPermissions.OnRequestPermissionsBack{
 
     private static final String TAG = "MainActivity";
-    private TextView camera,gps,call,sms_status,internet_status;
+    private TextView camera,gps,call,sms_status,internet_status,imei_status;
     private Button checkButton,proceed;
 
     @Override
@@ -34,6 +34,7 @@ public class Permissions extends AppCompatActivity implements View.OnClickListen
         checkButton = (Button) findViewById(R.id.checkButton);
         proceed = (Button)findViewById(R.id.proceed);
         internet_status = (TextView)findViewById(R.id.internet_status);
+        imei_status = (TextView)findViewById(R.id.imei_status);
         checkButton.setOnClickListener(this);
 
         proceed.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +52,12 @@ public class Permissions extends AppCompatActivity implements View.OnClickListen
     public void onClick(View v) {
 
         new RakshamPermissions.Builder(this)
-                .withPermissions(Manifest.permission.CAMERA,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,Manifest.permission.SEND_SMS,Manifest.permission.INTERNET)
+                .withPermissions(Manifest.permission.CAMERA,
+                                 Manifest.permission.ACCESS_FINE_LOCATION,
+                                 Manifest.permission.CALL_PHONE,
+                                 Manifest.permission.SEND_SMS,
+                                 Manifest.permission.INTERNET,
+                                 Manifest.permission.READ_PHONE_STATE)
                 .requestId(1)
                 .setListener(this)
                 .check();
@@ -78,6 +84,10 @@ public class Permissions extends AppCompatActivity implements View.OnClickListen
             sms_status.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
 
         }if(RakshamResponse.isGranted(Manifest.permission.INTERNET)) {
+            internet_status.setText("Allow");
+            internet_status.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+
+        }if(RakshamResponse.isGranted(Manifest.permission.READ_PHONE_STATE)) {
             internet_status.setText("Allow");
             internet_status.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
 

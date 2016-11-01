@@ -5,4 +5,6 @@ package rakshan.himachal.dit.rakshan.Utils;
  */
 
 public class EConstants {
+
+    public static final String PREF_SHARED = "RakshanDetails";
 }
