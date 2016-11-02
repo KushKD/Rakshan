@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -48,6 +49,7 @@ public class MainActivity_Navigation_Drawer extends AppCompatActivity
 
     private AlarmManager alarmManager;
     private PendingIntent notifyIntent;
+    private DrawerLayout drawer;
 
 
     private CircleButton SOS;
@@ -78,7 +80,7 @@ public class MainActivity_Navigation_Drawer extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -192,6 +194,8 @@ public class MainActivity_Navigation_Drawer extends AppCompatActivity
 
         } else if (id == R.id.nav_send) {
 
+        }else if(item.getItemId() == android.R.id.home){  //  use android.R.id
+            drawer.openDrawer(Gravity.LEFT);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

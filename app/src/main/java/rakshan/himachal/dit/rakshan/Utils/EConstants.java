@@ -7,4 +7,5 @@ package rakshan.himachal.dit.rakshan.Utils;
 public class EConstants {
 
     public static final String PREF_SHARED = "RakshanDetails";
+    public static final String URL = "http://10.126.161.38/Rakshan/Rakshan.svc/";
 }

@@ -52,7 +52,25 @@ public class Vehicle_In_Out_Json {
             Object json = new JSONTokener(s).nextValue();
             if (json instanceof JSONObject) {
                 JSONObject obj = new JSONObject(s);
-                g_Table = obj.optString("getConfirmPayment_JSONResult");
+                g_Table = obj.optString("getSOSRequest_JSONResult");
+                return g_Table;
+            } else {
+                return null;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String Registration_Parse(String s) {
+
+        String g_Table = null;
+        try {
+            Object json = new JSONTokener(s).nextValue();
+            if (json instanceof JSONObject) {
+                JSONObject obj = new JSONObject(s);
+                g_Table = obj.optString("getSOSRequest_JSONResult");
                 return g_Table;
             } else {
                 return null;

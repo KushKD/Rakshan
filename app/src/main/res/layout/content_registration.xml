@@ -197,7 +197,7 @@
                 </RelativeLayout>
 
 
-                <!-- OTP -->
+                <!-- Aadhaar -->
                 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -209,7 +209,7 @@
                     <!-- ListRow Left sied Thumbnail image -->
 
                     <LinearLayout
-                        android:id="@+id/otp"
+                        android:id="@+id/aadhaar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -250,7 +250,7 @@
 
 
                     <EditText
-                        android:id="@+id/otp_server"
+                        android:id="@+id/aadhaar_server"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -258,7 +258,235 @@
                         android:layout_marginRight="5dip"
                         android:layout_toLeftOf="@+id/imageViewx"
                         android:background="@drawable/rounded_edittext"
-                        android:hint="Enter OTP"
+                        android:hint="Enter Aadhaar"
+                        android:inputType="number"
+                        android:maxLength="12"
+                        android:textColor="#282a35"
+                        android:textColorHint="#282a35"
+                        android:textSize="18dip" />
+
+                </RelativeLayout>
+
+                <!-- Email -->
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#40666666"
+                    android:gravity="center|center_vertical|center_horizontal"
+                    android:orientation="horizontal"
+                    android:padding="15dip" >
+
+                    <!-- ListRow Left sied Thumbnail image -->
+
+                    <LinearLayout
+                        android:id="@+id/email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginRight="3dip"
+                        android:padding="3dip" >
+
+
+                        <ImageView
+                            android:id="@+id/otp_imager"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="top"
+
+                            android:contentDescription="@string/app_name" />
+
+                        <!--  android:src="@drawable/mobile" -->
+
+                    </LinearLayout>
+
+                    <!-- Rightend Arrow -->
+                    <ImageButton
+                        android:id="@+id/imageViewr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:visibility="gone"
+
+                        android:contentDescription="@string/app_name"
+                        />
+
+                    <!--   android:src="@drawable/speaker"
+                       android:background="@drawable/circularbutton"-->
+
+
+
+
+
+
+                    <EditText
+                        android:id="@+id/email_server"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="50dip"
+                        android:layout_marginRight="5dip"
+                        android:layout_toLeftOf="@+id/imageViewr"
+                        android:background="@drawable/rounded_edittext"
+                        android:hint="Enter Email"
+                        android:inputType="textEmailAddress"
+                        android:textColor="#282a35"
+                        android:textColorHint="#282a35"
+                        android:textSize="18dip" />
+
+                </RelativeLayout>
+
+                <!-- Gender -->
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#40666666"
+                    android:gravity="center|center_vertical|center_horizontal"
+                    android:orientation="horizontal"
+                    android:padding="15dip" >
+
+                    <!-- ListRow Left sied Thumbnail image -->
+
+                    <LinearLayout
+                        android:id="@+id/gender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginRight="3dip"
+                        android:padding="3dip" >
+
+
+                        <ImageView
+                            android:id="@+id/otp_imageg"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="top"
+                            android:src="@mipmap/ic_launcher"
+                            android:contentDescription="@string/app_name" />
+
+                        <!--  android:src="@drawable/mobile" -->
+
+                    </LinearLayout>
+
+                    <!-- Rightend Arrow -->
+                    <ImageButton
+                        android:id="@+id/imageViewg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:visibility="gone"
+
+                        android:contentDescription="@string/app_name"
+                        />
+
+                    <!--   android:src="@drawable/speaker"
+                       android:background="@drawable/circularbutton"-->
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="50dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left|center_vertical|center_horizontal"
+        android:padding="10dip"
+        android:text="Select Gender"
+        android:textColor="#282a35"/>
+
+
+    <RadioGroup
+        android:id="@+id/radioSex"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <RadioButton
+            android:id="@+id/radioMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Male"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/radioFemale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female" />
+
+    </RadioGroup>
+
+</LinearLayout>
+
+
+                </RelativeLayout>
+
+                <!-- Date Of Birth -->
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#40666666"
+                    android:gravity="center|center_vertical|center_horizontal"
+                    android:orientation="horizontal"
+                    android:padding="15dip" >
+
+                    <!-- ListRow Left sied Thumbnail image -->
+
+                    <LinearLayout
+                        android:id="@+id/dateofbirth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginRight="3dip"
+                        android:padding="3dip" >
+
+
+                        <ImageView
+                            android:id="@+id/dob_imager"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="top"
+
+                            android:contentDescription="@string/app_name" />
+
+                        <!--  android:src="@drawable/mobile" -->
+
+                    </LinearLayout>
+
+                    <!-- Rightend Arrow -->
+                    <ImageButton
+                        android:id="@+id/imageViewdob"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:visibility="gone"
+
+                        android:contentDescription="@string/app_name"
+                        />
+
+                    <!--   android:src="@drawable/speaker"
+                       android:background="@drawable/circularbutton"-->
+
+
+
+
+
+
+                    <EditText
+                        android:id="@+id/dob_server"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="50dip"
+                        android:layout_marginRight="5dip"
+                        android:layout_toLeftOf="@+id/imageViewdob"
+                        android:background="@drawable/rounded_edittext"
+                        android:hint="Enter Date Of Birth"
                         android:textColor="#282a35"
                         android:textColorHint="#282a35"
                         android:textSize="18dip" />
@@ -266,7 +494,9 @@
                 </RelativeLayout>
 
 
-                <TextView
+
+
+                <!--<TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#40666666"
@@ -274,9 +504,9 @@
                     android:gravity="left|center_vertical|center_horizontal"
                     android:padding="10dip"
                     android:text="**OTP will be sent on this mobile number for verfification."
-                    android:textColor="#FF545454"/>
+                    android:textColor="#FF545454"/>-->
 
-                <TextView
+              <!--  <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#40666666"
@@ -284,17 +514,17 @@
                     android:gravity="left|center_vertical|center_horizontal"
                     android:padding="10dip"
                     android:text="**All fields are mandatory."
-                    android:textColor="#FF545454"/>
+                    android:textColor="#FF545454"/>-->
 
 
-                <TextView
+              <!--  <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#40666666"
                     android:gravity="left|center_vertical|center_horizontal"
                     android:padding="10dip"
                     android:text="**Please input your valid 10 digit Mobile Number. We'll be pushing all our notifications to this number via SMS facility."
-                    android:textColor="#FF545454"/>
+                    android:textColor="#FF545454"/>-->
             </LinearLayout>
 
 
