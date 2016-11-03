@@ -61,7 +61,7 @@ public class Generic_Async_Post_Activity extends AsyncTask<String,Void ,String> 
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
         taskListener.onTaskCompleted(result, taskType);
-        // dialog.dismiss();
+        dialog.dismiss();
     }
 
 

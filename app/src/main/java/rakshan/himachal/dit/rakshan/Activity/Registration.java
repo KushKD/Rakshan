@@ -16,11 +16,16 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
 import rakshan.himachal.dit.rakshan.Enum.TaskType;
 import rakshan.himachal.dit.rakshan.Helper.AppStatus;
 import rakshan.himachal.dit.rakshan.Helper.Date_Time;
 import rakshan.himachal.dit.rakshan.Interfaces.AsyncTaskListener;
 import rakshan.himachal.dit.rakshan.JsonManager.Vehicle_In_Out_Json;
+import rakshan.himachal.dit.rakshan.Model.UserDetails;
 import rakshan.himachal.dit.rakshan.Presentation.Custom_Dialog;
 import rakshan.himachal.dit.rakshan.R;
 import rakshan.himachal.dit.rakshan.Services.SendLocationService;
@@ -165,23 +170,29 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
 
     private void saveDataSharedPref(String name_service, String phoneNumber_service, String imei_server) {
 
-        // User has successfully logged in, save this information
-        //  We need an Editor object to make preference changes.
-        SharedPreferences settings = getSharedPreferences(EConstants.PREF_SHARED, 0); // 0 - for private mode
-        SharedPreferences.Editor editor = settings.edit();
-        //Set "hasLoggedIn" to true
-        editor.putBoolean("RegistrationFlag", true);
-        editor.putString("Name",name_service);
-        Log.e("Name",name_service);
-        editor.putString("phonenumber",phoneNumber_service);
-        Log.e("phonenumber",phoneNumber_service);
-        editor.putString("IMEI",imei_server);
-        Log.e("IMEI",imei_server);
-        // Commit the edits!
-        editor.commit();
-        Intent i = new Intent(Registration.this,MainActivity_Navigation_Drawer.class);
-        startActivity(i);
-        Registration.this.finish();
+       try{
+           // User has successfully logged in, save this information
+           //  We need an Editor object to make preference changes.
+           SharedPreferences settings = getSharedPreferences(EConstants.PREF_SHARED, 0); // 0 - for private mode
+           SharedPreferences.Editor editor = settings.edit();
+           //Set "hasLoggedIn" to true
+           editor.putBoolean("RegistrationFlag", true);
+           editor.putString("Name",name_service);
+           Log.e("Name",name_service);
+           editor.putString("phonenumber",phoneNumber_service);
+           Log.e("phonenumber",phoneNumber_service);
+           editor.putString("IMEI",imei_server);
+           Log.e("IMEI",imei_server);
+           // Commit the edits!
+           editor.commit();
+           Intent i = new Intent(Registration.this,MainActivity_Navigation_Drawer.class);
+           startActivity(i);
+           Registration.this.finish();
+
+       }catch(Exception e){
+
+            CD.showDialog(Registration.this,"Something went wrong. Please restart the application. ");
+       }
     }
 
     @Override
@@ -189,10 +200,46 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
 
         if(taskType==TaskType.REGISTRATION){
             Log.e("Getting Result",result);
-           // String Result_to_Show = null;
-          //  Result_to_Show = Vehicle_In_Out_Json.Registration_Parse(result);
-            Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
+            String Result_to_Show = null;
+            Result_to_Show = Vehicle_In_Out_Json.Registration_Parse(result);
+           // Toast.makeText(getApplicationContext(),Result_to_Show,Toast.LENGTH_LONG).show();
+            //saveDataSharedPref
+            Object json = null;
+            try {
+                json = new JSONTokener(Result_to_Show).nextValue();
+                if (json instanceof JSONObject) {
+                    //Check Weather the String is object or array
+                    JSONObject myJson = null;
+                    UserDetails PGP = null;
 
+                    try {
+                        PGP = new UserDetails();
+                        myJson = new JSONObject(Result_to_Show);
+
+                        Log.e("MyJSON",myJson.toString());
+
+                        if(myJson.optString("ResName").length()<=1){
+                            CD.showDialog(Registration.this,"Unable to register please try again.");
+                        }else{
+                            PGP.setName(myJson.optString("ResName"));
+                            PGP.setIMEI(myJson.optString("IMEI"));
+                            PGP.setMobile(myJson.optString("Mobile"));
+
+                            Log.e("Name From Server",PGP.getName());
+                            Log.e("IMEI From Server",PGP.getIMEI());
+                            Log.e("MOBILE From Server",PGP.getMobile());
+                          saveDataSharedPref(PGP.getName(), PGP.getMobile(), PGP.getIMEI());
+                        }
+
+
+
+                    }catch (Exception e){
+                        CD.showDialog(Registration.this,"There is some Error.");
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }else{
             CD.showDialog(Registration.this,"Something went wrong. Please restart the application");
         }

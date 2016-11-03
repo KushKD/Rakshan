@@ -70,7 +70,7 @@ public class Vehicle_In_Out_Json {
             Object json = new JSONTokener(s).nextValue();
             if (json instanceof JSONObject) {
                 JSONObject obj = new JSONObject(s);
-                g_Table = obj.optString("getSOSRequest_JSONResult");
+                g_Table = obj.optString("getUserRegistration_JSONResult");
                 return g_Table;
             } else {
                 return null;
