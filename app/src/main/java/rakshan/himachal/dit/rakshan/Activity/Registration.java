@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -39,6 +40,7 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
     private RadioGroup radioSexGroup;
     private RadioButton radioSexButton;
     Button back,register;
+    ImageView edit_Profile_IV;
     Custom_Dialog CD = new Custom_Dialog();
 
     private int mSelectedYear;
@@ -70,6 +72,15 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
         dob_server_et = (EditText)findViewById(R.id.dob_server);
         back          = (Button)findViewById(R.id.back);
         register      = (Button)findViewById(R.id.register);
+        edit_Profile_IV = (ImageView) findViewById(R.id.edit_Profile);
+
+
+        edit_Profile_IV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //ToDo
+            }
+        });
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
