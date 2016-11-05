@@ -2,13 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="rakshan.himachal.dit.rakshan">
 
-    <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -36,8 +39,12 @@
 
         <activity
             android:name=".Activity.Registration"
-            android:label="@string/title_activity_registration" />
-        <activity android:name=".Activity.Permissions"></activity>
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".Activity.Permissions"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>

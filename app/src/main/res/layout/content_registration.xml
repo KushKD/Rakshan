@@ -82,7 +82,7 @@
                 android:textColor="#fff"
                 android:textSize="14sp" />
 
-            <ImageButton
+            <rakshan.himachal.dit.rakshan.Presentation.CircleImageView
                 android:id="@+id/user_profile_photo"
                 android:layout_width="100dp"
                 android:layout_height="100dp"

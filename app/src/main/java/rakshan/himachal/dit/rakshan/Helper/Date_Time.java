@@ -26,6 +26,18 @@ public class Date_Time {
         return IN_TIME;
     }
 
+    public static String GetDateAndTimeImage(){
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+        String formattedDate = df.format(c.getTime());
+
+
+        String IN_TIME = formattedDate;
+
+        return IN_TIME;
+    }
+
 
     public static String Change_Date_Format(String date_Current) throws ParseException {
 

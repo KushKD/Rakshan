@@ -55,7 +55,9 @@ public class Permissions extends AppCompatActivity implements View.OnClickListen
                             Manifest.permission.CALL_PHONE,
                             Manifest.permission.SEND_SMS,
                             Manifest.permission.INTERNET,
-                            Manifest.permission.READ_PHONE_STATE)
+                            Manifest.permission.READ_PHONE_STATE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.ACCESS_NETWORK_STATE)
                     .requestId(1)
                     .setListener(this)
                     .check();
