@@ -172,6 +172,8 @@ public class HttpManager {
         String IMEI = null;
         String Gender = null;
         String ResDOB = null;
+        String ResPhotoName = null;
+        String ResPhoto = null;
 
         try {
 
@@ -183,6 +185,8 @@ public class HttpManager {
             IMEI = params[6];
             Gender = params[7];
             ResDOB = params[8];
+            ResPhotoName = params[9];
+            ResPhoto = params[10];
 
 
             url_ =new URL(URL);
@@ -205,6 +209,8 @@ public class HttpManager {
                     .key("IMEI").value(IMEI)
                     .key("Gender").value(Gender)
                     .key("ResDOB").value(ResDOB)
+                    .key("PhotoName").value(ResPhotoName)
+                    .key("Photo").value(ResPhoto)
                     .endObject()
                     .endObject();
 
