@@ -532,15 +532,16 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
 
                 BitmapFactory.Options options = null;
                 options = new BitmapFactory.Options();
-                options.inSampleSize = 4;
+                options.inSampleSize = 16;
                 bitmap = BitmapFactory.decodeFile(fileUri.getPath().toString(),options);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 // Must compress the Image to reduce image size to make upload easy
-                bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] byte_arr = stream.toByteArray();
+                Log.e("Array Length",Integer.toString(byte_arr.length));
                 // Encode Image to String
                 // Encode Image to String
-                encodedString = Base64.encodeToString(byte_arr, 0);
+                encodedString = Base64.encodeToString(byte_arr, Base64.DEFAULT); //0
                 photo_Details.setPhotobase64encode(encodedString);
                 return photo_Details;
             }

@@ -7,6 +7,7 @@ package rakshan.himachal.dit.rakshan.HTTP;
 import android.util.Log;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.json.JSONStringer;
 
 import java.io.BufferedReader;
@@ -199,6 +200,20 @@ public class HttpManager {
             conn_.setRequestProperty("Content-Type", "application/json");
             conn_.connect();
 
+            Thread T1 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+
+            JSONObject KL = new JSONObject("{\"imsge\":\"+ResPhoto+\"}");
             userJson = new JSONStringer()
                     .object().key("UsersRegistration")
                     .object()
@@ -214,8 +229,27 @@ public class HttpManager {
                     .endObject()
                     .endObject();
 
+
+
+            T1.start();
+            T1.join();
+
             System.out.println(userJson.toString());
             Log.e("Object",userJson.toString());
+            Thread T2 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            T2.start();
+            T2.join();
             OutputStreamWriter out = new OutputStreamWriter(conn_.getOutputStream());
             out.write(userJson.toString());
             out.close();
@@ -246,6 +280,8 @@ public class HttpManager {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         } finally{
             if(conn_!=null)
