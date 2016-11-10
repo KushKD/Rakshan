@@ -301,13 +301,12 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
             } else {
                 String Result_to_Show = null;
                 Result_to_Show = JsonParser.Registration_Parse(result);
-                // Toast.makeText(getApplicationContext(),Result_to_Show,Toast.LENGTH_LONG).show();
-                //saveDataSharedPref
-                Object json = null;
-               //// TODO: 11/10/2016  
-            }  //till here
+                CD.showDialog(Registration.this, Result_to_Show);
+                Registration.this.finish();
+
+            }
             }else{
-                CD.showDialog(Registration.this, "Something went wrong. Please restart the application");
+                CD.showDialog(Registration.this, "Something went wrong. Please try again.");
             }
 
     }
@@ -382,9 +381,7 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
       //  startActivity(i);
     }
 
-      /*
-     * ------------ Helper Methods ----------------------
-     */
+
 
     /*
      * Creating file uri to store image/video
