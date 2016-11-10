@@ -119,4 +119,13 @@
     <string name="settings">settings</string>
     <string name="cancel">cancel</string>
     <string name="title_activity_registration">Registration</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Mobile Number</string>
+    <string name="prompt_password">OTP</string>
+    <string name="action_sign_in">Login</string>
+    <string name="invalid_email">This email address is invalid</string>
+    <string name="invalid_password">Password is too short</string>
+    <string name="incorrect_password">Password is incorrect</string>
+    <string name="field_required">This field is required</string>
 </resources>

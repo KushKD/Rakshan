@@ -9,6 +9,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="#282a35"
-    tools:context="rakshan.himachal.dit.rakshan.Activity.SplashScreen">
+    tools:context="rakshan.himachal.dit.sms.Activity.SplashScreen">
 
 </RelativeLayout>
