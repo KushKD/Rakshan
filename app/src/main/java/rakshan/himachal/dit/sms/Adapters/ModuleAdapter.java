@@ -13,6 +13,7 @@ import android.widget.Toast;
 import rakshan.himachal.dit.sms.Activity.MainActivity_Navigation_Drawer;
 import rakshan.himachal.dit.sms.Activity.Permissions;
 import rakshan.himachal.dit.sms.Activity.Registration;
+import rakshan.himachal.dit.sms.Activity.VacationTraveller;
 import rakshan.himachal.dit.sms.R;
 
 /**
@@ -75,12 +76,11 @@ public class ModuleAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Toast.makeText(context, "You Clicked "+result[position], Toast.LENGTH_LONG).show();
+
 
                 if(result[position].toString().equalsIgnoreCase("Vacation Locator")){
-                    Toast.makeText(context, "You Clicked "+result[position], Toast.LENGTH_LONG).show();
-                  /*  Intent intent = new Intent(context,Permissions.class);
-                    context.startActivity(intent);*/
+                    Intent intent = new Intent(context,VacationTraveller.class);
+                    context.startActivity(intent);
                 }else if (result[position].toString().equalsIgnoreCase("Travel Tracking")){
                     Toast.makeText(context, "You Clicked "+result[position], Toast.LENGTH_LONG).show();
                    /* Intent intent = new Intent(context,Registration.class);
