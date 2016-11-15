@@ -24,8 +24,8 @@ public class TwoFragment extends Fragment{
  //   public static String [] prgmNameList={"Let Us C","c++","JAVA","Jsp","Microsoft .Net","Android","PHP","Jquery","JavaScript"};
    // public static int [] prgmImages={R.mipmap.ic_launcher,R.drawable.images1,R.drawable.images2,R.drawable.images3,R.drawable.images4,R.drawable.images5,R.drawable.images6,R.drawable.images7,R.drawable.images8};
 
-       public static String [] prgmNameList={"Vacation Locator","Travel Tracking","Locate Police Station"};
-    public static int [] prgmImages={R.mipmap.ic_launcher,R.mipmap.ic_launcher,R.mipmap.ic_launcher};
+       public static String [] prgmNameList={"Vacation Travel"};
+    public static int [] prgmImages={R.mipmap.ic_launcher};
 
     public TwoFragment() {
         // Required empty public constructor

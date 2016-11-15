@@ -78,7 +78,7 @@ public class ModuleAdapter extends BaseAdapter {
                 // TODO Auto-generated method stub
 
 
-                if(result[position].toString().equalsIgnoreCase("Vacation Locator")){
+                if(result[position].toString().equalsIgnoreCase("Vacation Travel")){
                     Intent intent = new Intent(context,VacationTraveller.class);
                     context.startActivity(intent);
                 }else if (result[position].toString().equalsIgnoreCase("Travel Tracking")){

@@ -77,10 +77,10 @@ public class VacationTraveller extends FragmentActivity implements
 
                 if(tv_latitude.getText().length()!= 0 && tv_longitude.getText().length()!=0){
 
-                   // Intent i = new Intent(VacationTraveller.this,Add_Parking_Here.class);
-                  //  i.putExtra("LATITUDE",tv_latitude.getText().toString());
-                  //  i.putExtra("LONGITUDE",tv_longitude.getText().toString());
-                  //  startActivity(i);
+                    Intent i = new Intent(VacationTraveller.this,VacationTravelDetails.class);
+                    i.putExtra("LATITUDE",tv_latitude.getText().toString());
+                    i.putExtra("LONGITUDE",tv_longitude.getText().toString());
+                    startActivity(i);
                 }else{
 
 

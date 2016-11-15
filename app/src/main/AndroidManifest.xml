@@ -61,7 +61,8 @@
 
         <activity
             android:name=".Activity.VacationTraveller"
-            android:label="@string/title_activity_vacation_traveller"></activity>
+            android:label="@string/title_activity_vacation_traveller" />
+        <activity android:name=".Activity.VacationTravelDetails"></activity>
     </application>
 
 </manifest>
