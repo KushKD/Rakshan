@@ -98,7 +98,7 @@
                             android:layout_weight="1"
                             android:textStyle="bold"
                             android:textColor="#366988"
-                            android:text="From Date:"
+                            android:text="Start Date:"
                             android:padding="5dp"/>
 
 
@@ -154,12 +154,24 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/rounded_edittext"
-                            android:hint="To Date"
+                            android:hint="End Date"
                             android:textColor="#FF545454"
                             android:textColorHint="#FF545454"
                             android:textSize="18sp" />
                     </LinearLayout>
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10px"
+                    android:gravity="center|center_horizontal|center_vertical"
+                    android:text="Location Details"
+                    android:textColor="#FFEB3B"
+                    android:background="#282a35"
+                    android:textSize="18sp"
+                    android:padding="5dp"
+                    android:textStyle="bold"/>
 
                 <!-- Latitude -->
                 <LinearLayout
@@ -458,8 +470,6 @@
 
 
     </LinearLayout>
-
-
 
 
     <!-- Buttons -->
