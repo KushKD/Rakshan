@@ -17,6 +17,9 @@ import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import rakshan.himachal.dit.sms.Enum.TaskType;
 import rakshan.himachal.dit.sms.Helper.AppStatus;
 import rakshan.himachal.dit.sms.Helper.Date_Time;
@@ -25,11 +28,12 @@ import rakshan.himachal.dit.sms.Interfaces.AsyncTaskListener;
 import rakshan.himachal.dit.sms.JsonManager.JsonParser;
 import rakshan.himachal.dit.sms.Utils.EConstants;
 import rakshan.himachal.dit.sms.Utils.Generic_Async_Post;
+import rakshan.himachal.dit.sms.Utils.Prefrences;
 
 
 public class SendLocationService extends Service implements AsyncTaskListener{
 
-
+    Map<String, String> map = null;
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -38,12 +42,26 @@ public class SendLocationService extends Service implements AsyncTaskListener{
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+       /*  map  = new HashMap<>();
+        map = Prefrences.getStringFromPreferences(SendLocationService.this);
+
+        Boolean Registration = Boolean.parseBoolean(map.get("RegistrationFlag"));
+        String name = map.get("Name");
+        String Mobile_No = map.get("phonenumber");
+        String IMEI = map.get("IMEI");
+
+        Log.e("Registration",Boolean.toString(Registration));
+        Log.e("Name",name);
+        Log.e("phonenumber",Mobile_No);
+        Log.e("IMEI",IMEI);*/
+
+        String sent = "SMS_SENT";
         SharedPreferences prfs = getSharedPreferences(EConstants.PREF_SHARED, Context.MODE_PRIVATE);
 
         String name  = prfs.getString("Name","");
         String Mobile_No = prfs.getString("phonenumber","");
         String IMEI = prfs.getString("IMEI","");
-        String sent = "SMS_SENT";
+
 
 
         GPSTracker gpsTracker = new GPSTracker(this);
@@ -95,7 +113,7 @@ public class SendLocationService extends Service implements AsyncTaskListener{
                             }
                         }
                     }, new IntentFilter(sent));
-                    SmsManager.getDefault().sendTextMessage("+919459619235", null, message, sentPI, null);
+                    SmsManager.getDefault().sendTextMessage("+919418497722", null, message, sentPI, null);
                 }catch (Exception e){
                     Log.e("Unable to send Message", e.getLocalizedMessage().toString().trim());
                 }

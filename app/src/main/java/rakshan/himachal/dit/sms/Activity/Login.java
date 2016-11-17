@@ -32,7 +32,10 @@ import rakshan.himachal.dit.sms.Presentation.Custom_Dialog;
 import rakshan.himachal.dit.sms.R;
 import rakshan.himachal.dit.sms.Utils.EConstants;
 import rakshan.himachal.dit.sms.Utils.Generic_Async_Get;
+import rakshan.himachal.dit.sms.Utils.Prefrences;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -274,6 +277,7 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
             SharedPreferences settings = getSharedPreferences(EConstants.PREF_SHARED, 0); // 0 - for private mode
             SharedPreferences.Editor editor = settings.edit();
             //Set "hasLoggedIn" to true
+
             editor.putBoolean("RegistrationFlag", true);
             editor.putString("Name",name_service);
             Log.e("Name",name_service);
@@ -283,6 +287,19 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
             Log.e("IMEI",imei_server);
             // Commit the edits!
             editor.commit();
+            Map<String, String> PrefData = null;
+        /*    try {
+                PrefData = new HashMap<>();
+                PrefData.put("RegistrationFlag", Boolean.toString(true));
+                PrefData.put("Name", name_service);
+                PrefData.put("phonenumber", phoneNumber_service);
+                PrefData.put("IMEI", imei_server);
+                Prefrences.putStringsInPreferences(Login.this,PrefData);
+            }catch(Exception e){
+
+            }finally{
+
+            }*/
             Intent i = new Intent(Login.this,MainActivity_Navigation_Drawer.class);
             startActivity(i);
             Login.this.finish();
