@@ -291,5 +291,107 @@ public class HttpManager {
 
     }
 
+    public String PostData_vacationTravel(String... params){
+        URL url_ = null;
+        HttpURLConnection conn_ = null;
+        StringBuilder sb = null;
+        JSONStringer userJson = null;
+
+        String URL = null;
+        String stringLatitude = null;
+        String stringLongitude = null;
+        String fromDate = null;
+        String to_Date = null;
+        String aadhaarNo = null;
+        String mobileNumber = null;
+        String policeStation = null;
+        String contactName = null;
+        String EmergencyMobileNumber = null;
+        String EmergencyMobileNumbertwo = null;
+        String Address = null;
+
+        try {
+
+            URL = params[1];
+            stringLatitude = params[2];
+            stringLongitude = params[3];
+            fromDate = params[4];
+            to_Date = params[5];
+            aadhaarNo = params[6];
+            mobileNumber = params[7];
+            policeStation = params[8];
+            contactName = params[9];
+            EmergencyMobileNumber = params[10];
+            EmergencyMobileNumbertwo = params[11];
+            Address = params[12];
+
+
+            url_ =new URL(URL);
+            conn_ = (HttpURLConnection)url_.openConnection();
+            conn_.setDoOutput(true);
+            conn_.setRequestMethod("POST");
+            conn_.setUseCaches(false);
+            conn_.setConnectTimeout(10000);
+            conn_.setReadTimeout(10000);
+            conn_.setRequestProperty("Content-Type", "application/json");
+            conn_.connect();
+
+            userJson = new JSONStringer()
+                    .object().key("objVacation")
+                    .object()
+                    .key("HouseLong").value(stringLatitude)
+                    .key("HouseLat").value(stringLongitude)
+                    .key("StartDate").value(fromDate)
+                    .key("LocalPolicStation").value(policeStation)
+                    .key("IMEI").value("")
+                    .key("Contact1 ").value(EmergencyMobileNumber)
+                    .key("Contact2 ").value(EmergencyMobileNumbertwo)
+                    .key("Address").value(Address)
+                    .key("Phone").value(mobileNumber)
+                    .key("Enddate ").value(to_Date)
+                    .endObject()
+                    .endObject();
+
+            System.out.println(userJson.toString());
+            Log.e("Object",userJson.toString());
+            OutputStreamWriter out = new OutputStreamWriter(conn_.getOutputStream());
+            out.write(userJson.toString());
+            out.close();
+
+            try{
+                int HttpResult =conn_.getResponseCode();
+                if(HttpResult !=HttpURLConnection.HTTP_OK){
+                    return "Timeout.";
+
+                }else{
+                    BufferedReader br = new BufferedReader(new InputStreamReader(conn_.getInputStream(),"utf-8"));
+                    String line = null;
+                    sb = new StringBuilder();
+                    while ((line = br.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                    br.close();
+                    System.out.println(sb.toString());
+                }
+
+            } catch(Exception e){
+                return "Error";
+            }
+
+        }
+        catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } finally{
+            if(conn_!=null)
+                conn_.disconnect();
+        }
+        return sb.toString();
+
+    }
+
 
 }

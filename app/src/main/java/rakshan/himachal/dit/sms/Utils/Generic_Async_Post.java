@@ -43,6 +43,9 @@ public class Generic_Async_Post extends AsyncTask<String,Void ,String> {
             if(params[0].equalsIgnoreCase("getSOSRequest_JSON")){
                 Data_From_Server = http_manager.PostData_SOS(params);
                 return Data_From_Server;
+            }else if(params[0].equalsIgnoreCase("getVacationTravel_JSON")){
+                Data_From_Server = http_manager.PostData_vacationTravel(params);
+                return Data_From_Server;
             }
 
             else{

@@ -10,18 +10,18 @@
         android:id="@+id/ll1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center|center_horizontal|center_vertical"
         android:layout_weight="3.0"
         android:background="#282a35"
-        android:orientation="vertical" >
+        android:gravity="center|center_horizontal|center_vertical"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#282a35"
             android:gravity="center|center_horizontal|center_vertical"
             android:text="House Details"
             android:textColor="#FFEB3B"
-            android:background="#282a35"
             android:textSize="20sp"
             android:textStyle="bold"
 
@@ -29,8 +29,6 @@
 
 
     </LinearLayout>
-
-
 
 
     <!-- Body -->
@@ -58,58 +56,57 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10px"
+                    android:background="#282a35"
                     android:gravity="center|center_horizontal|center_vertical"
+                    android:padding="5dp"
                     android:text="Please Enter the Start and End Date of the Vacation"
                     android:textColor="#FFEB3B"
-                    android:background="#282a35"
                     android:textSize="18sp"
-                    android:padding="5dp"
-                    android:textStyle="bold"/>
-
+                    android:textStyle="bold" />
 
 
                 <!-- From Date -->
                 <LinearLayout
+                    android:id="@+id/fd"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:elevation="8dp"
-                    android:padding="5dp"
-                    android:id="@+id/fd"
-                    android:background="#ffffff"
                     android:layout_below="@+id/applicant_details"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="5dp"
-                    android:orientation="vertical">
+                    android:background="#ffffff"
+                    android:elevation="8dp"
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
 
                     <!-- From Date -->
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:weightSum="2"
-                        android:layout_height="wrap_content">
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
 
                         <TextView
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textStyle="bold"
-                            android:textColor="#366988"
+                            android:padding="5dp"
                             android:text="Start Date:"
-                            android:padding="5dp"/>
+                            android:textColor="#366988"
+                            android:textStyle="bold" />
 
 
                         <TextView
                             android:id="@+id/fromdate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:background="@drawable/rounded_edittext"
                             android:hint=" Start date"
                             android:inputType="number"
-                            android:layout_weight="1"
                             android:textColor="#FF545454"
                             android:textColorHint="#FF545454"
                             android:textSize="18dip" />
@@ -122,31 +119,31 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:elevation="8dp"
-                    android:padding="5dp"
-                    android:background="#ffffff"
                     android:layout_below="@+id/applicant_details"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="5dp"
-                    android:orientation="vertical">
+                    android:background="#ffffff"
+                    android:elevation="8dp"
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:weightSum="2"
-                        android:layout_height="wrap_content">
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
                         <TextView
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textStyle="bold"
-                            android:textColor="#366988"
+                            android:padding="5dp"
                             android:text="End Date:"
-                            android:padding="5dp"/>
+                            android:textColor="#366988"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/todate"
@@ -165,204 +162,206 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10px"
+                    android:background="#282a35"
                     android:gravity="center|center_horizontal|center_vertical"
+                    android:padding="5dp"
                     android:text="Location Details"
                     android:textColor="#FFEB3B"
-                    android:background="#282a35"
                     android:textSize="18sp"
-                    android:padding="5dp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <!-- Latitude -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:weightSum="2"
-                    android:layout_height="wrap_content">
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textStyle="bold"
-                        android:textColor="#366988"
+                        android:padding="5dp"
                         android:text="Latitude:"
-                        android:padding="5dp"/>
+                        android:textColor="#366988"
+                        android:textStyle="bold" />
+
                     <TextView
                         android:id="@+id/latitude"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:clickable="true"
-                        android:textColor="#000000"
-                        android:padding="5dp"/>
+                        android:padding="5dp"
+                        android:textColor="#000000" />
                 </LinearLayout>
 
                 <!-- Longitude -->
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:weightSum="2"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:layout_height="wrap_content">
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textColor="#366988"
-                        android:textStyle="bold"
+                        android:padding="5dp"
                         android:text="Longitude:"
-                        android:padding="5dp"/>
+                        android:textColor="#366988"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/longitude"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="#000000"
                         android:layout_weight="1"
-                        android:padding="5dp" />
+                        android:padding="5dp"
+                        android:textColor="#000000" />
                 </LinearLayout>
 
                 <!-- Aadhaar Number -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:weightSum="2"
-                    android:layout_height="wrap_content">
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textStyle="bold"
-                        android:textColor="#366988"
+                        android:padding="5dp"
                         android:text="Aadhaar number:"
-                        android:padding="5dp"/>
+                        android:textColor="#366988"
+                        android:textStyle="bold" />
+
                     <EditText
                         android:id="@+id/aadhaarno"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:inputType="number"
-                        android:maxLength="12"
                         android:background="@drawable/rounded_edittext"
                         android:clickable="true"
-                        android:textColor="#000000"
-                        android:padding="5dp"/>
+                        android:inputType="number"
+                        android:maxLength="12"
+                        android:padding="5dp"
+                        android:textColor="#000000" />
                 </LinearLayout>
 
                 <!-- Mobile Number -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:weightSum="2"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:layout_height="wrap_content">
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textColor="#366988"
-                        android:textStyle="bold"
+                        android:padding="5dp"
                         android:text="Mobile Number:"
-                        android:padding="5dp"/>
+                        android:textColor="#366988"
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/mobilenumber"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:background="@drawable/rounded_edittext"
-                        android:textColor="#000000"
                         android:inputType="number"
                         android:maxLength="10"
-                        android:layout_weight="1"
-                        android:padding="5dp" />
+                        android:padding="5dp"
+                        android:textColor="#000000" />
                 </LinearLayout>
 
                 <!-- Local Police Station -->
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:weightSum="2"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:layout_height="wrap_content">
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textColor="#366988"
-                        android:textStyle="bold"
+                        android:padding="5dp"
                         android:text="Local Police Station Address:"
-                        android:padding="5dp"/>
+                        android:textColor="#366988"
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/policestation"
                         android:layout_width="fill_parent"
                         android:layout_height="80dp"
-                        android:background="@drawable/rounded_edittext"
-                        android:textColor="#000000"
                         android:layout_weight="1"
-                        android:padding="5dp" />
+                        android:background="@drawable/rounded_edittext"
+                        android:padding="5dp"
+                        android:textColor="#000000" />
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="#282a35"
                     android:gravity="center|center_horizontal|center_vertical"
+                    android:padding="5dp"
                     android:text="Emergency Contact Details"
                     android:textColor="#FFEB3B"
-                    android:background="#282a35"
                     android:textSize="18sp"
-                    android:padding="5dp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
                 <!--Emergency Contact  Name -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:weightSum="2"
-                    android:elevation="6dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:layout_height="wrap_content">
+                    android:layout_marginTop="10dp"
+                    android:elevation="6dp"
+                    android:orientation="vertical"
+                    android:weightSum="2">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:weightSum="2"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
                         <TextView
-                            android:text="Name"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textStyle="bold"
+                            android:padding="5dp"
+                            android:text="Name"
                             android:textColor="#366988"
-                            android:padding="5dp"/>
+                            android:textStyle="bold" />
 
                         <EditText
                             android:id="@+id/contactname"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:inputType="textCapWords"
                             android:background="@drawable/rounded_edittext"
-                            android:textColor="#000000"
                             android:clickable="true"
-                            android:padding="5dp"/>
+                            android:inputType="textCapWords"
+                            android:padding="5dp"
+                            android:textColor="#000000" />
 
                     </LinearLayout>
 
@@ -371,102 +370,94 @@
                 <!--Emergency Contact Mobile Number -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:weightSum="2"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:layout_height="wrap_content">
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textColor="#366988"
-                        android:textStyle="bold"
+                        android:padding="5dp"
                         android:text="Mobile Number:"
-                        android:padding="5dp"/>
+                        android:textColor="#366988"
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/emergencymobilenumber"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:background="@drawable/rounded_edittext"
-                        android:textColor="#000000"
                         android:inputType="number"
                         android:maxLength="10"
-                        android:layout_weight="1"
-                        android:padding="5dp" />
+                        android:padding="5dp"
+                        android:textColor="#000000" />
                 </LinearLayout>
 
                 <!--Emergency Contact Mobile Number Two -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:weightSum="2"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:layout_height="wrap_content">
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textColor="#366988"
-                        android:textStyle="bold"
+                        android:padding="5dp"
                         android:text="Other Contact Number:"
-                        android:padding="5dp"/>
+                        android:textColor="#366988"
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/emergencymobilenumbertwo"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:background="@drawable/rounded_edittext"
-                        android:textColor="#000000"
                         android:inputType="number"
                         android:maxLength="10"
-                        android:layout_weight="1"
-                        android:padding="5dp" />
+                        android:padding="5dp"
+                        android:textColor="#000000" />
                 </LinearLayout>
 
                 <!--Emergency Contact Address -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:weightSum="2"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:layout_height="wrap_content">
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textColor="#366988"
-                        android:textStyle="bold"
+                        android:padding="5dp"
                         android:text="Contact Address:"
-                        android:padding="5dp"/>
+                        android:textColor="#366988"
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/address"
                         android:layout_width="fill_parent"
                         android:layout_height="80dp"
-                        android:background="@drawable/rounded_edittext"
-                        android:textColor="#000000"
-                        android:inputType="textMultiLine"
                         android:layout_weight="1"
-                        android:padding="5dp" />
+                        android:background="@drawable/rounded_edittext"
+                        android:inputType="textMultiLine"
+                        android:padding="5dp"
+                        android:textColor="#000000" />
                 </LinearLayout>
             </LinearLayout>
 
         </ScrollView>
-
-
-
-
-
-
-
-
 
 
     </LinearLayout>
@@ -478,54 +469,44 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="3.0"
-        android:gravity="bottom|center_horizontal|center_vertical"
         android:background="#F2F2F2"
+        android:gravity="bottom|center_horizontal|center_vertical"
         android:orientation="vertical">
-
-
-
-
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
             android:gravity="bottom"
+            android:orientation="horizontal"
             android:weightSum="2">
-
-
-
 
 
             <Button
                 android:id="@+id/back"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#282a35"
                 android:layout_margin="5dp"
-                android:text="Back"
                 android:layout_weight="1"
+                android:background="#282a35"
+                android:text="Back"
                 android:textColor="#FFEB3B"
-                android:textSize="16sp"/>
-
+                android:textSize="16sp" />
 
 
             <Button
-                android:id="@+id/getreport"
+                android:id="@+id/inform"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#282a35"
                 android:layout_margin="5dp"
-                android:text="Inform"
                 android:layout_weight="1"
+                android:background="#282a35"
+                android:text="Inform"
                 android:textColor="#FFEB3B"
-                android:textSize="16sp"/>
-
+                android:textSize="16sp" />
 
 
         </LinearLayout>
-
 
 
     </LinearLayout>

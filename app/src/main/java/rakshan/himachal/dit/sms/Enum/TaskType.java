@@ -9,6 +9,7 @@ public enum TaskType {
     SOS(1),
     REGISTRATION(2),
     LOGIN(3),
-    VERIFY_OTP(4);
+    VERIFY_OTP(4),
+    VACATIONTRAVELDETAILS(5);
     int value; private TaskType(int value) { this.value = value; }
 }
