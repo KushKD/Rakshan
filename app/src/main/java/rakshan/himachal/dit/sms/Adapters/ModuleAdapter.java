@@ -85,13 +85,10 @@ public class ModuleAdapter extends BaseAdapter {
                     }catch (Exception e){
                         Toast.makeText(context, "Please Restart the application", Toast.LENGTH_LONG).show();
                     }
-                }else if (result[position].toString().equalsIgnoreCase("Complaint")){
-                    try {
-                        Intent intent = new Intent(context, VacationTraveller.class);
-                        context.startActivity(intent);
-                    }catch (Exception e){
-                        Toast.makeText(context, "Please Restart the application", Toast.LENGTH_LONG).show();
-                    }
+                }else if (result[position].toString().equalsIgnoreCase("COMPLAINT")){
+                    Toast.makeText(context, "You Clicked "+result[position], Toast.LENGTH_LONG).show();
+                   /* Intent intent = new Intent(context,Registration.class);
+                    context.startActivity(intent);*/
                 }else{
                     Toast.makeText(context, "Something went wrong.", Toast.LENGTH_LONG).show();
                 }
