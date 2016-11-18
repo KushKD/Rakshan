@@ -1,9 +1,7 @@
 package rakshan.himachal.dit.sms.Activity;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -13,7 +11,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
@@ -26,10 +23,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
@@ -40,7 +33,6 @@ import rakshan.himachal.dit.sms.Helper.VerhoeffAlgorithm;
 import rakshan.himachal.dit.sms.Interfaces.AsyncTaskListener;
 import rakshan.himachal.dit.sms.JsonManager.JsonParser;
 import rakshan.himachal.dit.sms.Model.Register_User;
-import rakshan.himachal.dit.sms.Model.UserDetails;
 import rakshan.himachal.dit.sms.Presentation.CircleImageView;
 import rakshan.himachal.dit.sms.Presentation.Custom_Dialog;
 import rakshan.himachal.dit.sms.R;
@@ -154,9 +146,7 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
                 String Name_Service = etname_et.getText().toString().trim();
                 String Aadhaar_Service = aadhaar_et.getText().toString().trim();
                 String Email_Service = email_et.getText().toString().trim();
-                //Save Data
-                TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-                String IMEI_SERVER =  telephonyManager.getDeviceId().toString().trim();
+                String IMEI_SERVER = AppStatus.GetIMEI(Registration.this);
                 // get selected radio button from radioGroup
                 int selectedId = radioSexGroup.getCheckedRadioButtonId();
                 radioSexButton = (RadioButton) findViewById(selectedId);

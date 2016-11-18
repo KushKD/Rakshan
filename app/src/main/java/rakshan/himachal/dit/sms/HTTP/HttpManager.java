@@ -309,7 +309,7 @@ public class HttpManager {
         String EmergencyMobileNumber = null;
         String EmergencyMobileNumbertwo = null;
         String Address = null;
-
+        String IMEI_ = null;
         try {
 
             URL = params[1];
@@ -324,8 +324,10 @@ public class HttpManager {
             EmergencyMobileNumber = params[10];
             EmergencyMobileNumbertwo = params[11];
             Address = params[12];
+            IMEI_ = params[13];
+            Log.e("We are Here 33 ",IMEI_);
 
-
+            Log.e("We are Here ","34");
             url_ =new URL(URL);
             conn_ = (HttpURLConnection)url_.openConnection();
             conn_.setDoOutput(true);
@@ -339,16 +341,16 @@ public class HttpManager {
             userJson = new JSONStringer()
                     .object().key("objVacation")
                     .object()
-                    .key("HouseLong").value(stringLatitude)
-                    .key("HouseLat").value(stringLongitude)
+                    .key("HouseLong").value(stringLongitude)
+                    .key("HouseLat").value(stringLatitude)
                     .key("StartDate").value(fromDate)
                     .key("LocalPolicStation").value(policeStation)
-                    .key("IMEI").value("")
+                    .key("IMEI").value(IMEI_)
                     .key("Contact1 ").value(EmergencyMobileNumber)
                     .key("Contact2 ").value(EmergencyMobileNumbertwo)
                     .key("Address").value(Address)
                     .key("Phone").value(mobileNumber)
-                    .key("Enddate ").value(to_Date)
+                    .key("Enddate").value(to_Date)
                     .endObject()
                     .endObject();
 

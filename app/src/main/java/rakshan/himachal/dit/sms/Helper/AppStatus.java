@@ -7,6 +7,7 @@ package rakshan.himachal.dit.sms.Helper;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 
@@ -38,5 +39,17 @@ public class AppStatus {
             Log.v("connectivity", e.toString());
         }
         return connected;
+    }
+
+
+    /**
+     * GET IMEI
+     * @param context
+     * @return
+     */
+    public static String GetIMEI(Context context){
+        TelephonyManager telephonyManager = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+        String IMEI_SERVER =  telephonyManager.getDeviceId().toString().trim();
+        return IMEI_SERVER;
     }
 }

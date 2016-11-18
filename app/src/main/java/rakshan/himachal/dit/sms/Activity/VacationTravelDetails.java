@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -24,6 +23,7 @@ import rakshan.himachal.dit.sms.Presentation.Custom_Dialog;
 import rakshan.himachal.dit.sms.R;
 import rakshan.himachal.dit.sms.Utils.EConstants;
 import rakshan.himachal.dit.sms.Utils.Generic_Async_Post;
+import rakshan.himachal.dit.sms.Utils.Generic_Async_Post_Activity;
 
 public class VacationTravelDetails extends AppCompatActivity implements AsyncTaskListener {
 
@@ -134,6 +134,7 @@ public class VacationTravelDetails extends AppCompatActivity implements AsyncTas
                 try {
                     getData();
 
+
                 } catch (Exception ex) {
                     CD.showDialog(VacationTravelDetails.this, ex.getLocalizedMessage().toString().trim());
                 }
@@ -143,7 +144,6 @@ public class VacationTravelDetails extends AppCompatActivity implements AsyncTas
     }
 
     private void getData() {
-
         VTDP = new vacationTravelDetailsPojo();
         try {
             VTDP.setHouseLongitude(longitude_tv.getText().toString().trim());
@@ -157,14 +157,14 @@ public class VacationTravelDetails extends AppCompatActivity implements AsyncTas
             VTDP.setEmergencyMobileNumber(et_emergencymobilenumber.getText().toString().trim());
             VTDP.setEmergencyMobileNumberTwo(et_emergencymobilenumbertwo.getText().toString().trim());
             VTDP.setAddress(et_address.getText().toString().trim());
+            VTDP.setIMEI(AppStatus.GetIMEI(VacationTravelDetails.this));
 
             if (VTDP.getHouseLatitude().length() != 0 && VTDP.getHouseLongitude().length() != 0) {
                 if (VTDP.getFromDate().length() != 0 && VTDP.getToDate().length() != 0) {
-
                     if (AppStatus.getInstance(VacationTravelDetails.this).isOnline()) {
                         //Send Data To Server
                         try {
-                            new Generic_Async_Post(VacationTravelDetails.this, VacationTravelDetails.this, TaskType.VACATIONTRAVELDETAILS)
+                            new Generic_Async_Post_Activity(VacationTravelDetails.this, VacationTravelDetails.this, TaskType.VACATIONTRAVELDETAILS)
                                     .execute("getVacationTravel_JSON",
                                             EConstants.URL + "getVacationTravel_JSON",
                                             VTDP.getHouseLatitude(),
@@ -177,7 +177,8 @@ public class VacationTravelDetails extends AppCompatActivity implements AsyncTas
                                             VTDP.getContactName(),
                                             VTDP.getEmergencyMobileNumber(),
                                             VTDP.getEmergencyMobileNumberTwo(),
-                                            VTDP.getAddress());
+                                            VTDP.getAddress(),
+                                            VTDP.getIMEI());
 
                         } catch (Exception e) {
                             CD.showDialog(VacationTravelDetails.this, e.getLocalizedMessage().toString().trim());
@@ -215,7 +216,7 @@ public class VacationTravelDetails extends AppCompatActivity implements AsyncTas
         et_emergencymobilenumbertwo = (EditText) findViewById(R.id.emergencymobilenumbertwo);
         et_address = (EditText) findViewById(R.id.address);
         bt_back = (Button) findViewById(R.id.back);
-        bt_inform = (Button) findViewById(R.id.inform);
+        bt_inform = (Button) findViewById(R.id.it);
     }
 
     private void setDateTimeField() {
