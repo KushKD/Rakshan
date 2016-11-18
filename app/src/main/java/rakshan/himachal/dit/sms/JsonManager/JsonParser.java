@@ -81,6 +81,24 @@ public class JsonParser {
         }
     }
 
+    public static String VacationTravel_Parse(String s) {
+
+        String g_Table = null;
+        try {
+            Object json = new JSONTokener(s).nextValue();
+            if (json instanceof JSONObject) {
+                JSONObject obj = new JSONObject(s);
+                g_Table = obj.optString("getVacationTravel_JSONResult");
+                return g_Table;
+            } else {
+                return null;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public String ParseStringOTP(String s) {
 
         String g_Table = null;

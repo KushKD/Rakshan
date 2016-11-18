@@ -18,6 +18,7 @@ import java.util.Locale;
 import rakshan.himachal.dit.sms.Enum.TaskType;
 import rakshan.himachal.dit.sms.Helper.AppStatus;
 import rakshan.himachal.dit.sms.Interfaces.AsyncTaskListener;
+import rakshan.himachal.dit.sms.JsonManager.JsonParser;
 import rakshan.himachal.dit.sms.Model.vacationTravelDetailsPojo;
 import rakshan.himachal.dit.sms.Presentation.Custom_Dialog;
 import rakshan.himachal.dit.sms.R;
@@ -92,8 +93,6 @@ public class VacationTravelDetails extends AppCompatActivity implements AsyncTas
 
 
         tv_todate.setText(todateFormat.format(new Date()));
-
-
         tv_fromdate = (TextView) findViewById(R.id.fromdate);
         tv_fromdate.setText(fromdateFormat.format(new Date()));
 
@@ -246,6 +245,17 @@ public class VacationTravelDetails extends AppCompatActivity implements AsyncTas
 
     @Override
     public void onTaskCompleted(String result, TaskType taskType) {
+
+        if(taskType == TaskType.VACATIONTRAVELDETAILS){
+           // CD.showDialog(VacationTravelDetails.this,result);
+
+            String Result_to_Show = null;
+            Result_to_Show = JsonParser.VacationTravel_Parse(result);
+            CD.showDialog(VacationTravelDetails.this, Result_to_Show);
+           // VacationTravelDetails.this.finish();
+        }else{
+            CD.showDialog(VacationTravelDetails.this, "Something went wrong.Please try again.");
+        }
 
     }
 }
