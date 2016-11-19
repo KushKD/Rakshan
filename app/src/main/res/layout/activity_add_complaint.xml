@@ -4,14 +4,13 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:clickable="true"
     android:background="#FFFFFF"
+    android:clickable="true"
     android:gravity="center"
     android:orientation="vertical">
 
 
     <!-- http://www.viralandroid.com/2016/01/adding-badge-notification-count-to-android-actionbar-icon.html -->
-
 
 
     <!-- Five Buttons -->
@@ -164,7 +163,6 @@
             android:textSize="12sp"
             android:textStyle="bold" />
     </RelativeLayout>
-
 
 
 </RelativeLayout>
