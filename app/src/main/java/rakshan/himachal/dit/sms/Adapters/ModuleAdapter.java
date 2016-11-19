@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import rakshan.himachal.dit.sms.Activity.AddComplaint;
 import rakshan.himachal.dit.sms.Activity.MainActivity_Navigation_Drawer;
 import rakshan.himachal.dit.sms.Activity.Permissions;
 import rakshan.himachal.dit.sms.Activity.Registration;
@@ -86,9 +87,9 @@ public class ModuleAdapter extends BaseAdapter {
                         Toast.makeText(context, "Please Restart the application", Toast.LENGTH_LONG).show();
                     }
                 }else if (result[position].toString().equalsIgnoreCase("COMPLAINT")){
-                    Toast.makeText(context, "You Clicked "+result[position], Toast.LENGTH_LONG).show();
-                   /* Intent intent = new Intent(context,Registration.class);
-                    context.startActivity(intent);*/
+                   // Toast.makeText(context, "You Clicked "+result[position], Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(context,AddComplaint.class);
+                    context.startActivity(intent);
                 }else{
                     Toast.makeText(context, "Something went wrong.", Toast.LENGTH_LONG).show();
                 }

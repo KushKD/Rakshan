@@ -64,7 +64,8 @@
             android:label="@string/title_activity_vacation_traveller" />
         <activity android:name=".Activity.VacationTravelDetails" />
         <activity android:name=".Activity.ComplaintDetails_Accused" />
-        <activity android:name=".Activity.ComplaintDetails_Incident"></activity>
+        <activity android:name=".Activity.ComplaintDetails_Incident" />
+        <activity android:name=".Activity.AddComplaint"></activity>
     </application>
 
 </manifest>
