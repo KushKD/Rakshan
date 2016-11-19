@@ -39,6 +39,7 @@ public class MainActivity_Navigation_Drawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Toolbar toolbar;
+    ActionBarDrawerToggle toggle;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private int[] tabIcons = {
@@ -46,6 +47,7 @@ public class MainActivity_Navigation_Drawer extends AppCompatActivity
             R.drawable.ic_tab_call,
             R.drawable.ic_tab_contacts
     };
+
 
     private AlarmManager alarmManager;
     private PendingIntent notifyIntent;
@@ -81,9 +83,34 @@ public class MainActivity_Navigation_Drawer extends AppCompatActivity
         });
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close ){
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                supportInvalidateOptionsMenu();
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
+
+        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("We are","Here");
+               /* if(!toggle.isDrawerIndicatorEnabled()) {
+                    (MainActivity_Navigation_Drawer.onBackPressed();
+                }*/
+            }
+        });
+
+        toggle.setDrawerIndicatorEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -195,8 +222,15 @@ public class MainActivity_Navigation_Drawer extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         }else if(item.getItemId() == android.R.id.home){  //  use android.R.id
-            drawer.openDrawer(Gravity.LEFT);
+           // drawer.openDrawer(Gravity.LEFT);
+            if(drawer.isDrawerOpen(Gravity.LEFT)) {
+                drawer.closeDrawer(Gravity.LEFT);
+            }else{
+                drawer.openDrawer(Gravity.LEFT);
+            }
+
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

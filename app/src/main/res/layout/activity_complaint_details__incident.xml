@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="6"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3.0"
+        android:background="#282a35"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#282a35"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:text="Incident Details"
+            android:textColor="#FFEB3B"
+            android:textSize="20sp"
+            android:textStyle="bold"
+
+            />
+
+        />
+
+
+    </LinearLayout>
+
+
+    <!-- Body -->
+    <LinearLayout
+        android:id="@+id/ll2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#FFFFFF"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:id="@+id/mainScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <!-- Incident From date and Time -->
+                <LinearLayout
+                    android:id="@+id/fromdateandtime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|center_horizontal|center_vertical"
+                    android:orientation="vertical">
+                    <!-- Incident From date and Time -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10px"
+                        android:background="#282a35"
+                        android:gravity="center|center_horizontal|center_vertical"
+                        android:padding="5dp"
+                        android:text="Incident from Date and Time"
+                        android:textColor="#FFEB3B"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
+                        android:gravity="center|center_vertical|center_horizontal"
+                        android:orientation="horizontal"
+                        android:padding="5dip">
+
+                        <!-- ListRow Left  Thumbnail image -->
+
+                        <LinearLayout
+                            android:id="@+id/thumbnail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginRight="3dip"
+                            android:padding="3dip">
+
+
+                            <ImageView
+                                android:id="@+id/list_image"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_gravity="top"
+                                android:contentDescription="@string/app_name" />
+
+                        </LinearLayout>
+
+                        <!-- Rightend Arrow -->
+                        <ImageButton
+                            android:id="@+id/imageView1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:contentDescription="@string/app_name"
+                            android:visibility="gone" />
+
+
+                        <TextView
+                            android:id="@+id/fromdate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="50dip"
+                            android:layout_marginRight="5dip"
+                            android:layout_toLeftOf="@+id/imageView1"
+                            android:background="@drawable/rounded_edittext"
+                            android:hint="  From date"
+                            android:inputType="number"
+                            android:textColor="#282a35"
+                            android:textColorHint="#282a35"
+                            android:textSize="18dip" />
+
+                    </RelativeLayout>
+
+                    <!-- From Time -->
+                    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
+                        android:gravity="center|center_vertical|center_horizontal"
+                        android:orientation="horizontal"
+                        android:padding="5dip">
+
+                        <!-- ListRow Left sied Thumbnail image -->
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginRight="3dip"
+                            android:padding="3dip">
+
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_gravity="top"
+                                android:contentDescription="@string/app_name" />
+
+                        </LinearLayout>
+
+                        <!-- Rightend Arrow -->
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:contentDescription="@string/app_name"
+                            android:visibility="gone" />
+
+
+                        <TextView
+                            android:id="@+id/fromtime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="50dip"
+                            android:layout_marginRight="5dip"
+                            android:background="@drawable/rounded_edittext"
+                            android:hint="From time"
+                            android:textColor="#FF545454"
+                            android:textColorHint="#FF545454"
+                            android:textSize="18sp" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+
+                <!-- Incident To date and Time -->
+                <LinearLayout
+                    android:id="@+id/todateandtime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|center_horizontal|center_vertical"
+                    android:orientation="vertical">
+                    <!-- Personal Details -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10px"
+                        android:background="#282a35"
+                        android:gravity="center|center_horizontal|center_vertical"
+                        android:padding="5dp"
+                        android:text="Incident To Date and Time"
+                        android:textColor="#FFEB3B"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <!-- To Date -->
+                    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
+                        android:gravity="center|center_vertical|center_horizontal"
+                        android:orientation="horizontal"
+                        android:padding="5dip">
+
+                        <!-- ListRow Left sied Thumbnail image -->
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginRight="3dip"
+                            android:padding="3dip">
+
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_gravity="top"
+                                android:contentDescription="@string/app_name" />
+
+                        </LinearLayout>
+
+                        <!-- Rightend Arrow -->
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:contentDescription="@string/app_name"
+                            android:visibility="gone" />
+
+
+                        <TextView
+                            android:id="@+id/todate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="50dip"
+                            android:layout_marginRight="5dip"
+                            android:background="@drawable/rounded_edittext"
+                            android:hint="To Date"
+                            android:textColor="#282a35"
+                            android:textColorHint="#282a35"
+                            android:textSize="18sp" />
+
+                    </RelativeLayout>
+
+
+                    <!-- To Date -->
+                    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
+                        android:gravity="center|center_vertical|center_horizontal"
+                        android:orientation="horizontal"
+                        android:padding="5dip">
+
+                        <!-- ListRow Left sied Thumbnail image -->
+
+                        <LinearLayout
+                            android:id="@+id/thumbnail2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginRight="3dip"
+                            android:padding="3dip">
+
+
+                            <ImageView
+                                android:id="@+id/list_image2"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_gravity="top"
+                                android:contentDescription="@string/app_name" />
+
+                        </LinearLayout>
+
+                        <!-- Rightend Arrow -->
+                        <ImageButton
+                            android:id="@+id/imageView12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:contentDescription="@string/app_name"
+                            android:visibility="gone" />
+
+
+                        <TextView
+                            android:id="@+id/totime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="50dip"
+                            android:layout_marginRight="5dip"
+                            android:layout_toLeftOf="@+id/imageView12"
+                            android:background="@drawable/rounded_edittext"
+                            android:hint="To Time"
+                            android:textColor="#282a35"
+                            android:textColorHint="#282a35"
+                            android:textSize="18sp" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <!-- Place and Type of Incident -->
+            <LinearLayout
+                android:id="@+id/placeandtypeincident"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:orientation="vertical">
+                <!-- Incident From date and Time -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10px"
+                    android:background="#282a35"
+                    android:gravity="center|center_horizontal|center_vertical"
+                    android:padding="5dp"
+                    android:text="Place and Type of Incident"
+                    android:textColor="#FFEB3B"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <!--  Place -->
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/placeandtime_one"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="#ffffff"
+                    android:elevation="8dp"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="5dp"
+                            android:text="Place of Incident:"
+                            android:textColor="#366988"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/place"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/rounded_edittext"
+                            android:hint="Place of Incident"
+                            android:textColor="#FF545454"
+                            android:textColorHint="#FF545454"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Type -->
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/placeandtime_two"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="#ffffff"
+                    android:elevation="8dp"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="5dp"
+                            android:text="Type of Incident:"
+                            android:textColor="#366988"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/type"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/rounded_edittext"
+                            android:hint="Type of Incident"
+                            android:textColor="#FF545454"
+                            android:textColorHint="#FF545454"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+
+
+    <!-- Buttons -->
+    <LinearLayout
+        android:id="@+id/ll3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3.0"
+        android:background="#F2F2F2"
+        android:gravity="bottom|center_horizontal|center_vertical"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+
+            <Button
+                android:id="@+id/back"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="#282a35"
+                android:text="Back"
+                android:textColor="#FFEB3B"
+                android:textSize="16sp" />
+
+
+            <Button
+                android:id="@+id/getreport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="#282a35"
+                android:text="Save"
+                android:textColor="#FFEB3B"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

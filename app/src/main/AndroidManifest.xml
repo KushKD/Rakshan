@@ -62,7 +62,9 @@
         <activity
             android:name=".Activity.VacationTraveller"
             android:label="@string/title_activity_vacation_traveller" />
-        <activity android:name=".Activity.VacationTravelDetails"></activity>
+        <activity android:name=".Activity.VacationTravelDetails" />
+        <activity android:name=".Activity.ComplaintDetails_Accused" />
+        <activity android:name=".Activity.ComplaintDetails_Incident"></activity>
     </application>
 
 </manifest>
