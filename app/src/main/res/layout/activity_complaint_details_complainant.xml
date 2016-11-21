@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:background="#282a35"
             android:gravity="center|center_horizontal|center_vertical"
-            android:text="Accused Details"
+            android:text="Complainant Details"
             android:textColor="#FFEB3B"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -256,6 +256,172 @@
                         </LinearLayout>
                     </LinearLayout>
 
+                    <!-- Relation Type -->
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/personal_details_w"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="#ffffff"
+                        android:elevation="8dp"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="5dp"
+                                android:text="Relation Type:"
+                                android:textColor="#366988"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/relationtype"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/rounded_edittext"
+                                android:textColor="#FF545454"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Relative Name -->
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/personal_details_f"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="#ffffff"
+                        android:elevation="8dp"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="5dp"
+                                android:text="Relative Name:"
+                                android:textColor="#366988"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/relativename"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/rounded_edittext"
+                                android:textColor="#FF545454"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Nature of Complaint -->
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/personal_details_x0"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="#ffffff"
+                        android:elevation="8dp"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="5dp"
+                                android:text="Nature Of Complaint:"
+                                android:textColor="#366988"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/natureofcomplaint"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/rounded_edittext"
+                                android:textColor="#FF545454"
+                                android:textColorHint="#FF545454"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Date Of Birth -->
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/personal_details_x"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="#ffffff"
+                        android:elevation="8dp"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="5dp"
+                                android:text="Date of Birth:"
+                                android:textColor="#366988"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/dateofbirth"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/rounded_edittext"
+                                android:textColor="#FF545454"
+                                android:textColorHint="#FF545454"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
                     <!-- Mobile Number -->
                     <LinearLayout
                         android:layout_width="fill_parent"
@@ -338,6 +504,47 @@
                                 android:hint="Landline Number"
                                 android:textColor="#FF545454"
                                 android:textColorHint="#FF545454"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Email ID -->
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/personal_details_six"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="#ffffff"
+                        android:elevation="8dp"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="5dp"
+                                android:text="Email ID:"
+                                android:textColor="#366988"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/email"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/rounded_edittext"
+                                android:textColor="#FF545454"
                                 android:textSize="18sp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -674,6 +881,170 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
+                <!-- Identification -->
+            <LinearLayout
+                android:id="@+id/idetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:orientation="vertical">
+                <!-- Identification Details -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10px"
+                    android:background="#282a35"
+                    android:gravity="center|center_horizontal|center_vertical"
+                    android:padding="5dp"
+                    android:text="Identification Details"
+                    android:textColor="#FFEB3B"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <!-- Nationality -->
+                <LinearLayout
+                    android:id="@+id/identification_zero"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/identification_zero"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="#ffffff"
+                    android:elevation="8dp"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="5dp"
+                            android:text="Nationality:"
+                            android:textColor="#366988"
+                            android:textStyle="bold" />
+
+
+                        <EditText
+                            android:id="@+id/nationality"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/rounded_edittext"
+                            android:inputType="number"
+                            android:textColor="#FF545454"
+                            android:textColorHint="#FF545454"
+                            android:textSize="18dip" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Identification Type -->
+                <LinearLayout
+                    android:id="@+id/identification_two"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/identification_two"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="#ffffff"
+                    android:elevation="8dp"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="5dp"
+                            android:text="Identification Type:"
+                            android:textColor="#366988"
+                            android:textStyle="bold" />
+
+
+                        <EditText
+                            android:id="@+id/identificationtype"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/rounded_edittext"
+                            android:textColor="#FF545454"
+                            android:textColorHint="#FF545454"
+                            android:textSize="18dip" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Identification Number -->
+                <LinearLayout
+                    android:id="@+id/identification_three"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/identification_three"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="#ffffff"
+                    android:elevation="8dp"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="5dp"
+                            android:text="Identification Number:"
+                            android:textColor="#366988"
+                            android:textStyle="bold" />
+
+
+                        <EditText
+                            android:id="@+id/identificationnumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/rounded_edittext"
+                            android:textColor="#FF545454"
+                            android:textSize="18dip" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </ScrollView>

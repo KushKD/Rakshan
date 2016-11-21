@@ -7,7 +7,7 @@ import android.widget.Button;
 
 import rakshan.himachal.dit.sms.R;
 
-public class ComplaintDetails_Incident extends AppCompatActivity {
+public class ComplaintDetails_complainant extends AppCompatActivity {
 
     private Button back_bt,
             save_bt;
@@ -15,7 +15,7 @@ public class ComplaintDetails_Incident extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_complaint_details__incident);
+        setContentView(R.layout.activity_complaint_details_complainant);
 
         back_bt = (Button) findViewById(R.id.back);
         save_bt = (Button) findViewById(R.id.save);
@@ -27,7 +27,7 @@ public class ComplaintDetails_Incident extends AppCompatActivity {
         back_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ComplaintDetails_Incident.this.finish();
+                ComplaintDetails_complainant.this.finish();
             }
         });
 

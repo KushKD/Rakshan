@@ -65,7 +65,9 @@
         <activity android:name=".Activity.VacationTravelDetails" />
         <activity android:name=".Activity.ComplaintDetails_Accused" />
         <activity android:name=".Activity.ComplaintDetails_Incident" />
-        <activity android:name=".Activity.AddComplaint"></activity>
+        <activity android:name=".Activity.AddComplaint" />
+        <activity android:name=".Activity.ComplaintDetails_complainant" />
+        <activity android:name=".Activity.ComplaintDetails_Complaint"></activity>
     </application>
 
 </manifest>
