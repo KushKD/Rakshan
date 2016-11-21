@@ -97,7 +97,7 @@
                                         android:id="@+id/button1"
                                         android:layout_width="100dip"
                                         android:layout_height="100dip"
-                                        android:background="@mipmap/ic_launcher" />
+                                        android:background="@drawable/complainant" />
                                 </RelativeLayout>
 
                                 <TextView
@@ -149,7 +149,7 @@
                                         android:id="@+id/button2"
                                         android:layout_width="100dip"
                                         android:layout_height="100dip"
-                                        android:background="@mipmap/ic_launcher" />
+                                        android:background="@drawable/accused" />
                                 </RelativeLayout>
 
                                 <TextView
@@ -238,7 +238,7 @@
                                             android:id="@+id/button3"
                                             android:layout_width="100dip"
                                             android:layout_height="100dip"
-                                            android:background="@mipmap/ic_launcher" />
+                                            android:background="@drawable/incident" />
                                     </RelativeLayout>
 
                                     <TextView
@@ -288,7 +288,7 @@
                                             android:id="@+id/button4"
                                             android:layout_width="100dip"
                                             android:layout_height="100dip"
-                                            android:background="@mipmap/ic_launcher" />
+                                            android:background="@drawable/complaintdetails" />
                                     </RelativeLayout>
 
                                     <TextView
