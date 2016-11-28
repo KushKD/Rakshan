@@ -54,7 +54,7 @@ public class SplashScreen extends AppCompatActivity {
                     }
                 } else{
                     // do something for phones running an SDK before lollipop
-                    boolean Flag_Registration = settings.getBoolean("RegistrationFlag",false);
+                   /* boolean Flag_Registration = settings.getBoolean("RegistrationFlag",false);
                     if(Flag_Registration)
                     {
                         Intent mainIntent = new Intent(SplashScreen.this, MainActivity_Navigation_Drawer.class);
@@ -64,7 +64,10 @@ public class SplashScreen extends AppCompatActivity {
                         Intent mainIntent = new Intent(SplashScreen.this, Login.class);
                         SplashScreen.this.startActivity(mainIntent);
                         SplashScreen.this.finish();
-                    }
+                    }*/
+                    Intent mainIntent = new Intent(SplashScreen.this, MainActivity_Navigation_Drawer.class);
+                    SplashScreen.this.startActivity(mainIntent);
+                    SplashScreen.this.finish();
                 }
 
 

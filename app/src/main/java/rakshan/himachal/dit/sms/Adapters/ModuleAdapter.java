@@ -14,6 +14,7 @@ import rakshan.himachal.dit.sms.Activity.AddComplaint;
 import rakshan.himachal.dit.sms.Activity.MainActivity_Navigation_Drawer;
 import rakshan.himachal.dit.sms.Activity.Permissions;
 import rakshan.himachal.dit.sms.Activity.Registration;
+import rakshan.himachal.dit.sms.Activity.TravelTrackingMaps;
 import rakshan.himachal.dit.sms.Activity.VacationTraveller;
 import rakshan.himachal.dit.sms.R;
 
@@ -31,8 +32,7 @@ public class ModuleAdapter extends BaseAdapter {
         result=prgmNameList;
         context=mainActivity;
         imageId=prgmImages;
-        inflater = (LayoutInflater)context.
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
 
@@ -86,9 +86,13 @@ public class ModuleAdapter extends BaseAdapter {
                     }catch (Exception e){
                         Toast.makeText(context, "Please Restart the application", Toast.LENGTH_LONG).show();
                     }
-                }else if (result[position].toString().equalsIgnoreCase("COMPLAINT")){
+                }else if (result[position].toString().equalsIgnoreCase("Complaint")){
                    // Toast.makeText(context, "You Clicked "+result[position], Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(context,AddComplaint.class);
+                    context.startActivity(intent);
+                }else if (result[position].toString().equalsIgnoreCase("Travel Tracking")){
+                    // Toast.makeText(context, "You Clicked "+result[position], Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(context,TravelTrackingMaps.class);
                     context.startActivity(intent);
                 }else{
                     Toast.makeText(context, "Something went wrong.", Toast.LENGTH_LONG).show();
