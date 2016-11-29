@@ -25,6 +25,7 @@
         <activity
             android:name=".Activity.SplashScreen"
             android:label="@string/title_activity_main__navigation__drawer"
+            android:screenOrientation="portrait"
             android:theme="@style/MyMaterialTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +34,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.Fragment_Manager" />
-        <activity android:name=".Activity.MainActivity_Navigation_Drawer" />
+        <activity
+            android:name=".Activity.MainActivity_Navigation_Drawer"
+            android:screenOrientation="portrait" />
 
         <service android:name=".Services.SendLocationService">
             <intent-filter>
@@ -47,7 +50,9 @@
         <activity
             android:name=".Activity.Permissions"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activity.Login" />
+        <activity
+            android:name=".Activity.Login"
+            android:screenOrientation="portrait" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -62,18 +67,32 @@
 
         <activity
             android:name=".Activity.VacationTraveller"
-            android:label="@string/title_activity_vacation_traveller" />
-        <activity android:name=".Activity.VacationTravelDetails" />
-        <activity android:name=".Activity.ComplaintDetails_Accused" />
-        <activity android:name=".Activity.ComplaintDetails_Incident" />
-        <activity android:name=".Activity.AddComplaint" />
-        <activity android:name=".Activity.ComplaintDetails_complainant" />
-        <activity android:name=".Activity.ComplaintDetails_Complaint" />
+            android:label="@string/title_activity_vacation_traveller"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.VacationTravelDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.ComplaintDetails_Accused"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.ComplaintDetails_Incident"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.AddComplaint"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.ComplaintDetails_complainant"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.ComplaintDetails_Complaint"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.TravelTrackingMaps"
-            android:process=":SecondMapProcess"
+            android:label="@string/title_activity_travel_tracking_maps"
             android:launchMode="singleInstance"
-            android:label="@string/title_activity_travel_tracking_maps"></activity>
+            android:process=":SecondMapProcess"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

@@ -26,7 +26,10 @@ public class SplashScreen extends AppCompatActivity {
 
                 int currentapiVersion = android.os.Build.VERSION.SDK_INT;
                 if (currentapiVersion >= android.os.Build.VERSION_CODES.LOLLIPOP){
-                    boolean Flag_Permissions = settings.getBoolean("PermissionsFlag",false);
+                    Intent login_Intent = new Intent(SplashScreen.this, Permissions.class); //Login_Activity
+                    SplashScreen.this.startActivity(login_Intent);
+                    SplashScreen.this.finish();
+                   /* boolean Flag_Permissions = settings.getBoolean("PermissionsFlag",false);
                     boolean Flag_Registration = settings.getBoolean("RegistrationFlag",false);  //Registration flag is the login one
 
                     if(Flag_Permissions)
@@ -51,7 +54,7 @@ public class SplashScreen extends AppCompatActivity {
                         SplashScreen.this.startActivity(login_Intent);
                         SplashScreen.this.finish();
 
-                    }
+                    }*/
                 } else{
                     // do something for phones running an SDK before lollipop
                    /* boolean Flag_Registration = settings.getBoolean("RegistrationFlag",false);

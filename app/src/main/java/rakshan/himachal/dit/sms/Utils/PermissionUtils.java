@@ -11,6 +11,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import rakshan.himachal.dit.sms.Activity.TravelTrackingMaps;
 import rakshan.himachal.dit.sms.Activity.VacationTraveller;
 import rakshan.himachal.dit.sms.R;
 
@@ -36,6 +37,24 @@ public abstract class PermissionUtils {
 
         }
     }
+
+
+    public static void requestPermission_Other(TravelTrackingMaps activity, int requestId,
+                                               String permission, boolean finishActivity) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
+            // Display a dialog with rationale.
+            PermissionUtils.RationaleDialog.newInstance(requestId, finishActivity)
+                    .show(activity.getSupportFragmentManager(), "dialog");
+        } else {
+            // Location permission has not been granted yet, request it.
+            ActivityCompat.requestPermissions(activity, new String[]{permission}, requestId);
+
+        }
+    }
+
+
+
+
 
     /**
      * Checks if the result contains a {@link PackageManager#PERMISSION_GRANTED} result for a
