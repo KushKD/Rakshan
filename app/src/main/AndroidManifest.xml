@@ -91,6 +91,7 @@
             android:name=".Activity.TravelTrackingMaps"
             android:label="@string/title_activity_travel_tracking_maps"
             android:launchMode="singleInstance"
+            android:theme="@style/MyMaterialTheme"
             android:process=":SecondMapProcess"
             android:screenOrientation="portrait"></activity>
     </application>
