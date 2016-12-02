@@ -53,8 +53,7 @@ public class UberTesting extends AppCompatActivity implements
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        com.google.android.gms.location.LocationListener,
-        GoogleMap.OnMarkerDragListener{
+        com.google.android.gms.location.LocationListener{
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
@@ -149,7 +148,7 @@ public class UberTesting extends AppCompatActivity implements
             try {
                 // The autocomplete activity requires Google Play Services to be available. The intent
                 // builder checks this and throws an exception if it is not the case.
-                Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
+                Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
                         .build(this);
                 startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
             } catch (GooglePlayServicesRepairableException e) {
@@ -363,7 +362,7 @@ public class UberTesting extends AppCompatActivity implements
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(latLong).zoom(19f).tilt(70).build();
 
-            mMap.setMyLocationEnabled(true);
+           // mMap.setMyLocationEnabled(true);
             mMap.getUiSettings().setMyLocationButtonEnabled(true);
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
@@ -379,21 +378,7 @@ public class UberTesting extends AppCompatActivity implements
 
     }
 
-    @Override
-    public void onMarkerDragStart(Marker marker) {
 
-    }
-
-    @Override
-    public void onMarkerDrag(Marker marker) {
-
-    }
-
-    @Override
-    public void onMarkerDragEnd(Marker marker) {
-        mResultReceiver = new AddressResultReceiver(new Handler());
-
-    }
 
     /**
      * Receiver for data sent from FetchAddressIntentService.
