@@ -55,11 +55,14 @@ public class TravelTrackingMaps extends FragmentActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleMap.OnInfoWindowClickListener,
         GoogleMap.OnInfoWindowLongClickListener,
-        MapsActivityInterface {
+        MapsActivityInterface,
+        GoogleMap.OnMarkerDragListener,
+        GoogleMap.OnMapClickListener{
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     GoogleApiClient mGoogleApiClient;
     LocationRequest mLocationRequest;
+    boolean markerClicked;
     private GoogleMap mMap;
     private Button btnFindPath;
     private EditText originAddressInput;
@@ -137,7 +140,10 @@ public class TravelTrackingMaps extends FragmentActivity implements
 
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnInfoWindowClickListener(this);
-        // mMap.setOnInfoWindowLongClickListener(this);
+        mMap.setOnInfoWindowLongClickListener(this);
+        mMap.setOnMarkerDragListener(this);
+         markerClicked = false;
+
         try {
             mMap.setMyLocationEnabled(true);
         }catch(SecurityException s){
@@ -246,11 +252,14 @@ public class TravelTrackingMaps extends FragmentActivity implements
             originMarkers.add(mMap.addMarker(new MarkerOptions()
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue))
                     .title(route.startAddress)
-                    .position(route.startLocation)));
+                    .position(route.startLocation)
+                    .draggable(true)));
+
             destinationMarkers.add(mMap.addMarker(new MarkerOptions()
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.end_green))
                     .title(route.endAddress)
-                    .position(route.endLocation)));
+                    .position(route.endLocation)
+                    .draggable(true)));
 
             PolylineOptions polylineOptions = new PolylineOptions().
                     geodesic(true).
@@ -280,8 +289,12 @@ public class TravelTrackingMaps extends FragmentActivity implements
             latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(latLng);
-            // markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-            currLocationMarker = mMap.addMarker(markerOptions);
+             markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue));
+            markerOptions.draggable(true);
+            markerOptions.title(String.valueOf(mLastLocation.getLatitude()) + "\t" + String.valueOf(mLastLocation.getLongitude()));
+            mMap.addMarker(markerOptions);
+
+
         }
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(150000); //5 seconds
@@ -368,5 +381,40 @@ public class TravelTrackingMaps extends FragmentActivity implements
         super.onBackPressed();
 
         TravelTrackingMaps.this.finish();
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+        LatLng dragPosition = marker.getPosition();
+        double dragLat = dragPosition.latitude;
+        double dragLong = dragPosition.longitude;
+       // marker.this.title(String.valueOf(dragLat) + "\t" + String.valueOf(dragLong));
+
+        marker.setTitle(String.valueOf(dragLat) + "\t" + String.valueOf(dragLong));
+        marker.setSnippet(String.valueOf(marker.getPosition().latitude)+ "\t" + String.valueOf(marker.getPosition().longitude));
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+
+
+        Toast.makeText(TravelTrackingMaps.this, "After onMarkerDragEnd position: "+ dragLat+"  "+dragLong,Toast.LENGTH_LONG).show();
+
+
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+
+        Log.e("Map","Is Clicked");
+        markerClicked = false;
     }
 }

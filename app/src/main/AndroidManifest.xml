@@ -44,6 +44,10 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name="rakshan.himachal.dit.sms.Services.FetchAddressIntentService"
+            android:exported="false" />
+
         <activity
             android:name=".Activity.Registration"
             android:screenOrientation="portrait" />
@@ -91,9 +95,14 @@
             android:name=".Activity.TravelTrackingMaps"
             android:label="@string/title_activity_travel_tracking_maps"
             android:launchMode="singleInstance"
-            android:theme="@style/MyMaterialTheme"
             android:process=":SecondMapProcess"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme" />
+        <activity
+            android:name=".Activity.UberTesting"
+            android:process=":UberMapProcess"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_uber_testing"></activity>
     </application>
 
 </manifest>
