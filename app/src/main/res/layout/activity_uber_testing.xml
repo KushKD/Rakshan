@@ -4,62 +4,102 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/container_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:orientation="vertical">
-
-            <TextView android:gravity="center_vertical"
-                android:id="@+id/Locality"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_btn_current_location"
-                android:drawablePadding="@dimen/list_row_padding"
-                android:ellipsize="end"
-                android:padding="10dp"
-                android:singleLine="true"
-                android:text="Click to change location"
-                android:textSize="@dimen/font_22" />
-
-            <EditText
-                android:id="@+id/Address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:ellipsize="end"
-                android:textColor="#000000"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:enabled="false"
-                android:hint="Fetching Source Address"
-                android:singleLine="true" />
-        </LinearLayout>
-    </LinearLayout>
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/container_toolbar">
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/container_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+
+
+                <TextView android:gravity="center_vertical"
+                    android:id="@+id/Locality"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_btn_current_location"
+                    android:drawablePadding="@dimen/list_row_padding"
+                    android:ellipsize="end"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:text="Click to change location"
+                    android:textSize="@dimen/font_22" />
+
+                <TextView
+                    android:id="@+id/Address"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:padding="5dp"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:enabled="true"
+                    android:hint="Fetching Source Address"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+
+                <fragment
+                    android:id="@+id/place_autocomplete_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                    />
+
+                <TextView android:gravity="center_vertical"
+                    android:id="@+id/destination"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_btn_current_location"
+                    android:drawablePadding="@dimen/list_row_padding"
+                    android:ellipsize="end"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:text="Click to change location"
+                    android:textSize="@dimen/font_22" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+
+
+            </LinearLayout>
+        </LinearLayout>
 
         <fragment
-            xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context="com.sample.sishin.maplocation.MapsActivity" />
+            android:layout_height="match_parent" />
+
         <LinearLayout
             android:id="@+id/locationMarker"
             android:layout_width="wrap_content"
@@ -77,6 +117,7 @@
                 android:gravity="center"
                 android:minWidth="250dp"
                 android:paddingLeft="2dp"
+                android:visibility="invisible"
                 android:paddingRight="2dp"
                 android:text=" Set your Location "
                 android:textColor="@android:color/white" />

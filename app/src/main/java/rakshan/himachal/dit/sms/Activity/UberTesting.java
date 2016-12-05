@@ -1,9 +1,11 @@
 package rakshan.himachal.dit.sms.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -15,6 +17,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,6 +37,8 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -43,17 +48,29 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+
+import rakshan.himachal.dit.sms.Helper.AppStatus;
+import rakshan.himachal.dit.sms.Interfaces.MapsActivityInterface;
+import rakshan.himachal.dit.sms.Model.Route;
+import rakshan.himachal.dit.sms.Presentation.Custom_Dialog;
 import rakshan.himachal.dit.sms.R;
 import rakshan.himachal.dit.sms.Services.FetchAddressIntentService;
 import rakshan.himachal.dit.sms.Utils.AppUtils;
+import rakshan.himachal.dit.sms.Utils.Directions;
 
-public class UberTesting extends AppCompatActivity implements
+public class UberTesting extends FragmentActivity implements
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        com.google.android.gms.location.LocationListener{
+        com.google.android.gms.location.LocationListener,
+        MapsActivityInterface {
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
@@ -63,6 +80,10 @@ public class UberTesting extends AppCompatActivity implements
     TextView mLocationMarkerText;
     private LatLng mCenterLatLong;
     private LinearLayout locationMarker;
+
+    Custom_Dialog CD = new Custom_Dialog();
+
+
 
     /**
      * Receiver registered with this activity to get the response from FetchAddressIntentService.
@@ -75,10 +96,18 @@ public class UberTesting extends AppCompatActivity implements
     protected String mAreaOutput;
     protected String mCityOutput;
     protected String mStateOutput;
-    EditText mLocationAddress;
+    TextView mLocationAddress;
     TextView mLocationText;
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
     Toolbar mToolbar;
+    public TextView destination;
+
+    private List<Marker> originMarkers = new ArrayList<>();
+    private List<Marker> destinationMarkers = new ArrayList<>();
+    private List<Polyline> polylinePaths = new ArrayList<>();
+    private ProgressDialog progressDialog;
+
+    PlaceAutocompleteFragment autocompleteFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,23 +118,59 @@ public class UberTesting extends AppCompatActivity implements
                 .findFragmentById(R.id.map);
         mContext = this;
 
+        autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
 
         mLocationMarkerText = (TextView) findViewById(R.id.locationMarkertext);
-        mLocationAddress = (EditText) findViewById(R.id.Address);
+        mLocationAddress = (TextView) findViewById(R.id.Address);
         mLocationText = (TextView) findViewById(R.id.Locality);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        locationMarker = (LinearLayout)findViewById(R.id.locationMarker);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        locationMarker = (LinearLayout) findViewById(R.id.locationMarker);
+        destination = (TextView)findViewById(R.id.destination) ;
 
-        getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
 
+
+     //   getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
+      //  getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                destination.setText(place.getAddress());
+
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i(TAG, "An error occurred: " + status);
+
+            }
+        });
 
         mLocationText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-               openAutocompleteActivity();
+                openAutocompleteActivity();
+
+            }
+
+
+        });
+
+
+
+        mLocationAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                openAutocompleteActivity();
+                // Log.e("We Are","Here");
 
             }
 
@@ -144,28 +209,49 @@ public class UberTesting extends AppCompatActivity implements
         }
     }
 
-    private void openAutocompleteActivity() {
-            try {
-                // The autocomplete activity requires Google Play Services to be available. The intent
-                // builder checks this and throws an exception if it is not the case.
-                Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
-                        .build(this);
-                startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
-            } catch (GooglePlayServicesRepairableException e) {
-                // Indicates that Google Play Services is either not installed or not up to date. Prompt
-                // the user to correct the issue.
-                GoogleApiAvailability.getInstance().getErrorDialog(this, e.getConnectionStatusCode(),
-                        0 /* requestCode */).show();
-            } catch (GooglePlayServicesNotAvailableException e) {
-                // Indicates that Google Play Services is not available and the problem is not easily
-                // resolvable.
-                String message = "Google Play Services is not available: " +
-                        GoogleApiAvailability.getInstance().getErrorString(e.errorCode);
-
-                Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-            }
+    private void triggerDirectionRequest() {
+        String origin = mLocationAddress.getText().toString();
+        String destination_ = destination.getText().toString().trim();
+        if (origin.isEmpty()) {
+            CD.showDialog(UberTesting.this, "Please enter origin address!");
+            return;
+        }
+        if (destination_.isEmpty()) {
+            CD.showDialog(UberTesting.this, "Please enter destination address!");
+            return;
         }
 
+        try {
+            Log.e("ORIGIN", origin);
+            Log.e("DESTINATION", destination_);
+            new Directions(this, origin, destination_).execute();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            Log.e("ERROR", e.getLocalizedMessage().toString());
+        }
+    }
+
+    private void openAutocompleteActivity() {
+        try {
+            // The autocomplete activity requires Google Play Services to be available. The intent
+            // builder checks this and throws an exception if it is not the case.
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(this);
+            startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
+
+        } catch (GooglePlayServicesRepairableException e) {
+            // Indicates that Google Play Services is either not installed or not up to date. Prompt
+            // the user to correct the issue.
+            GoogleApiAvailability.getInstance().getErrorDialog(this, e.getConnectionStatusCode(), 0).show();
+            Log.e("AutoComplete", e.getLocalizedMessage().toString());
+        } catch (GooglePlayServicesNotAvailableException e) {
+            // Indicates that Google Play Services is not available and the problem is not easily
+            // resolvable.
+            String message = "Google Play Services is not available: " + GoogleApiAvailability.getInstance().getErrorString(e.errorCode);
+            Log.e("AutoComplete", message);
+            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+            Log.e("AutoComplete", e.getLocalizedMessage().toString());
+        }
+    }
 
 
     /**
@@ -205,7 +291,7 @@ public class UberTesting extends AppCompatActivity implements
 */
 
                     mResultReceiver.startIntentService(mLocation);
-                    mLocationMarkerText.setText( "Your Current Location \t"+"Lat : " + mCenterLatLong.latitude + "\t" + "Long : " + mCenterLatLong.longitude);
+                    mLocationMarkerText.setText("Your Current Location \t" + "Lat : " + mCenterLatLong.latitude + "\t" + "Long : " + mCenterLatLong.longitude);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -281,8 +367,7 @@ public class UberTesting extends AppCompatActivity implements
         try {
             if (location != null)
                 changeMap(location);
-            LocationServices.FusedLocationApi.removeLocationUpdates(
-                    mGoogleApiClient, this);
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -353,7 +438,7 @@ public class UberTesting extends AppCompatActivity implements
 
         // check if map is created successfully or not
         if (mMap != null) {
-            mMap.getUiSettings().setZoomControlsEnabled(false);
+            mMap.getUiSettings().setZoomControlsEnabled(true);
             LatLng latLong;
 
 
@@ -362,7 +447,7 @@ public class UberTesting extends AppCompatActivity implements
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(latLong).zoom(19f).tilt(70).build();
 
-           // mMap.setMyLocationEnabled(true);
+             mMap.setMyLocationEnabled(true);
             mMap.getUiSettings().setMyLocationButtonEnabled(true);
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
@@ -378,6 +463,69 @@ public class UberTesting extends AppCompatActivity implements
 
     }
 
+    @Override
+    public void clearPrevious() {
+        progressDialog = ProgressDialog.show(this, "Please wait.",
+                "Finding direction..!", true);
+
+        if (originMarkers != null) {
+            for (Marker marker : originMarkers) {
+                marker.remove();
+            }
+        }
+
+        if (destinationMarkers != null) {
+            for (Marker marker : destinationMarkers) {
+                marker.remove();
+            }
+        }
+
+        if (polylinePaths != null) {
+            for (Polyline polyline : polylinePaths) {
+                polyline.remove();
+            }
+        }
+    }
+
+    @Override
+    public void addNewRoutes(List<Route> routes) {
+        progressDialog.dismiss();
+        polylinePaths = new ArrayList<>();
+        originMarkers = new ArrayList<>();
+        destinationMarkers = new ArrayList<>();
+
+        for (Route route : routes) {
+
+          // ((TextView) findViewById(R.id.tvDuration)).setText(route.getDurationText());
+           // ((TextView) findViewById(R.id.tvDistance)).setText(route.getDistanceText());
+
+            originMarkers.add(mMap.addMarker(new MarkerOptions()
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue))
+                    .title(route.startAddress)
+                    .position(route.startLocation)));
+
+            destinationMarkers.add(mMap.addMarker(new MarkerOptions()
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.end_green))
+                    .title(route.endAddress)
+                    .position(route.endLocation)));
+
+            PolylineOptions polylineOptions = new PolylineOptions().
+                    geodesic(true).
+                    color(Color.BLUE).
+                    width(10);
+
+
+            Log.e("Size is  ", String.valueOf( route.points.size()));
+            for (int i = 0; i < route.points.size(); i++) {
+                Log.e("Points  "+i, String.valueOf(route.points.get(i)));
+                polylineOptions.add(route.points.get(i));
+            }
+
+            polylinePaths.add(mMap.addPolyline(polylineOptions));
+           // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 9));
+        }
+
+    }
 
 
     /**
@@ -432,8 +580,8 @@ public class UberTesting extends AppCompatActivity implements
 
         public void startIntentService(Location mLocation) {
             // Create an intent for passing to the intent service responsible for fetching the address.
-            Intent intent = new Intent(getApplicationContext(), FetchAddressIntentService.class);
 
+            Intent intent = new Intent(getApplicationContext(), FetchAddressIntentService.class);
             // Pass the result receiver as an extra to the service.
             intent.putExtra(AppUtils.LocationConstants.RECEIVER, mResultReceiver);
 
@@ -456,10 +604,12 @@ public class UberTesting extends AppCompatActivity implements
 
         // Check that the result was from the autocomplete widget.
         if (requestCode == REQUEST_CODE_AUTOCOMPLETE) {
-            Log.e("we are Here" , Integer.toString(REQUEST_CODE_AUTOCOMPLETE));
+            Log.e("we are Here", Integer.toString(REQUEST_CODE_AUTOCOMPLETE));
             if (resultCode == RESULT_OK) {
+                Log.e("we are Here", Integer.toString(RESULT_OK));
                 // Get the user's selected place from the Intent.
                 Place place = PlaceAutocomplete.getPlace(mContext, data);
+                Log.e("we are Here", place.getName().toString());
 
                 // TODO call location based filter
                 LatLng latLong;
@@ -468,11 +618,11 @@ public class UberTesting extends AppCompatActivity implements
                 latLong = place.getLatLng();
 
                 //mLocationText.setText(place.getName() + "");
-
+                mLocationAddress.setText(mAddressOutput);
                 CameraPosition cameraPosition = new CameraPosition.Builder()
                         .target(latLong).zoom(19f).tilt(70).build();
 
-                if (ActivityCompat.checkSelfPermission(this,  android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
                     //    ActivityCompat#requestPermissions
                     // here to request the missing permissions, and then overriding
@@ -483,8 +633,7 @@ public class UberTesting extends AppCompatActivity implements
                     return;
                 }
                 mMap.setMyLocationEnabled(true);
-                mMap.animateCamera(CameraUpdateFactory
-                        .newCameraPosition(cameraPosition));
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
 
             }
@@ -492,7 +641,7 @@ public class UberTesting extends AppCompatActivity implements
 
         } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
             Status status = PlaceAutocomplete.getStatus(mContext, data);
-            Log.e("we are Here" , status.toString());
+            Log.e("we are Here", status.toString());
         } else if (resultCode == RESULT_CANCELED) {
             // Indicates that the activity closed before a selection was made. For example if
             // the user pressed the back button.

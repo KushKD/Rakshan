@@ -266,8 +266,13 @@ public class TravelTrackingMaps extends FragmentActivity implements
                     color(Color.BLUE).
                     width(10);
 
-            for (int i = 0; i < route.points.size(); i++)
+            Log.e("Size is  ", String.valueOf( route.points.size()));
+            for (int i = 0; i < route.points.size(); i++){
                 polylineOptions.add(route.points.get(i));
+                Log.e("Points  "+i, String.valueOf(route.points.get(i)));
+            }
+
+
 
             polylinePaths.add(mMap.addPolyline(polylineOptions));
         }
