@@ -60,6 +60,7 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
      * Receiver registered with this activity to get the response from FetchAddressIntentService.
      */
     private AddressResultReceiver mResultReceiver;
+    private AddressDestinationReceiver mResultReceiverDestination;
     /**
      * The formatted location address.
      */
@@ -68,8 +69,9 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
     protected String mCityOutput;
     protected String mStateOutput;
     EditText mLocationAddress;
-    TextView mLocationText;
+    TextView mLocationText ,mLocationDestination;
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
+    private static final int REQUEST_CODE_AUTOCOMPLETETWO = 2;
     Toolbar mToolbar;
 
 
@@ -83,8 +85,8 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
                 .findFragmentById(R.id.map);
 
         mLocationMarkerText = (TextView) findViewById(R.id.locationMarkertext);
-        mLocationAddress = (EditText) findViewById(R.id.Address);
         mLocationText = (TextView) findViewById(R.id.Locality);
+        mLocationDestination = (TextView)findViewById(R.id.destination);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -102,8 +104,17 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
 
 
         });
+
+
+        mLocationDestination.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAutocompleteActivityDestination();
+            }
+        });
         mapFragment.getMapAsync(this);
         mResultReceiver = new AddressResultReceiver(new Handler());
+        mResultReceiverDestination = new AddressDestinationReceiver(new Handler());
 
         if (checkPlayServices()) {
             // If this check succeeds, proceed with normal processing.
@@ -290,7 +301,7 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
         }
     }
 
-    private boolean checkPlayServices() {
+    private boolean checkPlayServices()  {
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
         if (resultCode != ConnectionResult.SUCCESS) {
             if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
@@ -385,6 +396,44 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
 
     }
 
+
+    /**
+     * Destination Receiver
+     */
+
+    class AddressDestinationReceiver extends ResultReceiver {
+        public AddressDestinationReceiver(Handler handler) {
+            super(handler);
+        }
+
+        /**
+         * Receives data sent from FetchAddressIntentService and updates the UI in MainActivity.
+         */
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+
+            // Display the address string or an error message sent from the intent service.
+            mAddressOutput = resultData.getString(AppUtils.LocationConstants.RESULT_DATA_KEY);
+
+            mAreaOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_AREA);
+
+            mCityOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_CITY);
+            mStateOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_STREET);
+
+            displayDestinationOutput();
+
+            // Show a toast message if an address was found.
+            if (resultCode == AppUtils.LocationConstants.SUCCESS_RESULT) {
+                //  showToast(getString(R.string.address_found));
+
+
+            }
+
+
+        }
+
+    }
+
     /**
      * Updates the address in the UI.
      */
@@ -395,6 +444,19 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
                 // mLocationText.setText(mAreaOutput+ "");
 
                 mLocationText.setText(mAddressOutput);
+            //mLocationText.setText(mAreaOutput);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void displayDestinationOutput() {
+        //  mLocationAddressTextView.setText(mAddressOutput);
+        try {
+            if (mAreaOutput != null)
+                // mLocationText.setText(mAreaOutput+ "");
+
+                mLocationDestination.setText(mAddressOutput);
             //mLocationText.setText(mAreaOutput);
         } catch (Exception e) {
             e.printStackTrace();
@@ -422,6 +484,23 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
     }
 
 
+    protected void startIntentServiceDestination(Location mLocation) {
+        // Create an intent for passing to the intent service responsible for fetching the address.
+        Intent intent = new Intent(this, FetchAddressIntentService.class);
+
+        // Pass the result receiver as an extra to the service.
+        intent.putExtra(AppUtils.LocationConstants.RECEIVER, mResultReceiverDestination);
+
+        // Pass the location data as an extra to the service.
+        intent.putExtra(AppUtils.LocationConstants.LOCATION_DATA_EXTRA, mLocation);
+
+        // Start the service. If the service isn't already running, it is instantiated and started
+        // (creating a process for it if needed); if it is running then it remains running. The
+        // service kills itself automatically once all intents are processed.
+        startService(intent);
+    }
+
+
     private void openAutocompleteActivity() {
         try {
             // The autocomplete activity requires Google Play Services to be available. The intent
@@ -429,6 +508,28 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
             Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
                     .build(this);
             startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
+        } catch (GooglePlayServicesRepairableException e) {
+            // Indicates that Google Play Services is either not installed or not up to date. Prompt
+            // the user to correct the issue.
+            GoogleApiAvailability.getInstance().getErrorDialog(this, e.getConnectionStatusCode(),
+                    0 /* requestCode */).show();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            // Indicates that Google Play Services is not available and the problem is not easily
+            // resolvable.
+            String message = "Google Play Services is not available: " +
+                    GoogleApiAvailability.getInstance().getErrorString(e.errorCode);
+
+            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void openAutocompleteActivityDestination() {
+        try {
+            // The autocomplete activity requires Google Play Services to be available. The intent
+            // builder checks this and throws an exception if it is not the case.
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
+                    .build(this);
+            startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETETWO);
         } catch (GooglePlayServicesRepairableException e) {
             // Indicates that Google Play Services is either not installed or not up to date. Prompt
             // the user to correct the issue.
@@ -484,11 +585,54 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
                 mMap.animateCamera(CameraUpdateFactory
                         .newCameraPosition(cameraPosition));
 
+                Location targetLocation = new Location("");//provider name is unecessary
+                targetLocation.setLatitude(latLong.latitude);//your coords of course
+                targetLocation.setLongitude(latLong.longitude);
+
+                startIntentService(targetLocation);
+
 
             }
 
 
-        } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+        } else if(requestCode == REQUEST_CODE_AUTOCOMPLETETWO){
+            // Get the user's selected place from the Intent.
+            Place place = PlaceAutocomplete.getPlace(mContext, data);
+
+            // TODO call location based filter
+
+
+            LatLng latLong;
+
+
+            latLong = place.getLatLng();
+
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(latLong).zoom(19f).tilt(70).build();
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+
+            mMap.setMyLocationEnabled(true);
+            mMap.animateCamera(CameraUpdateFactory
+                    .newCameraPosition(cameraPosition));
+
+            Location targetLocation = new Location("");//provider name is unecessary
+            targetLocation.setLatitude(latLong.latitude);//your coords of course
+            targetLocation.setLongitude(latLong.longitude);
+
+            startIntentServiceDestination(targetLocation);
+
+        }
+        else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
             Status status = PlaceAutocomplete.getStatus(mContext, data);
         } else if (resultCode == RESULT_CANCELED) {
             // Indicates that the activity closed before a selection was made. For example if

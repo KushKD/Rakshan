@@ -63,7 +63,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
-                        android:singleLine="true"
                         android:textSize="@dimen/font_22" />
 
 
@@ -76,13 +75,15 @@
                         android:layout_marginTop="5dp"
                         android:background="@drawable/dotted" />
 
-                    <AutoCompleteTextView
+                    <TextView android:gravity="center_vertical"
                         android:id="@+id/destination"
-                        android:layout_width="fill_parent"
-                        android:textSize="14sp"
+                        android:hint="Destination"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:hint="Choose a destination..." />
+                        android:textColor="#000000"
+                        android:textSize="@dimen/font_22" />
+
+
                 </LinearLayout>
                 <ImageView
                     android:id="@+id/send"
