@@ -14,6 +14,7 @@ import rakshan.himachal.dit.sms.Activity.AddComplaint;
 import rakshan.himachal.dit.sms.Activity.MainActivity_Navigation_Drawer;
 import rakshan.himachal.dit.sms.Activity.Permissions;
 import rakshan.himachal.dit.sms.Activity.Registration;
+import rakshan.himachal.dit.sms.Activity.TestMaps2;
 import rakshan.himachal.dit.sms.Activity.TravelTrackingMaps;
 import rakshan.himachal.dit.sms.Activity.UberTesting;
 import rakshan.himachal.dit.sms.Activity.VacationTraveller;
@@ -93,7 +94,7 @@ public class ModuleAdapter extends BaseAdapter {
                     context.startActivity(intent);
                 }else if (result[position].toString().equalsIgnoreCase("Travel Tracking")){
                     // Toast.makeText(context, "You Clicked "+result[position], Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(context,UberTesting.class);  //TravelTracking
+                    Intent intent = new Intent(context,TestMaps2.class);  //TravelTracking UberTesting
                     context.startActivity(intent);
                 }else{
                     Toast.makeText(context, "Something went wrong.", Toast.LENGTH_LONG).show();

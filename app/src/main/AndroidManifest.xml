@@ -43,9 +43,8 @@
                 <action android:name="android.intent.action.SEND_LOC" />
             </intent-filter>
         </service>
-
         <service
-            android:name="rakshan.himachal.dit.sms.Services.FetchAddressIntentService"
+            android:name=".Services.FetchAddressIntentService"
             android:exported="false" />
 
         <activity
@@ -100,9 +99,10 @@
             android:theme="@style/MyMaterialTheme" />
         <activity
             android:name=".Activity.UberTesting"
+            android:label="@string/title_activity_uber_testing"
             android:process=":UberMapProcess"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_uber_testing"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activity.TestMaps2"></activity>
     </application>
 
 </manifest>
