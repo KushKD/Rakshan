@@ -1,5 +1,7 @@
 package rakshan.himachal.dit.sms.Activity;
 
+import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.Manifest;
@@ -20,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,20 +41,34 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+
+import rakshan.himachal.dit.sms.Helper.AppStatus;
+import rakshan.himachal.dit.sms.Interfaces.MapsActivityInterface;
+import rakshan.himachal.dit.sms.Model.Route;
 import rakshan.himachal.dit.sms.R;
 import rakshan.himachal.dit.sms.Services.FetchAddressIntentService;
 import rakshan.himachal.dit.sms.Utils.AppUtils;
+import rakshan.himachal.dit.sms.Utils.Directions;
 
 public class TestMaps2 extends AppCompatActivity
         implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        com.google.android.gms.location.LocationListener,GoogleMap.OnMarkerDragListener{
+        com.google.android.gms.location.LocationListener,
+        GoogleMap.OnMarkerDragListener,
+        MapsActivityInterface {
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
@@ -61,7 +78,12 @@ public class TestMaps2 extends AppCompatActivity
     TextView mLocationMarkerText;
     private LatLng mCenterLatLong;
 
-    Marker SourceMarker ;
+    Marker SourceMarker, DestinationMarker ;
+
+    private List<Marker> originMarkers = new ArrayList<>();
+    private List<Marker> destinationMarkers = new ArrayList<>();
+    private List<Polyline> polylinePaths = new ArrayList<>();
+    private ProgressDialog progressDialog;
 
 
     /**
@@ -81,6 +103,7 @@ public class TestMaps2 extends AppCompatActivity
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
     private static final int REQUEST_CODE_AUTOCOMPLETETWO = 2;
     Toolbar mToolbar;
+    ImageView IV_Click ;
 
 
     @Override
@@ -98,6 +121,7 @@ public class TestMaps2 extends AppCompatActivity
         mLocationText = (TextView) findViewById(R.id.Locality);
         mLocationDestination = (TextView) findViewById(R.id.destination);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        IV_Click = (ImageView)findViewById(R.id.send);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -113,6 +137,18 @@ public class TestMaps2 extends AppCompatActivity
             }
 
 
+        });
+
+
+        IV_Click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(AppStatus.getInstance(TestMaps2.this).isOnline()){
+                    triggerDirectionRequest();
+                }else{
+                   // CD.showDialog(TravelTrackingMaps.this,"You are not connected to Internet. Please Connect to Internet!!");
+                }
+            }
         });
 
 
@@ -158,6 +194,29 @@ public class TestMaps2 extends AppCompatActivity
     }
 
 
+    private void triggerDirectionRequest() {
+        String origin = mLocationText.getText().toString().trim();
+        String destination = mLocationDestination.getText().toString().trim();
+        if (origin.isEmpty()) {
+           // CD.showDialog(TravelTrackingMaps.this,"Please enter origin address!");
+            return;
+        }
+        if (destination.isEmpty()) {
+          //  CD.showDialog(TravelTrackingMaps.this,"Please enter destination address!");
+            return;
+        }
+
+        try {
+            Log.e("ORIGIN",origin);
+            Log.e("DESTINATION",destination);
+            new Directions(this, origin, destination).execute();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            Log.e("ERROR",e.getLocalizedMessage().toString());
+        }
+    }
+
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -179,12 +238,6 @@ public class TestMaps2 extends AppCompatActivity
                     Location mLocation = new Location("");
                     mLocation.setLatitude(mCenterLatLong.latitude);
                     mLocation.setLongitude(mCenterLatLong.longitude);
-
-
-
-
-
-
 
 
 
@@ -352,7 +405,7 @@ public class TestMaps2 extends AppCompatActivity
             latLong = new LatLng(location.getLatitude(), location.getLongitude());
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(latLong).zoom(19f).build();   //.tilt(70)
+                    .target(latLong).zoom(14f).build();   //.tilt(70)
 
             mMap.setMyLocationEnabled(true);
             mMap.getUiSettings().setMyLocationButtonEnabled(true);
@@ -364,7 +417,7 @@ public class TestMaps2 extends AppCompatActivity
                     .title("Source")
             );
             Log.d(TAG, "ON connected");
-           // mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
            /* mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(location.getLatitude(), location.getLongitude()))
                     .title("Starting Point").draggable(true));*/
@@ -393,23 +446,133 @@ public class TestMaps2 extends AppCompatActivity
     @Override
     public void onMarkerDragEnd(Marker marker) {
 
+        if(originMarkers.size()!=0 && destinationMarkers.size()!=0){
 
-        LatLng dragPosition = marker.getPosition();
-        double dragLat = dragPosition.latitude;
-        double dragLong = dragPosition.longitude;
-        // marker.this.title(String.valueOf(dragLat) + "\t" + String.valueOf(dragLong));
+            DestinationMarker.remove();
+            if (originMarkers != null) {
+                for (Marker m : originMarkers) {
+                    marker.remove();
+                }
+            }
 
-        marker.setTitle(String.valueOf(dragLat) + "\t" + String.valueOf(dragLong));
-        marker.setSnippet(String.valueOf(marker.getPosition().latitude)+ "\t" + String.valueOf(marker.getPosition().longitude));
-        mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+            if (destinationMarkers != null) {
+                for (Marker n : destinationMarkers) {
+                    marker.remove();
+                }
+            }
 
-        Location sourceLocation = new Location("");//provider name is unecessary
-        sourceLocation.setLatitude(dragLat);//your coords of course
-        sourceLocation.setLongitude(dragLong);
+            if (polylinePaths != null) {
+                for (Polyline polyline:polylinePaths ) {
+                    polyline.remove();
+                }
+            }
+        }else{
+
+        }
+
+        if(marker.getId().toString().equalsIgnoreCase("m0")){
+            LatLng dragPosition = marker.getPosition();
+            double dragLat = dragPosition.latitude;
+            double dragLong = dragPosition.longitude;
+            // marker.this.title(String.valueOf(dragLat) + "\t" + String.valueOf(dragLong));
+
+            marker.setTitle(String.valueOf(dragLat) + "\t" + String.valueOf(dragLong));
+            marker.setSnippet(String.valueOf(marker.getPosition().latitude)+ "\t" + String.valueOf(marker.getPosition().longitude));
+            mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+
+            Location sourceLocation = new Location("");//provider name is unecessary
+            sourceLocation.setLatitude(dragLat);//your coords of course
+            sourceLocation.setLongitude(dragLong);
 
 
-        Toast.makeText(TestMaps2.this, "After onMarkerDragEnd position: "+ dragLat+" \n "+dragLong +"\n MARKER ID \n" + marker.getId(),Toast.LENGTH_LONG).show();
-        startIntentService(sourceLocation);
+           // Toast.makeText(TestMaps2.this, "After onMarkerDragEnd position: "+ dragLat+" \n "+dragLong +"\n MARKER ID \n" + marker.getId(),Toast.LENGTH_LONG).show();
+            startIntentService(sourceLocation);
+        }else{
+            LatLng dragPosition = marker.getPosition();
+            double dragLat = dragPosition.latitude;
+            double dragLong = dragPosition.longitude;
+            // marker.this.title(String.valueOf(dragLat) + "\t" + String.valueOf(dragLong));
+
+            marker.setTitle("Source");
+            marker.setSnippet(String.valueOf(marker.getPosition().latitude)+ "\t" + String.valueOf(marker.getPosition().longitude));
+            mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+
+            Location DestinationLocation = new Location("");//provider name is unecessary
+            DestinationLocation.setLatitude(dragLat);//your coords of course
+            DestinationLocation.setLongitude(dragLong);
+
+
+          //  Toast.makeText(TestMaps2.this, "After onMarkerDragEnd position: "+ dragLat+" \n "+dragLong +"\n MARKER ID \n" + marker.getId(),Toast.LENGTH_LONG).show();
+            startIntentServiceDestination(DestinationLocation);
+        }
+
+
+    }
+
+    @Override
+    public void clearPrevious() {
+
+        progressDialog = ProgressDialog.show(this, "Please wait.",
+                "Finding direction..!", true);
+
+        if (originMarkers != null) {
+            for (Marker marker : originMarkers) {
+                marker.remove();
+            }
+        }
+
+        if (destinationMarkers != null) {
+            for (Marker marker : destinationMarkers) {
+                marker.remove();
+            }
+        }
+
+        if (polylinePaths != null) {
+            for (Polyline polyline:polylinePaths ) {
+                polyline.remove();
+            }
+        }
+
+    }
+
+    @Override
+    public void addNewRoutes(List<Route> routes) {
+        progressDialog.dismiss();
+        polylinePaths = new ArrayList<>();
+        originMarkers = new ArrayList<>();
+        destinationMarkers = new ArrayList<>();
+
+        for (Route route : routes) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 14));
+//            ((TextView) findViewById(R.id.tvDuration)).setText(route.getDurationText());
+         //   ((TextView) findViewById(R.id.tvDistance)).setText(route.getDistanceText());
+
+            originMarkers.add(mMap.addMarker(new MarkerOptions()
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue))
+                    .title(route.startAddress)
+                    .position(route.startLocation)
+                    .draggable(true)));
+
+            destinationMarkers.add(mMap.addMarker(new MarkerOptions()
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.end_green))
+                    .title(route.endAddress)
+                    .position(route.endLocation)
+                    .draggable(true)));
+
+            PolylineOptions polylineOptions = new PolylineOptions().
+                    geodesic(true).
+                    color(Color.BLUE).
+                    width(10);
+
+            Log.e("Size is  ", String.valueOf(route.points.size()));
+            for (int i = 0; i < route.points.size(); i++) {
+                polylineOptions.add(route.points.get(i));
+                Log.e("Points  " + i, String.valueOf(route.points.get(i)));
+            }
+
+
+            polylinePaths.add(mMap.addPolyline(polylineOptions));
+        }
     }
 
 
@@ -684,6 +847,15 @@ public class TestMaps2 extends AppCompatActivity
             Location targetLocation = new Location("");//provider name is unecessary
             targetLocation.setLatitude(latLong.latitude);//your coords of course
             targetLocation.setLongitude(latLong.longitude);
+
+
+            DestinationMarker =  mMap.addMarker(new MarkerOptions()
+                            .position( new LatLng(latLong.latitude, latLong.longitude))
+                            .draggable(true)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.add_marker))
+                            .visible(true)
+                            .title("Destination") );
+
 
             startIntentServiceDestination(targetLocation);
 
