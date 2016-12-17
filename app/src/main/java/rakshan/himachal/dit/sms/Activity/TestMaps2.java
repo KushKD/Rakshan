@@ -40,12 +40,18 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import rakshan.himachal.dit.sms.R;
 import rakshan.himachal.dit.sms.Services.FetchAddressIntentService;
 import rakshan.himachal.dit.sms.Utils.AppUtils;
 
-public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
+public class TestMaps2 extends AppCompatActivity
+        implements OnMapReadyCallback,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        com.google.android.gms.location.LocationListener,GoogleMap.OnMarkerDragListener{
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
@@ -54,6 +60,8 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
     Context mContext;
     TextView mLocationMarkerText;
     private LatLng mCenterLatLong;
+
+    Marker SourceMarker ;
 
 
     /**
@@ -69,7 +77,7 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
     protected String mCityOutput;
     protected String mStateOutput;
     EditText mLocationAddress;
-    TextView mLocationText ,mLocationDestination;
+    TextView mLocationText, mLocationDestination;
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
     private static final int REQUEST_CODE_AUTOCOMPLETETWO = 2;
     Toolbar mToolbar;
@@ -84,9 +92,11 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
 
+
+
         mLocationMarkerText = (TextView) findViewById(R.id.locationMarkertext);
         mLocationText = (TextView) findViewById(R.id.Locality);
-        mLocationDestination = (TextView)findViewById(R.id.destination);
+        mLocationDestination = (TextView) findViewById(R.id.destination);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -161,15 +171,8 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
     public void onMapReady(GoogleMap googleMap) {
         Log.d(TAG, "OnMapReady");
         mMap = googleMap;
-
-        mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
-            @Override
-            public void onCameraChange(CameraPosition cameraPosition) {
-                Log.d("Camera postion change" + "", cameraPosition + "");
-                mCenterLatLong = cameraPosition.target;
-
-
-                mMap.clear();
+        mMap.setMyLocationEnabled(true);
+        mMap.setOnMarkerDragListener(this);
 
                 try {
 
@@ -177,14 +180,21 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
                     mLocation.setLatitude(mCenterLatLong.latitude);
                     mLocation.setLongitude(mCenterLatLong.longitude);
 
-                    startIntentService(mLocation);
-                    mLocationMarkerText.setText("Lat : " + mCenterLatLong.latitude + "," + "Long : " + mCenterLatLong.longitude);
+
+
+
+
+
+
+
+
+                  //  mLocationMarkerText.setText("Lat : " + mCenterLatLong.latitude + "," + "Long : " + mCenterLatLong.longitude);
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-        });
+
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -220,7 +230,9 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
                 mGoogleApiClient);
         if (mLastLocation != null) {
             changeMap(mLastLocation);
-            Log.d(TAG, "ON connected");
+
+
+
 
         } else
             try {
@@ -254,7 +266,7 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
     public void onLocationChanged(Location location) {
         try {
             if (location != null)
-                changeMap(location);
+               // changeMap(location);
             LocationServices.FusedLocationApi.removeLocationUpdates(
                     mGoogleApiClient, this);
 
@@ -301,7 +313,7 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
         }
     }
 
-    private boolean checkPlayServices()  {
+    private boolean checkPlayServices() {
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
         if (resultCode != ConnectionResult.SUCCESS) {
             if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
@@ -333,21 +345,30 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
 
         // check if map is created successfully or not
         if (mMap != null) {
-            mMap.getUiSettings().setZoomControlsEnabled(false);
+            mMap.getUiSettings().setZoomControlsEnabled(true);
             LatLng latLong;
 
 
             latLong = new LatLng(location.getLatitude(), location.getLongitude());
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(latLong).zoom(19f).tilt(70).build();
+                    .target(latLong).zoom(19f).build();   //.tilt(70)
 
             mMap.setMyLocationEnabled(true);
             mMap.getUiSettings().setMyLocationButtonEnabled(true);
-            mMap.animateCamera(CameraUpdateFactory
-                    .newCameraPosition(cameraPosition));
 
-            mLocationMarkerText.setText("Lat : " + location.getLatitude() + "," + "Long : " + location.getLongitude());
+            SourceMarker =  mMap.addMarker(new MarkerOptions()
+                    .position( new LatLng(location.getLatitude(), location.getLongitude()))
+                    .draggable(true)
+                    .visible(true)
+                    .title("Source")
+            );
+            Log.d(TAG, "ON connected");
+           // mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+           /* mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(location.getLatitude(), location.getLongitude()))
+                    .title("Starting Point").draggable(true));*/
+           // mLocationMarkerText.setText("Lat : " + location.getLatitude() + "," + "Long : " + location.getLongitude());
             startIntentService(location);
 
 
@@ -357,6 +378,38 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
                     .show();
         }
 
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+
+
+        LatLng dragPosition = marker.getPosition();
+        double dragLat = dragPosition.latitude;
+        double dragLong = dragPosition.longitude;
+        // marker.this.title(String.valueOf(dragLat) + "\t" + String.valueOf(dragLong));
+
+        marker.setTitle(String.valueOf(dragLat) + "\t" + String.valueOf(dragLong));
+        marker.setSnippet(String.valueOf(marker.getPosition().latitude)+ "\t" + String.valueOf(marker.getPosition().longitude));
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+
+        Location sourceLocation = new Location("");//provider name is unecessary
+        sourceLocation.setLatitude(dragLat);//your coords of course
+        sourceLocation.setLongitude(dragLong);
+
+
+        Toast.makeText(TestMaps2.this, "After onMarkerDragEnd position: "+ dragLat+" \n "+dragLong +"\n MARKER ID \n" + marker.getId(),Toast.LENGTH_LONG).show();
+        startIntentService(sourceLocation);
     }
 
 
@@ -555,6 +608,8 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
         // Check that the result was from the autocomplete widget.
         if (requestCode == REQUEST_CODE_AUTOCOMPLETE) {
             if (resultCode == RESULT_OK) {
+
+
                 // Get the user's selected place from the Intent.
                 Place place = PlaceAutocomplete.getPlace(mContext, data);
 
@@ -569,7 +624,7 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
                 //mLocationText.setText(place.getName() + "");
 
                 CameraPosition cameraPosition = new CameraPosition.Builder()
-                        .target(latLong).zoom(19f).tilt(70).build();
+                        .target(latLong).zoom(19f).build();  //.tilt(70)
 
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
@@ -589,13 +644,14 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
                 targetLocation.setLatitude(latLong.latitude);//your coords of course
                 targetLocation.setLongitude(latLong.longitude);
 
+                SourceMarker.setPosition(new LatLng(latLong.latitude,latLong.longitude));
                 startIntentService(targetLocation);
 
 
             }
 
 
-        } else if(requestCode == REQUEST_CODE_AUTOCOMPLETETWO){
+        } else if (requestCode == REQUEST_CODE_AUTOCOMPLETETWO) {
             // Get the user's selected place from the Intent.
             Place place = PlaceAutocomplete.getPlace(mContext, data);
 
@@ -608,7 +664,7 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
             latLong = place.getLatLng();
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(latLong).zoom(19f).tilt(70).build();
+                    .target(latLong).zoom(15f).build();  //.tilt(70)
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
@@ -631,14 +687,15 @@ public class TestMaps2 extends AppCompatActivity implements OnMapReadyCallback, 
 
             startIntentServiceDestination(targetLocation);
 
-        }
-        else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+        } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
             Status status = PlaceAutocomplete.getStatus(mContext, data);
         } else if (resultCode == RESULT_CANCELED) {
             // Indicates that the activity closed before a selection was made. For example if
             // the user pressed the back button.
         }
     }
+
+
 
 
 }
