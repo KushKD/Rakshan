@@ -1,6 +1,7 @@
 package rakshan.himachal.dit.sms.Activity;
 
 import android.app.ProgressDialog;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,12 +16,12 @@ import android.os.Handler;
 import android.os.ResultReceiver;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
-import android.os.Bundle;
 
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,7 +42,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -62,7 +62,7 @@ import rakshan.himachal.dit.sms.Services.FetchAddressIntentService;
 import rakshan.himachal.dit.sms.Utils.AppUtils;
 import rakshan.himachal.dit.sms.Utils.Directions;
 
-public class TestMaps2 extends AppCompatActivity
+public class TravelTracking extends AppCompatActivity
         implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -104,6 +104,8 @@ public class TestMaps2 extends AppCompatActivity
     private static final int REQUEST_CODE_AUTOCOMPLETETWO = 2;
     Toolbar mToolbar;
     ImageView IV_Click ;
+    Button clear;
+    CardView cardViewHidden;
 
 
     @Override
@@ -117,11 +119,13 @@ public class TestMaps2 extends AppCompatActivity
 
 
 
-        mLocationMarkerText = (TextView) findViewById(R.id.locationMarkertext);
+       // mLocationMarkerText = (TextView) findViewById(R.id.locationMarkertext);
         mLocationText = (TextView) findViewById(R.id.Locality);
         mLocationDestination = (TextView) findViewById(R.id.destination);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         IV_Click = (ImageView)findViewById(R.id.send);
+        clear = (Button)findViewById(R.id.clear);
+        cardViewHidden = (CardView)findViewById(R.id.cardview2);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -139,11 +143,59 @@ public class TestMaps2 extends AppCompatActivity
 
         });
 
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                try {
+
+                    if (originMarkers != null) {
+                        for (Marker marker : originMarkers) {
+                            marker.remove();
+                        }
+                    }
+
+                    if (destinationMarkers != null) {
+                        for (Marker marker : destinationMarkers) {
+                            marker.remove();
+                        }
+                    }
+
+                    if (polylinePaths != null) {
+                        for (Polyline polyline:polylinePaths ) {
+                            polyline.remove();
+                        }
+                    }
+
+                    DestinationMarker.remove();
+
+                    mLocationDestination.setText("");
+                    cardViewHidden.setVisibility(View.INVISIBLE);
+
+
+
+                   /* if(mCenterLatLong.latitude!= 0 && mCenterLatLong.latitude!=0) {
+                        Location x = new Location("");
+                        x.setLatitude(mCenterLatLong.latitude);
+                        x.setLatitude(mCenterLatLong.longitude);
+                        changeMap(x);
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Got the Location",Toast.LENGTH_LONG).show();
+                    }*/
+
+
+                }catch(Exception e){
+                    Toast.makeText(getApplicationContext(),"I Messed UP",Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
 
         IV_Click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(AppStatus.getInstance(TestMaps2.this).isOnline()){
+                if(AppStatus.getInstance(TravelTracking.this).isOnline()){
                     triggerDirectionRequest();
                 }else{
                    // CD.showDialog(TravelTrackingMaps.this,"You are not connected to Internet. Please Connect to Internet!!");
@@ -414,15 +466,25 @@ public class TestMaps2 extends AppCompatActivity
                     .position( new LatLng(location.getLatitude(), location.getLongitude()))
                     .draggable(true)
                     .visible(true)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.source))
                     .title("Source")
+
+
+
             );
-            Log.d(TAG, "ON connected");
+
+            DestinationMarker =  mMap.addMarker(new MarkerOptions()
+                            .position(  new LatLng(location.getLatitude(), location.getLongitude()))
+                            .draggable(true)
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.destination))
+                            .visible(false)
+                            .title("Destination") );
+            mLocationDestination.setText("");
+
+
+                    Log.d(TAG, "ON connected");
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-           /* mMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(location.getLatitude(), location.getLongitude()))
-                    .title("Starting Point").draggable(true));*/
-           // mLocationMarkerText.setText("Lat : " + location.getLatitude() + "," + "Long : " + location.getLongitude());
-            startIntentService(location);
+           startIntentService(location);
 
 
         } else {
@@ -435,6 +497,10 @@ public class TestMaps2 extends AppCompatActivity
 
     @Override
     public void onMarkerDragStart(Marker marker) {
+        if(!mLocationText.getText().toString().isEmpty()) mLocationText.setText("Please Wait.. Fetching Location");
+        if(!mLocationDestination.getText().toString().isEmpty()) mLocationDestination.setText("Please Wait... Fetching Location");
+
+
 
     }
 
@@ -446,29 +512,7 @@ public class TestMaps2 extends AppCompatActivity
     @Override
     public void onMarkerDragEnd(Marker marker) {
 
-        if(originMarkers.size()!=0 && destinationMarkers.size()!=0){
 
-            DestinationMarker.remove();
-            if (originMarkers != null) {
-                for (Marker m : originMarkers) {
-                    marker.remove();
-                }
-            }
-
-            if (destinationMarkers != null) {
-                for (Marker n : destinationMarkers) {
-                    marker.remove();
-                }
-            }
-
-            if (polylinePaths != null) {
-                for (Polyline polyline:polylinePaths ) {
-                    polyline.remove();
-                }
-            }
-        }else{
-
-        }
 
         if(marker.getId().toString().equalsIgnoreCase("m0")){
             LatLng dragPosition = marker.getPosition();
@@ -485,7 +529,7 @@ public class TestMaps2 extends AppCompatActivity
             sourceLocation.setLongitude(dragLong);
 
 
-           // Toast.makeText(TestMaps2.this, "After onMarkerDragEnd position: "+ dragLat+" \n "+dragLong +"\n MARKER ID \n" + marker.getId(),Toast.LENGTH_LONG).show();
+           // Toast.makeText(TravelTracking.this, "After onMarkerDragEnd position: "+ dragLat+" \n "+dragLong +"\n MARKER ID \n" + marker.getId(),Toast.LENGTH_LONG).show();
             startIntentService(sourceLocation);
         }else{
             LatLng dragPosition = marker.getPosition();
@@ -502,7 +546,7 @@ public class TestMaps2 extends AppCompatActivity
             DestinationLocation.setLongitude(dragLong);
 
 
-          //  Toast.makeText(TestMaps2.this, "After onMarkerDragEnd position: "+ dragLat+" \n "+dragLong +"\n MARKER ID \n" + marker.getId(),Toast.LENGTH_LONG).show();
+          //  Toast.makeText(TravelTracking.this, "After onMarkerDragEnd position: "+ dragLat+" \n "+dragLong +"\n MARKER ID \n" + marker.getId(),Toast.LENGTH_LONG).show();
             startIntentServiceDestination(DestinationLocation);
         }
 
@@ -544,19 +588,21 @@ public class TestMaps2 extends AppCompatActivity
 
         for (Route route : routes) {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 14));
-//            ((TextView) findViewById(R.id.tvDuration)).setText(route.getDurationText());
-         //   ((TextView) findViewById(R.id.tvDistance)).setText(route.getDistanceText());
+            ((TextView) findViewById(R.id.time)).setText(route.getDurationText());
+            ((TextView) findViewById(R.id.distance)).setText(route.getDistanceText());
 
             originMarkers.add(mMap.addMarker(new MarkerOptions()
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue))
                     .title(route.startAddress)
                     .position(route.startLocation)
+                    .visible(false)
                     .draggable(true)));
 
             destinationMarkers.add(mMap.addMarker(new MarkerOptions()
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.end_green))
                     .title(route.endAddress)
                     .position(route.endLocation)
+                    .visible(false)
                     .draggable(true)));
 
             PolylineOptions polylineOptions = new PolylineOptions().
@@ -572,6 +618,7 @@ public class TestMaps2 extends AppCompatActivity
 
 
             polylinePaths.add(mMap.addPolyline(polylineOptions));
+            cardViewHidden.setVisibility(View.VISIBLE);
         }
     }
 
@@ -849,12 +896,10 @@ public class TestMaps2 extends AppCompatActivity
             targetLocation.setLongitude(latLong.longitude);
 
 
-            DestinationMarker =  mMap.addMarker(new MarkerOptions()
-                            .position( new LatLng(latLong.latitude, latLong.longitude))
-                            .draggable(true)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.add_marker))
-                            .visible(true)
-                            .title("Destination") );
+
+            DestinationMarker.setVisible(true);
+            DestinationMarker.setPosition(new LatLng(latLong.latitude, latLong.longitude));
+
 
 
             startIntentServiceDestination(targetLocation);

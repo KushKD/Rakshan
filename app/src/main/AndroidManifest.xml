@@ -71,7 +71,8 @@
         <activity
             android:name=".Activity.VacationTraveller"
             android:label="@string/title_activity_vacation_traveller"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:process=":vacationtraveller"/>
         <activity
             android:name=".Activity.VacationTravelDetails"
             android:screenOrientation="portrait" />
@@ -90,19 +91,8 @@
         <activity
             android:name=".Activity.ComplaintDetails_Complaint"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".Activity.TravelTrackingMaps"
-            android:label="@string/title_activity_travel_tracking_maps"
-            android:launchMode="singleInstance"
-            android:process=":SecondMapProcess"
-            android:screenOrientation="portrait"
-            android:theme="@style/MyMaterialTheme" />
-        <activity
-            android:name=".Activity.UberTesting"
-            android:label="@string/title_activity_uber_testing"
-            android:process=":UberMapProcess"
-            android:screenOrientation="portrait" />
-        <activity android:name=".Activity.TestMaps2"></activity>
+        <activity android:name=".Activity.TravelTracking"
+            android:process=":traveltracking"></activity>
     </application>
 
 </manifest>
