@@ -167,9 +167,8 @@ public class TravelTracking extends AppCompatActivity
                         }
                     }
 
-                    DestinationMarker.remove();
 
-                    mLocationDestination.setText("");
+                   // mLocationDestination.setText("");
                     cardViewHidden.setVisibility(View.INVISIBLE);
 
 
@@ -497,10 +496,14 @@ public class TravelTracking extends AppCompatActivity
 
     @Override
     public void onMarkerDragStart(Marker marker) {
-        if(!mLocationText.getText().toString().isEmpty()) mLocationText.setText("Please Wait.. Fetching Location");
-        if(!mLocationDestination.getText().toString().isEmpty()) mLocationDestination.setText("Please Wait... Fetching Location");
 
 
+        if(marker.getId().toString().equalsIgnoreCase("m0")){
+            if(!mLocationText.getText().toString().isEmpty()) mLocationText.setText("Please Wait.. Fetching Location");
+        }else{
+            if(!mLocationDestination.getText().toString().isEmpty()) mLocationDestination.setText("Please Wait... Fetching Location");
+
+        }
 
     }
 
