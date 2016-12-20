@@ -29,7 +29,7 @@ public class Prefrences {
             editor.commit();
         }
 
-        public static Map<String, String> getStringFromPreferences(Context context) {
+        public static Map<String, String> getDataFromPreferences(Context context) {
             SharedPreferences sharedPreferences = context.getSharedPreferences(EConstants.PREF_SHARED, Context.MODE_PRIVATE);
 
             Boolean Registration = sharedPreferences.getBoolean("RegistrationFlag", Boolean.valueOf(""));
@@ -44,5 +44,23 @@ public class Prefrences {
             PrefData.put("IMEI",IMEI);
             return PrefData;
         }
+
+    public static String getPhoneNumberFromPrefrences(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(EConstants.PREF_SHARED, Context.MODE_PRIVATE);
+        String Mobile_No = sharedPreferences.getString("phonenumber","");
+        return Mobile_No;
+    }
+
+    public static String getNameFromPrefrences(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(EConstants.PREF_SHARED, Context.MODE_PRIVATE);
+        String name  = sharedPreferences.getString("Name","");
+        return name;
+    }
+
+    public static String getIMEIFromPrefrences(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(EConstants.PREF_SHARED, Context.MODE_PRIVATE);
+        String IMEI = sharedPreferences.getString("IMEI","");
+        return IMEI;
+    }
 
 }

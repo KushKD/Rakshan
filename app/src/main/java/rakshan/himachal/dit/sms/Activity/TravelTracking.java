@@ -57,10 +57,12 @@ import java.util.List;
 import rakshan.himachal.dit.sms.Helper.AppStatus;
 import rakshan.himachal.dit.sms.Interfaces.MapsActivityInterface;
 import rakshan.himachal.dit.sms.Model.Route;
+import rakshan.himachal.dit.sms.Presentation.Custom_Dialog;
 import rakshan.himachal.dit.sms.R;
 import rakshan.himachal.dit.sms.Services.FetchAddressIntentService;
 import rakshan.himachal.dit.sms.Utils.AppUtils;
 import rakshan.himachal.dit.sms.Utils.Directions;
+import rakshan.himachal.dit.sms.Utils.Prefrences;
 
 public class TravelTracking extends AppCompatActivity
         implements OnMapReadyCallback,
@@ -77,6 +79,7 @@ public class TravelTracking extends AppCompatActivity
     Context mContext;
     TextView mLocationMarkerText;
     private LatLng mCenterLatLong;
+
 
     Marker SourceMarker, DestinationMarker ;
 
@@ -104,8 +107,9 @@ public class TravelTracking extends AppCompatActivity
     private static final int REQUEST_CODE_AUTOCOMPLETETWO = 2;
     Toolbar mToolbar;
     ImageView IV_Click ;
-    Button clear;
+    Button clear ,setroute;
     CardView cardViewHidden;
+    Custom_Dialog CD = new Custom_Dialog();
 
 
     @Override
@@ -125,6 +129,7 @@ public class TravelTracking extends AppCompatActivity
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         IV_Click = (ImageView)findViewById(R.id.send);
         clear = (Button)findViewById(R.id.clear);
+        setroute= (Button)findViewById(R.id.setroute);
         cardViewHidden = (CardView)findViewById(R.id.cardview2);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -141,6 +146,17 @@ public class TravelTracking extends AppCompatActivity
             }
 
 
+        });
+
+        setroute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO
+                CD.showDialog(TravelTracking.this,"Setting the Route and Starting the Service");
+
+                //Get the Current Latitue and Longitude
+
+            }
         });
 
         clear.setOnClickListener(new View.OnClickListener() {
@@ -184,7 +200,7 @@ public class TravelTracking extends AppCompatActivity
 
 
                 }catch(Exception e){
-                    Toast.makeText(getApplicationContext(),"I Messed UP",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Something Messed UP",Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -197,7 +213,7 @@ public class TravelTracking extends AppCompatActivity
                 if(AppStatus.getInstance(TravelTracking.this).isOnline()){
                     triggerDirectionRequest();
                 }else{
-                   // CD.showDialog(TravelTrackingMaps.this,"You are not connected to Internet. Please Connect to Internet!!");
+                    CD.showDialog(TravelTracking.this,"You are not connected to Internet. Please Connect to Internet!!");
                 }
             }
         });
@@ -249,11 +265,11 @@ public class TravelTracking extends AppCompatActivity
         String origin = mLocationText.getText().toString().trim();
         String destination = mLocationDestination.getText().toString().trim();
         if (origin.isEmpty()) {
-           // CD.showDialog(TravelTrackingMaps.this,"Please enter origin address!");
+            CD.showDialog(TravelTracking.this,"Please enter origin address!");
             return;
         }
         if (destination.isEmpty()) {
-          //  CD.showDialog(TravelTrackingMaps.this,"Please enter destination address!");
+            CD.showDialog(TravelTracking.this,"Please enter destination address!");
             return;
         }
 
@@ -290,7 +306,8 @@ public class TravelTracking extends AppCompatActivity
                     mLocation.setLatitude(mCenterLatLong.latitude);
                     mLocation.setLongitude(mCenterLatLong.longitude);
 
-
+                    Log.e("Latitude",Double.toString(mCenterLatLong.latitude));
+                    Log.e("Longitude",Double.toString(mCenterLatLong.longitude));
 
                   //  mLocationMarkerText.setText("Lat : " + mCenterLatLong.latitude + "," + "Long : " + mCenterLatLong.longitude);
 
@@ -369,8 +386,21 @@ public class TravelTracking extends AppCompatActivity
     @Override
     public void onLocationChanged(Location location) {
         try {
-            if (location != null)
-               // changeMap(location);
+            if (location != null){
+                // changeMap(location);
+                //Send Data TO SERVICE
+                Log.e("Latitude",Double.toString(location.getLatitude()));
+                Log.e("Longitude",Double.toString(location.getLongitude()));
+                Log.e("IMEI", Prefrences.getIMEIFromPrefrences(TravelTracking.this));
+                Log.e("Name",Prefrences.getNameFromPrefrences(TravelTracking.this));
+                Log.e("Phone",Prefrences.getPhoneNumberFromPrefrences(TravelTracking.this));
+                Log.e("ORIGINAL IMEI",AppStatus.GetIMEI(TravelTracking.this));
+
+                //Start the Service
+
+            }
+
+
             LocationServices.FusedLocationApi.removeLocationUpdates(
                     mGoogleApiClient, this);
 

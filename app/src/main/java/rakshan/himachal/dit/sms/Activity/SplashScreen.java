@@ -26,10 +26,10 @@ public class SplashScreen extends AppCompatActivity {
 
                 int currentapiVersion = android.os.Build.VERSION.SDK_INT;
                 if (currentapiVersion >= android.os.Build.VERSION_CODES.LOLLIPOP){
-                    Intent login_Intent = new Intent(SplashScreen.this, Permissions.class); //Login_Activity
+                   /* Intent login_Intent = new Intent(SplashScreen.this, Permissions.class); //Login_Activity
                     SplashScreen.this.startActivity(login_Intent);
-                    SplashScreen.this.finish();
-                   /* boolean Flag_Permissions = settings.getBoolean("PermissionsFlag",false);
+                    SplashScreen.this.finish();*/
+                    boolean Flag_Permissions = settings.getBoolean("PermissionsFlag",false);
                     boolean Flag_Registration = settings.getBoolean("RegistrationFlag",false);  //Registration flag is the login one
 
                     if(Flag_Permissions)
@@ -54,10 +54,10 @@ public class SplashScreen extends AppCompatActivity {
                         SplashScreen.this.startActivity(login_Intent);
                         SplashScreen.this.finish();
 
-                    }*/
+                    }
                 } else{
                     // do something for phones running an SDK before lollipop
-                   /* boolean Flag_Registration = settings.getBoolean("RegistrationFlag",false);
+                    boolean Flag_Registration = settings.getBoolean("RegistrationFlag",false);
                     if(Flag_Registration)
                     {
                         Intent mainIntent = new Intent(SplashScreen.this, MainActivity_Navigation_Drawer.class);
@@ -67,10 +67,10 @@ public class SplashScreen extends AppCompatActivity {
                         Intent mainIntent = new Intent(SplashScreen.this, Login.class);
                         SplashScreen.this.startActivity(mainIntent);
                         SplashScreen.this.finish();
-                    }*/
-                    Intent mainIntent = new Intent(SplashScreen.this, MainActivity_Navigation_Drawer.class);
+                    }
+                /*    Intent mainIntent = new Intent(SplashScreen.this, MainActivity_Navigation_Drawer.class);
                     SplashScreen.this.startActivity(mainIntent);
-                    SplashScreen.this.finish();
+                    SplashScreen.this.finish();*/
                 }
 
 

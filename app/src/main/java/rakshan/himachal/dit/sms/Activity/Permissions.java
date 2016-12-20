@@ -79,8 +79,8 @@ public class Permissions extends AppCompatActivity implements View.OnClickListen
         editor.putBoolean("PermissionsFlag", true);
         editor.commit();
 
-       // Intent i = new Intent(Permissions.this,Login.class);   //Working
-        Intent i = new Intent(Permissions.this,MainActivity_Navigation_Drawer.class);
+        Intent i = new Intent(Permissions.this,Login.class);   //Working
+       // Intent i = new Intent(Permissions.this,MainActivity_Navigation_Drawer.class);
         startActivity(i);
         Permissions.this.finish();
       /*  if(RakshamResponse.isGranted(Manifest.permission.CAMERA)) {
