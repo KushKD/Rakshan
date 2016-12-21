@@ -3,16 +3,22 @@ package rakshan.himachal.dit.sms.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ThemedSpinnerAdapter;
 import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -22,6 +28,7 @@ import org.json.JSONTokener;
 
 import rakshan.himachal.dit.autosmsread.RakshanOnSmsCatchListener;
 import rakshan.himachal.dit.autosmsread.RakshanSmsVerifyCatcher;
+import rakshan.himachal.dit.sms.DatabaseHandler.DatabaseHandler;
 import rakshan.himachal.dit.sms.Enum.TaskType;
 import rakshan.himachal.dit.sms.Helper.AppStatus;
 import rakshan.himachal.dit.sms.Helper.VerhoeffAlgorithm;
@@ -32,8 +39,12 @@ import rakshan.himachal.dit.sms.Presentation.Custom_Dialog;
 import rakshan.himachal.dit.sms.R;
 import rakshan.himachal.dit.sms.Utils.EConstants;
 import rakshan.himachal.dit.sms.Utils.Generic_Async_Get;
-import rakshan.himachal.dit.sms.Utils.Prefrences;
+import rakshan.himachal.dit.sms.Helper.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -51,6 +62,7 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
     String MobileNumber = null;
     String IMEI = null;
     AutoCompleteTextView phone;
+    ImageView imageView1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +74,11 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
 
         phone = (AutoCompleteTextView) findViewById(R.id.phone_number);
         phone.addTextChangedListener(GET_OTP);
-        otp   = (EditText)findViewById(R.id.otp);
+        otp = (EditText) findViewById(R.id.otp);
+        imageView1 = (ImageView) findViewById(R.id.imageView1);
 
         //init RakshanSmsVerifyCatcher
-        smsVerifyCatcher = new RakshanSmsVerifyCatcher(this, new RakshanOnSmsCatchListener<String>() {
+       /* smsVerifyCatcher = new RakshanSmsVerifyCatcher(this, new RakshanOnSmsCatchListener<String>() {
             @Override
             public void onSmsCatch(String message) {
                 //String code = parseCode(message);//Parse verification code
@@ -74,10 +87,10 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
                 otp.setText(code);//set code in edit text
                 //then you can send verification code to server
             }
-        });
+        });*/     // Working
 
         //set phone number filter if needed
-        smsVerifyCatcher.setPhoneNumberFilter("TM-HPGOVT");
+        // smsVerifyCatcher.setPhoneNumberFilter("TM-HPGOVT");  working
 
         signUpTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,9 +117,9 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
 
         _OTP = otp.getText().toString().trim();
         String _Mobile = phone.getText().toString().trim();
-        if(!_OTP.isEmpty()){
-            if(_OTP.length()== 6){
-                if(AppStatus.getInstance(Login.this).isOnline()) {
+        if (!_OTP.isEmpty()) {
+            if (_OTP.length() == 6) {
+                if (AppStatus.getInstance(Login.this).isOnline()) {
                     // OTP_Async OA = new OTP_Async();
                     // OA.execute(aadhaar_a, otp);
                     String url2 = null;
@@ -120,17 +133,17 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
                     sb.append("/");
                     sb.append(_OTP);
                     url2 = sb.toString();
-                    Log.e("OTP URL",url2);
+                    Log.e("OTP URL", url2);
                     new Generic_Async_Get(Login.this, Login.this, TaskType.VERIFY_OTP).execute(url2);
                 } else {
-                    CM.showDialog(Login.this,"Network isn't available");
+                    CM.showDialog(Login.this, "Network isn't available");
 
                 }
-            }else{
-                CM.showDialog(Login.this,"Please Enter a valid OTP");
+            } else {
+                CM.showDialog(Login.this, "Please Enter a valid OTP");
             }
-        }else{
-            CM.showDialog(Login.this,"OTP Cannot be empty.");
+        } else {
+            CM.showDialog(Login.this, "OTP Cannot be empty.");
         }
 
     }
@@ -145,13 +158,13 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
         }
 
         public void afterTextChanged(Editable s) {
-            if(s.length()==10 && Integer.parseInt(s.toString().substring(0,1)) > 6){
+            if (s.length() == 10 && Integer.parseInt(s.toString().substring(0, 1)) > 6) {
 
                 MobileNumber();
-            }else{
-               // aadhaar_et.setBackgroundResource(R.drawable.rounded_edittext);
+            } else {
+                // aadhaar_et.setBackgroundResource(R.drawable.rounded_edittext);
                 // CM.showDialog(Login.this,"Please Enter a valid Phone Number.");
-                 Log.e("Aadhaar ","Not Valid");
+                Log.e("Aadhaar ", "Not Valid");
             }
         }
     };
@@ -159,13 +172,13 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
     @Override
     protected void onStart() {
         super.onStart();
-        smsVerifyCatcher.onStart();
+        //smsVerifyCatcher.onStart();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        smsVerifyCatcher.onStop();
+        // smsVerifyCatcher.onStop();
     }
 
     private void MobileNumber() {
@@ -177,7 +190,7 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
 
                     //Save Data
                     TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-                     IMEI = telephonyManager.getDeviceId().toString().trim();
+                    IMEI = telephonyManager.getDeviceId().toString().trim();
 
                     String url = null;
                     StringBuilder sb = new StringBuilder();
@@ -200,7 +213,7 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
     @Override
     public void onTaskCompleted(String result, TaskType taskType) {
 
-        Log.e("Server Message",result);
+        Log.e("Server Message", result);
 
         String finalResult = null;
         if (taskType == TaskType.LOGIN) {
@@ -214,15 +227,15 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
                 CM.showDialog(Login.this, finalResult);
             }
 
-        }else if(taskType == TaskType.VERIFY_OTP){
+        } else if (taskType == TaskType.VERIFY_OTP) {
             JsonParser JP = new JsonParser();
             finalResult = JP.ParseStringOTP(result);
             if (finalResult.length() > 100) {
-                Log.e("GOT IT",finalResult);
+                Log.e("GOT IT", finalResult);
                 // editText_aadhaarLogin.setEnabled(false);
                 // editText_otpLogin.setEnabled(true);
-                try{
-                        //Save Data to DataBase
+                try {
+                    //Save Data to DataBase
                     Object json = null;
                     try {
                         json = new JSONTokener(finalResult).nextValue();
@@ -240,14 +253,24 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
                                 if (myJson.optString("ResName").length() <= 1) {
                                     CM.showDialog(Login.this, "Unable to register please try again.");
                                 } else {
+
                                     PGP.setName(myJson.optString("ResName"));
                                     PGP.setIMEI(myJson.optString("IMEI"));
                                     PGP.setMobile(myJson.optString("Mobile"));
+                                    PGP.setPhotoName(myJson.optString("PhotoName"));
+                                    PGP.setGender(myJson.optString("Gender"));
+                                    PGP.setResAadhaar(myJson.optString("ResAadhaar"));
+                                    PGP.setEmail(myJson.optString("EMail"));
+                                    PGP.setPhoto(Base64.decode(myJson.getString("Photo"), Base64.DEFAULT));
+                                    PGP.setDateTime(Date_Time.GetDateAndTime());
 
-                                    Log.e("Name From Server", PGP.getName());
-                                    Log.e("IMEI From Server", PGP.getIMEI());
-                                    Log.e("MOBILE From Server", PGP.getMobile());
-                                     saveDataSharedPref(PGP.getName(), PGP.getMobile(), PGP.getIMEI());
+                                    try{
+                                        saveDataDatabase(PGP);
+                                    }catch(Exception ex){
+                                        CM.showDialog(Login.this,ex.getLocalizedMessage().toString());
+                                    }
+
+
                                 }
 
 
@@ -258,20 +281,89 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }catch(Exception e){
-                    CM.showDialog(Login.this,"Data Isn't Saved");
+                } catch (Exception e) {
+                    CM.showDialog(Login.this, "Data Isn't Saved");
                 }
             } else {
                 CM.showDialog(Login.this, finalResult);
             }
-        }else{
+        } else {
             CM.showDialog(Login.this, "Something is not Good");
         }
     }
 
-    private void saveDataSharedPref(String name_service, String phoneNumber_service, String imei_server) {
+    private void saveDataDatabase(UserDetails pgp) {
 
         try{
+            DatabaseHandler DH = new DatabaseHandler(Login.this);
+            if( DH.addContact(pgp)){
+
+                File folder = new File(Environment.getExternalStorageDirectory() + "/Rakshan");
+                boolean foldersuccess = true;
+                if (!folder.exists()) {
+                    foldersuccess = folder.mkdir();
+                }
+                if (foldersuccess) {
+                    // Do something on success
+                } else {
+                    // Do something else on failure
+                }
+
+                File sdCardDirectory = Environment.getExternalStorageDirectory();
+                File image = new File(sdCardDirectory +"/Rakshan", pgp.getPhotoName());
+
+                boolean success = false;
+
+                // Encode the file as a PNG image.
+                FileOutputStream outStream;
+                try {
+                    byte[] byteArrayphoto = pgp.getPhoto();
+                    Bitmap bmp1 = BitmapFactory.decodeByteArray(byteArrayphoto, 0, byteArrayphoto.length);
+
+                    outStream = new FileOutputStream(image);
+                    bmp1.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+                    outStream.flush();
+                    outStream.close();
+                    success = true;
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                if (success) {
+                   CM.showDialog(Login.this,"Image saved with success");
+                } else {
+                    CM.showDialog(Login.this,"Error during image saving");
+                }
+
+
+                CM.showDialog(Login.this,"Data Saved Successfully");
+
+                SharedPreferences settings = getSharedPreferences(EConstants.PREF_SHARED, 0); // 0 - for private mode
+                SharedPreferences.Editor editor = settings.edit();
+                //Set "hasLoggedIn" to true
+
+                editor.putBoolean("Login", true);
+                editor.commit();
+
+
+                Intent i = new Intent(Login.this, MainActivity_Navigation_Drawer.class);
+                startActivity(i);
+                Login.this.finish();
+
+            }else{
+                CM.showDialog(Login.this,"Unable to Save Data. Something bad happened , please restart the application.");
+            }
+        }catch(Exception ex){
+            CM.showDialog(Login.this,ex.getLocalizedMessage().toString().trim());
+        }
+
+    }
+
+    private void saveDataSharedPref(UserDetails PGP) {
+
+        try {
             // User has successfully logged in, save this information
             //  We need an Editor object to make preference changes.
             SharedPreferences settings = getSharedPreferences(EConstants.PREF_SHARED, 0); // 0 - for private mode
@@ -279,12 +371,12 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
             //Set "hasLoggedIn" to true
 
             editor.putBoolean("RegistrationFlag", true);
-            editor.putString("Name",name_service);
-            Log.e("Name",name_service);
-            editor.putString("phonenumber",phoneNumber_service);
-            Log.e("phonenumber",phoneNumber_service);
-            editor.putString("IMEI",imei_server);
-            Log.e("IMEI",imei_server);
+            editor.putString("Name", PGP.getName());
+            Log.e("Name", PGP.getName());
+            editor.putString("phonenumber", PGP.getMobile());
+            Log.e("phonenumber",  PGP.getMobile());
+            editor.putString("IMEI",  PGP.getIMEI());
+            Log.e("IMEI", PGP.getIMEI());
             // Commit the edits!
             editor.commit();
             Map<String, String> PrefData = null;
@@ -300,16 +392,15 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
             }finally{
 
             }*/
-            Intent i = new Intent(Login.this,MainActivity_Navigation_Drawer.class);
+          /*  Intent i = new Intent(Login.this, MainActivity_Navigation_Drawer.class);
             startActivity(i);
-            Login.this.finish();
+            Login.this.finish();*/
 
-        }catch(Exception e){
+        } catch (Exception e) {
 
-            CM.showDialog(Login.this,"Something went wrong. Please restart the application. ");
+            CM.showDialog(Login.this, "Something went wrong. Please restart the application. ");
         }
     }
-
 
 
     /**

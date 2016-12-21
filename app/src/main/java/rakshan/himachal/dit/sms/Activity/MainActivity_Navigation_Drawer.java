@@ -209,8 +209,14 @@ public class MainActivity_Navigation_Drawer extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
+        if (id == R.id.profile) {
+            try{
+                Intent profile = new Intent(MainActivity_Navigation_Drawer.this,Profile.class);
+                startActivity(profile);
+            }catch(Exception e){
+                Toast.makeText(getApplicationContext(),"Profile Activity not able to Load",Toast.LENGTH_LONG).show();
+            }
+
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {

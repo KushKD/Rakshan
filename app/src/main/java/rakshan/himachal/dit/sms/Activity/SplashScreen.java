@@ -25,45 +25,40 @@ public class SplashScreen extends AppCompatActivity {
                 //   boolean hasParkingSelected_ = settings.getBoolean("hasParkingSelected", false);
 
                 int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-                if (currentapiVersion >= android.os.Build.VERSION_CODES.LOLLIPOP){
+                if (currentapiVersion >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                    /* Intent login_Intent = new Intent(SplashScreen.this, Permissions.class); //Login_Activity
                     SplashScreen.this.startActivity(login_Intent);
                     SplashScreen.this.finish();*/
-                    boolean Flag_Permissions = settings.getBoolean("PermissionsFlag",false);
-                    boolean Flag_Registration = settings.getBoolean("RegistrationFlag",false);  //Registration flag is the login one
+                    boolean Flag_Permissions = settings.getBoolean("PermissionsFlag", false);
+                    boolean Flag_Registration = settings.getBoolean("Login", false);  //Registration flag is the login one
 
-                    if(Flag_Permissions)
-                    {
+                    if (Flag_Permissions) {
 
-                        if(Flag_Registration)
-                        {
+                        if (Flag_Registration) {
                             Intent mainIntent = new Intent(SplashScreen.this, MainActivity_Navigation_Drawer.class);
                             SplashScreen.this.startActivity(mainIntent);
                             SplashScreen.this.finish();
-                        }else{
+                        } else {
                             Intent mainIntent = new Intent(SplashScreen.this, Login.class);
                             SplashScreen.this.startActivity(mainIntent);
                             SplashScreen.this.finish();
                         }
 
 
-
-
-                    }else{
+                    } else {
                         Intent login_Intent = new Intent(SplashScreen.this, Permissions.class); //Login_Activity
                         SplashScreen.this.startActivity(login_Intent);
                         SplashScreen.this.finish();
 
                     }
-                } else{
+                } else {
                     // do something for phones running an SDK before lollipop
-                    boolean Flag_Registration = settings.getBoolean("RegistrationFlag",false);
-                    if(Flag_Registration)
-                    {
+                    boolean Flag_Registration = settings.getBoolean("Login", false);
+                    if (Flag_Registration) {
                         Intent mainIntent = new Intent(SplashScreen.this, MainActivity_Navigation_Drawer.class);
                         SplashScreen.this.startActivity(mainIntent);
                         SplashScreen.this.finish();
-                    }else{
+                    } else {
                         Intent mainIntent = new Intent(SplashScreen.this, Login.class);
                         SplashScreen.this.startActivity(mainIntent);
                         SplashScreen.this.finish();
@@ -74,11 +69,8 @@ public class SplashScreen extends AppCompatActivity {
                 }
 
 
-
-
-
             }
         }, 2000);
     }
-    }
+}
 

@@ -44,10 +44,10 @@ import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
 
 public class Registration extends AppCompatActivity implements AsyncTaskListener {
 
-    EditText OTP_Server_et,etmobile_et,etname_et,email_et,aadhaar_et,dob_server_et;
+    EditText OTP_Server_et, etmobile_et, etname_et, email_et, aadhaar_et, dob_server_et;
     private RadioGroup radioSexGroup;
     private RadioButton radioSexButton;
-    Button back,register;
+    Button back, register;
     CircleImageView edit_Profile_IV;
     Custom_Dialog CD = new Custom_Dialog();
     String Aadhaar_Service = null;
@@ -56,10 +56,9 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
     private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
 
     public static final String IMAGE_DIRECTORY_NAME = "Cloud Uploads";
-    public static int flag=0;
+    public static int flag = 0;
     private Uri fileUri = null; // file url to store image/video
     Register_User photo_Details = new Register_User();
-
 
 
     private int mSelectedYear;
@@ -82,22 +81,21 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-       // OTP_Server_et = (EditText)findViewById(R.id.otp_server);
-        etmobile_et   = (EditText)findViewById(R.id.etmobile);
-        etname_et     = (EditText)findViewById(R.id.etname);
-        email_et      = (EditText)findViewById(R.id.email_server);
+        // OTP_Server_et = (EditText)findViewById(R.id.otp_server);
+        etmobile_et = (EditText) findViewById(R.id.etmobile);
+        etname_et = (EditText) findViewById(R.id.etname);
+        email_et = (EditText) findViewById(R.id.email_server);
 
-        aadhaar_et    = (EditText)findViewById(R.id.aadhaar_server);
+        aadhaar_et = (EditText) findViewById(R.id.aadhaar_server);
          /* Set Text Watcher listener */
 
 
         aadhaar_et.addTextChangedListener(AadhaarWatcher);
         radioSexGroup = (RadioGroup) findViewById(R.id.radioSex);
-        dob_server_et = (EditText)findViewById(R.id.dob_server);
-        back          = (Button)findViewById(R.id.back);
-        register      = (Button)findViewById(R.id.register);
+        dob_server_et = (EditText) findViewById(R.id.dob_server);
+        back = (Button) findViewById(R.id.back);
+        register = (Button) findViewById(R.id.register);
         edit_Profile_IV = (CircleImageView) findViewById(R.id.user_profile_photo);
-
 
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -111,35 +109,29 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
             @Override
             public void onClick(View v) {
                 //ToDo
-               // Toast.makeText(getApplicationContext(), "We are Here", Toast.LENGTH_SHORT).show();
-               try {
-                   captureImage();
-               }catch(Exception ex){
-                   CD.showDialog(Registration.this,ex.getLocalizedMessage().toString());
-               }
+                // Toast.makeText(getApplicationContext(), "We are Here", Toast.LENGTH_SHORT).show();
+                try {
+                    captureImage();
+                } catch (Exception ex) {
+                    CD.showDialog(Registration.this, ex.getLocalizedMessage().toString());
+                }
             }
         });
-
 
 
         dob_server_et.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                        showDatePickerDialog(mSelectedYear, mSelectedMonth, mSelectedDay, mOnDateSetListener);
+                showDatePickerDialog(mSelectedYear, mSelectedMonth, mSelectedDay, mOnDateSetListener);
 
             }
         });
 
 
-
-
-
-
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
 
                 String PhoneNumber_Service = etmobile_et.getText().toString().trim();
@@ -150,76 +142,70 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
                 // get selected radio button from radioGroup
                 int selectedId = radioSexGroup.getCheckedRadioButtonId();
                 radioSexButton = (RadioButton) findViewById(selectedId);
-               // Toast.makeText(Registration.this, radioSexButton.getText(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(Registration.this, radioSexButton.getText(), Toast.LENGTH_SHORT).show();
 
                 String Gender_Service = radioSexButton.getText().toString().trim();
                 String DOB_Server = dob_server_et.getText().toString().trim();
 
 
-                if(Name_Service.length()!= 0 && Name_Service!= null){
-                    if (PhoneNumber_Service.length() == 10 && Integer.parseInt(PhoneNumber_Service.substring(0,1)) > 6) {
+                if (Name_Service.length() != 0 && Name_Service != null) {
+                    if (PhoneNumber_Service.length() == 10 && Integer.parseInt(PhoneNumber_Service.substring(0, 1)) > 6) {
 
-                        if(Gender_Service!=null){
+                        if (Gender_Service != null) {
 
-                            if(DOB_Server!=null&& DOB_Server.length()!=0){
+                            if (DOB_Server != null && DOB_Server.length() != 0) {
 
-                                if( Aadhaar_Service.length()==12 && VerhoeffAlgorithm.validateVerhoeff(Aadhaar_Service)){
+                                if (Aadhaar_Service.length() == 12 && VerhoeffAlgorithm.validateVerhoeff(Aadhaar_Service)) {
 
                                     if (fileUri != null && !fileUri.getPath().isEmpty()) {
-                                        Log.e("Pic Path",fileUri.getPath().toString());
+                                        Log.e("Pic Path", fileUri.getPath().toString());
 
                                         String fileNameSegments[] = fileUri.getPath().toString().split("/");
                                         String fileName = fileNameSegments[fileNameSegments.length - 1];
 
                                         // Put file name in Async Http Post Param which will used in Php web app
                                         photo_Details.setPhotoname(fileName);
-                                        Log.e("Params",photo_Details.getPhotoname().toString());
+                                        Log.e("Params", photo_Details.getPhotoname().toString());
 
-                                        if(AppStatus.getInstance(Registration.this).isOnline()) {
+                                        if (AppStatus.getInstance(Registration.this).isOnline()) {
 
                                             try {
                                                 // Convert image to String using Base64
-                                                encodeImagetoString(Name_Service,PhoneNumber_Service,Aadhaar_Service,Email_Service,IMEI_SERVER,Gender_Service,DOB_Server);
-                                            }catch(Exception ex){
-                                                Log.e("Image Error",ex.getLocalizedMessage().toString());
+                                                encodeImagetoString(Name_Service, PhoneNumber_Service, Aadhaar_Service, Email_Service, IMEI_SERVER, Gender_Service, DOB_Server);
+                                            } catch (Exception ex) {
+                                                Log.e("Image Error", ex.getLocalizedMessage().toString());
                                             }
 
-                                        }else{
-                                            CD.showDialog(Registration.this,"Please Connect to Internet");
+                                        } else {
+                                            CD.showDialog(Registration.this, "Please Connect to Internet");
                                         }
 
 
-                                    }else{
-                                        CD.showDialog(Registration.this,"Please Upload your profile Pic");
+                                    } else {
+                                        CD.showDialog(Registration.this, "Please Upload your profile Pic");
                                     }
 
 
-
-
-                                }else{
-                                    CD.showDialog(Registration.this,"Aadhaar Number not Valid.");
+                                } else {
+                                    CD.showDialog(Registration.this, "Aadhaar Number not Valid.");
                                 }
 
-                            }else{
-                                CD.showDialog(Registration.this,"Date of Birth cannot be empty.");
+                            } else {
+                                CD.showDialog(Registration.this, "Date of Birth cannot be empty.");
                             }
 
-                        }else{
-                            CD.showDialog(Registration.this,"Please select Gender.");
+                        } else {
+                            CD.showDialog(Registration.this, "Please select Gender.");
                         }
                     } else {
                         CD.showDialog(Registration.this, "Please enter a valid 10 digit Mobile number");
                     }
 
-                }else{
-                    CD.showDialog(Registration.this,"Please enter your Name.");
+                } else {
+                    CD.showDialog(Registration.this, "Please enter your Name.");
                 }
             }
         });
-
-
-
-
 
 
     }
@@ -234,23 +220,22 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
         }
 
         public void afterTextChanged(Editable s) {
-            if(s.length()==12){
+            if (s.length() == 12) {
 
-                if(VerhoeffAlgorithm.validateVerhoeff(s.toString())){
+                if (VerhoeffAlgorithm.validateVerhoeff(s.toString())) {
                     aadhaar_et.setBackgroundResource(R.drawable.rounded_edittext_green);
                     //Log.e("Aadhaar","Green");
-                }else{
+                } else {
                     aadhaar_et.setBackgroundResource(R.drawable.rounded_edittext_red);
-                   // Log.e("Aadhaar","Red");
+                    // Log.e("Aadhaar","Red");
                 }
-            }else{
+            } else {
                 aadhaar_et.setBackgroundResource(R.drawable.rounded_edittext);
-               // CD.showDialog(Registration.this,"Aadhaar Not Valid");
-               // Log.e("Aadhaar ","Not Valid");
+                // CD.showDialog(Registration.this,"Aadhaar Not Valid");
+                // Log.e("Aadhaar ","Not Valid");
             }
         }
     };
-
 
 
     private void captureImage() {
@@ -269,21 +254,16 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
     }
 
     private void updateDateUI() {
-        String month = ((mSelectedMonth+1) > 9) ? ""+(mSelectedMonth+1): "0"+(mSelectedMonth+1) ;
-        String day = ((mSelectedDay) < 10) ? "0"+mSelectedDay: ""+mSelectedDay ;
+        String month = ((mSelectedMonth + 1) > 9) ? "" + (mSelectedMonth + 1) : "0" + (mSelectedMonth + 1);
+        String day = ((mSelectedDay) < 10) ? "0" + mSelectedDay : "" + mSelectedDay;
         dob_server_et.setText(mSelectedYear + "-" + month + "-" + day);
     }
-
-   
-    
-
-
 
 
     @Override
     public void onTaskCompleted(String result, TaskType taskType) {
 
-        if(taskType==TaskType.REGISTRATION) {
+        if (taskType == TaskType.REGISTRATION) {
             Log.e("Getting Result", result);
 
             if (result.equalsIgnoreCase("Timeout")) {
@@ -291,13 +271,14 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
             } else {
                 String Result_to_Show = null;
                 Result_to_Show = JsonParser.Registration_Parse(result);
+
                 CD.showDialog(Registration.this, Result_to_Show);
                 Registration.this.finish();
 
             }
-            }else{
-                CD.showDialog(Registration.this, "Something went wrong. Please try again.");
-            }
+        } else {
+            CD.showDialog(Registration.this, "Something went wrong. Please try again.");
+        }
 
     }
 
@@ -338,7 +319,7 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
             Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             mediaScanIntent.setData(fileUri);
             this.sendBroadcast(mediaScanIntent);
-            flag=1;
+            flag = 1;
             launchUploadActivity(true);             // launching upload activity
 
 
@@ -358,19 +339,18 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
     }
 
     private void launchUploadActivity(boolean isImage) {
-       // Intent i = new Intent(Registration.this, ImageUpload.class);
-       // i.putExtra("isImage", isImage);
-        if(flag==1){
-          //  i.putExtra("filePath", fileUri.getPath());
+        // Intent i = new Intent(Registration.this, ImageUpload.class);
+        // i.putExtra("isImage", isImage);
+        if (flag == 1) {
+            //  i.putExtra("filePath", fileUri.getPath());
             previewMedia(fileUri.getPath().toString());
-        }else if(flag==2) {
-           // i.putExtra("picturePath", picturePath);
-        }else{
-            Toast.makeText(this,"Flag neither 1 nor 2!",Toast.LENGTH_LONG).show();
+        } else if (flag == 2) {
+            // i.putExtra("picturePath", picturePath);
+        } else {
+            Toast.makeText(this, "Flag neither 1 nor 2!", Toast.LENGTH_LONG).show();
         }
-      //  startActivity(i);
+        //  startActivity(i);
     }
-
 
 
     /*
@@ -408,7 +388,7 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
 
     /**
      * Displaying captured image/video on the screen
-     * */
+     */
     private void previewMedia(String filePath) {
         // Checking whether captured media is image or video
         //imgPreview.setVisibility(View.VISIBLE);
@@ -418,8 +398,8 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
         options.inSampleSize = 8;
 
         final Bitmap bitmap = BitmapFactory.decodeFile(filePath, options);
-        Toast.makeText(this,filePath,Toast.LENGTH_LONG).show();
-        edit_Profile_IV.setImageBitmap(getResizedBitmap(bitmap,30,20));
+        Toast.makeText(this, filePath, Toast.LENGTH_LONG).show();
+        edit_Profile_IV.setImageBitmap(getResizedBitmap(bitmap, 30, 20));
     }
 
 
@@ -442,8 +422,7 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
 
 
     // AsyncTask - To convert Image to String
-    public void encodeImagetoString(String Name_Service,String PhoneNumber_Service,String Aadhaar_Service,String Email_Service,String IMEI_SERVER,String Gender_Service,String DOB_Server) {
-
+    public void encodeImagetoString(String Name_Service, String PhoneNumber_Service, String Aadhaar_Service, String Email_Service, String IMEI_SERVER, String Gender_Service, String DOB_Server) {
 
 
         photo_Details.setUsername_User(Name_Service);
@@ -458,10 +437,11 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
         new AsyncTask<Void, Void, Register_User>() {
 
             String encodedString = null;
-           // ProgressDialog prgDialog;
+
+            // ProgressDialog prgDialog;
             protected void onPreExecute() {
-              //  prgDialog.setMessage("Converting Image to Binary Data");
-              //  prgDialog.show();
+                //  prgDialog.setMessage("Converting Image to Binary Data");
+                //  prgDialog.show();
             }
 
             @Override
@@ -470,12 +450,12 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
                 BitmapFactory.Options options = null;
                 options = new BitmapFactory.Options();
                 options.inSampleSize = 16;
-                bitmap = BitmapFactory.decodeFile(fileUri.getPath().toString(),options);
+                bitmap = BitmapFactory.decodeFile(fileUri.getPath().toString(), options);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 // Must compress the Image to reduce image size to make upload easy
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] byte_arr = stream.toByteArray();
-                Log.e("Array Length",Integer.toString(byte_arr.length));
+                Log.e("Array Length", Integer.toString(byte_arr.length));
                 // Encode Image to String
                 // Encode Image to String
                 encodedString = Base64.encodeToString(byte_arr, Base64.DEFAULT); //0
@@ -488,10 +468,10 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
                 // prgDialog.setMessage("Calling Upload");
                 // Put converted Image string into Async Http Post param
                 // params.put("image", encodedString);
-                Log.e("Image in String msg: ",photo_Details.getPhotobase64encode());
-                Log.e("Length Byte Array ",Integer.toString(photo_Details.getPhotobase64encode().length()));
-                Log.e("Image Name msg: ",photo_Details.getPhotoname());
-              //  prgDialog.dismiss();
+                Log.e("Image in String msg: ", photo_Details.getPhotobase64encode());
+                Log.e("Length Byte Array ", Integer.toString(photo_Details.getPhotobase64encode().length()));
+                Log.e("Image Name msg: ", photo_Details.getPhotoname());
+                //  prgDialog.dismiss();
                 // Trigger Image upload
                 triggerImageUpload(userdetails);
             }
@@ -515,11 +495,10 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
                     photo_Details.getPhotoname(),
                     photo_Details.getPhotobase64encode());
 
-        }catch (Exception ex){
-            CD.showDialog(Registration.this,ex.getLocalizedMessage().toString());
+        } catch (Exception ex) {
+            CD.showDialog(Registration.this, ex.getLocalizedMessage().toString());
         }
     }
-
 
 
 }
