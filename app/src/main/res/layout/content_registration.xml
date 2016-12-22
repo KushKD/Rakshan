@@ -143,7 +143,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="top"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@drawable/name_ic"
                         android:contentDescription="@string/app_name" />
 
                     <!--   android:src="@drawable/name" -->
@@ -213,7 +213,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="top"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@drawable/mobile_ic"
                         android:contentDescription="@string/app_name" />
 
                     <!--  android:src="@drawable/mobile" -->
@@ -283,7 +283,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="top"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@drawable/aadhaar_ic"
                         android:contentDescription="@string/app_name" />
 
                     <!--  android:src="@drawable/mobile" -->
@@ -352,7 +352,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="top"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@drawable/email_ic"
                         android:contentDescription="@string/app_name" />
 
                     <!--  android:src="@drawable/mobile" -->
@@ -420,7 +420,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="top"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@drawable/gender_ic"
                         android:contentDescription="@string/app_name" />
 
                     <!--  android:src="@drawable/mobile" -->
@@ -508,7 +508,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="top"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@drawable/dob_ic"
                         android:contentDescription="@string/app_name" />
 
                     <!--  android:src="@drawable/mobile" -->

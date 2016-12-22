@@ -11,5 +11,5 @@ public class EConstants {
 
 
     // public static final String URL = "http://192.16.137.1/Rakshan/Rakshan.svc/";  Amit PC
-    public static final String URL = "http://192.168.1.102/Rakshan/Rakshan.svc/";   // JIO MY WIFI
+    public static final String URL = "http://192.168.1.100/Rakshan/Rakshan.svc/";   // JIO MY WIFI
 }

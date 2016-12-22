@@ -12,9 +12,6 @@ import android.net.NetworkInfo;
 import android.os.Environment;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.widget.ImageView;
-
-import rakshan.himachal.dit.sms.R;
 import rakshan.himachal.dit.sms.Utils.EConstants;
 
 
@@ -59,6 +56,13 @@ public class AppStatus {
         String IMEI_SERVER =  telephonyManager.getDeviceId().toString().trim();
         return IMEI_SERVER;
     }
+
+    /**
+     * Returns a Bitmap from SD Card
+     * @param context
+     * @param name
+     * @return
+     */
 
     public static Bitmap getBitmap(Context context, String name){
         String imageInSD = Environment.getExternalStorageDirectory().getAbsolutePath() + EConstants.FOLDER_NAME +"/" + name ;

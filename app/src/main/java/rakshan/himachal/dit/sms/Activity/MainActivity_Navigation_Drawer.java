@@ -249,17 +249,7 @@ public class MainActivity_Navigation_Drawer extends AppCompatActivity
                 Toast.makeText(getApplicationContext(),"Profile Activity not able to Load",Toast.LENGTH_LONG).show();
             }
 
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }else if(item.getItemId() == android.R.id.home){  //  use android.R.id
+        } else if(item.getItemId() == android.R.id.home){  //  use android.R.id
            // drawer.openDrawer(Gravity.LEFT);
             if(drawer.isDrawerOpen(Gravity.LEFT)) {
                 drawer.closeDrawer(Gravity.LEFT);
