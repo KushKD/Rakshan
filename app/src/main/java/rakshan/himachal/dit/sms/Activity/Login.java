@@ -298,7 +298,7 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
             DatabaseHandler DH = new DatabaseHandler(Login.this);
             if( DH.addContact(pgp)){
 
-                File folder = new File(Environment.getExternalStorageDirectory() + "/Rakshan");
+                File folder = new File(Environment.getExternalStorageDirectory() + EConstants.FOLDER_NAME);
                 boolean foldersuccess = true;
                 if (!folder.exists()) {
                     foldersuccess = folder.mkdir();
@@ -310,7 +310,7 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
                 }
 
                 File sdCardDirectory = Environment.getExternalStorageDirectory();
-                File image = new File(sdCardDirectory +"/Rakshan", pgp.getPhotoName());
+                File image = new File(sdCardDirectory + EConstants.FOLDER_NAME, pgp.getPhotoName());
 
                 boolean success = false;
 
@@ -319,7 +319,6 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
                 try {
                     byte[] byteArrayphoto = pgp.getPhoto();
                     Bitmap bmp1 = BitmapFactory.decodeByteArray(byteArrayphoto, 0, byteArrayphoto.length);
-
                     outStream = new FileOutputStream(image);
                     bmp1.compress(Bitmap.CompressFormat.PNG, 100, outStream);
                     outStream.flush();
@@ -338,7 +337,7 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
                 }
 
 
-                CM.showDialog(Login.this,"Data Saved Successfully");
+                // CM.showDialog(Login.this,"Data Saved Successfully");
 
                 SharedPreferences settings = getSharedPreferences(EConstants.PREF_SHARED, 0); // 0 - for private mode
                 SharedPreferences.Editor editor = settings.edit();

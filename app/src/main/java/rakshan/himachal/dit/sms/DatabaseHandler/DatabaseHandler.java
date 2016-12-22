@@ -59,17 +59,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     //Database Columns HASHMAP Attendance Details
     public static final String ID_DB = "id";
-    private static final String NAME_DB = "ResName";
-    private static final String IMEI_DB = "imei";
-    private static final String MobileDB = "Mobile";
-    private static final String PHOTO_NAMEDB = "Photo_Name";
-    private static final String GENDER_DB = "Gender";
-    private static final String AADHAAR_DB = "Aadhaar";
-    private static final String Email_DB = "ContactPersonemail";
-    private static final String EMERGENCY_CONTACT1_DB = "EmergencyContact1";
-    private static final String EMERGENCY_CONTACT2_DB = "EmergencyContact2";
-    private static final String EMERGENCY_CONTACT3_DB = "EmergencyContact3";
-    private static final String DATE_TIME_DB = "DATE_TIME";
+    public static final String NAME_DB = "ResName";
+    public static final String IMEI_DB = "imei";
+    public static final String MobileDB = "Mobile";
+    public static final String PHOTO_NAMEDB = "Photo_Name";
+    public static final String GENDER_DB = "Gender";
+    public static final String AADHAAR_DB = "Aadhaar";
+    public static final String Email_DB = "ContactPersonemail";
+    public static final String EMERGENCY_CONTACT1_DB = "EmergencyContact1";
+    public static final String EMERGENCY_CONTACT2_DB = "EmergencyContact2";
+    public static final String EMERGENCY_CONTACT3_DB = "EmergencyContact3";
+    public static final String DATE_TIME_DB = "DATE_TIME";
 
 
     public DatabaseHandler(Context context) {
@@ -145,7 +145,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     // // Getting the Complete Database in a List Attendance
-    public ArrayList<HashMap<String, String>> GetAllData_AttendanceStatus() {
+    public ArrayList<HashMap<String, String>> GetAllData_UserDetails() {
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_USER_DETAILS + " ORDER BY " + DATE_TIME + " DESC";
         SQLiteDatabase db = this.getWritableDatabase();
@@ -171,6 +171,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return list_Users_Details;
 
     }
+
+
 
 
     // Getting contacts Count

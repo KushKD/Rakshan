@@ -7,6 +7,7 @@ package rakshan.himachal.dit.sms.Utils;
 public class EConstants {
 
     public static final String PREF_SHARED = "RakshanDetails";
+    public static final String FOLDER_NAME = "/Rakshan";
 
 
     // public static final String URL = "http://192.16.137.1/Rakshan/Rakshan.svc/";  Amit PC

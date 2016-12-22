@@ -3,6 +3,7 @@ package rakshan.himachal.dit.sms.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -21,14 +22,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
+import rakshan.himachal.dit.sms.DatabaseHandler.DatabaseHandler;
+import rakshan.himachal.dit.sms.Helper.AppStatus;
 import rakshan.himachal.dit.sms.Presentation.CircleButton;
+import rakshan.himachal.dit.sms.Presentation.CircleImageView;
+import rakshan.himachal.dit.sms.Presentation.Custom_Dialog;
 import rakshan.himachal.dit.sms.R;
 import rakshan.himachal.dit.sms.Services.SendLocationService;
 import rakshan.himachal.dit.sms.fragments.OneFragment;
@@ -38,6 +45,8 @@ import rakshan.himachal.dit.sms.fragments.TwoFragment;
 public class MainActivity_Navigation_Drawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    DatabaseHandler DH = null;
+    Custom_Dialog CD = new Custom_Dialog();
     private Toolbar toolbar;
     ActionBarDrawerToggle toggle;
     private TabLayout tabLayout;
@@ -53,7 +62,7 @@ public class MainActivity_Navigation_Drawer extends AppCompatActivity
     private PendingIntent notifyIntent;
     private DrawerLayout drawer;
 
-
+    ArrayList<HashMap<String,String>> listDB_UserDetails = null;
     private CircleButton SOS;
 
     @Override
@@ -115,6 +124,29 @@ public class MainActivity_Navigation_Drawer extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View header=navigationView.getHeaderView(0);
+        ImageView Photo = (ImageView) header.findViewById(R.id.imageView);
+        TextView  _Name_tv = (TextView)header.findViewById(R.id.name);
+        TextView Phone_tv = (TextView)header.findViewById(R.id.phone);
+
+        try{
+            DH = new DatabaseHandler(MainActivity_Navigation_Drawer.this);
+            listDB_UserDetails = new ArrayList<>();
+            listDB_UserDetails = DH.GetAllData_UserDetails();
+
+        }catch(Exception ex){
+            CD.showDialog(MainActivity_Navigation_Drawer.this,ex.getLocalizedMessage().toString().trim());
+
+
+        }
+
+        Log.e("Photo Name",listDB_UserDetails.get(0).get(DatabaseHandler.PHOTO_NAMEDB));
+
+        _Name_tv.setText(listDB_UserDetails.get(0).get(DatabaseHandler.NAME_DB));
+        Phone_tv.setText(listDB_UserDetails.get(0).get(DatabaseHandler.MobileDB));
+        Bitmap PhotoBmp = AppStatus.getBitmap(MainActivity_Navigation_Drawer.this, listDB_UserDetails.get(0).get(DatabaseHandler.PHOTO_NAMEDB));
+        Photo.setImageBitmap(PhotoBmp);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

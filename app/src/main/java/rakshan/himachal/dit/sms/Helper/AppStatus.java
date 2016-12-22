@@ -5,10 +5,17 @@ package rakshan.himachal.dit.sms.Helper;
  */
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Environment;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.widget.ImageView;
+
+import rakshan.himachal.dit.sms.R;
+import rakshan.himachal.dit.sms.Utils.EConstants;
 
 
 public class AppStatus {
@@ -52,4 +59,15 @@ public class AppStatus {
         String IMEI_SERVER =  telephonyManager.getDeviceId().toString().trim();
         return IMEI_SERVER;
     }
+
+    public static Bitmap getBitmap(Context context, String name){
+        String imageInSD = Environment.getExternalStorageDirectory().getAbsolutePath() + EConstants.FOLDER_NAME +"/" + name ;
+        Bitmap bitmap = BitmapFactory.decodeFile(imageInSD);
+        return bitmap;
+    }
+
+
+
+
+
 }
