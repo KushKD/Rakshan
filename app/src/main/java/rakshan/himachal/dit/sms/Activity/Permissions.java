@@ -18,8 +18,8 @@ import rakshan.himachal.dit.sms.Utils.EConstants;
 public class Permissions extends AppCompatActivity implements View.OnClickListener, RakshamPermissions.OnRequestPermissionsBack {
 
     private static final String TAG = "MainActivity";
-    private TextView camera, gps, call, sms_status, internet_status, imei_status;
-    private Button checkButton, proceed;
+
+    private Button checkButton;
     Custom_Dialog CD;
 
     @Override
@@ -30,13 +30,9 @@ public class Permissions extends AppCompatActivity implements View.OnClickListen
     }
 
     private void initViews() {
-        gps = (TextView) findViewById(R.id.gpsStatus);
-        call = (TextView) findViewById(R.id.callStatus);
-        camera = (TextView) findViewById(R.id.cameraStatus);
-        sms_status = (TextView) findViewById(R.id.sms_status);
+
         checkButton = (Button) findViewById(R.id.checkButton);
-        internet_status = (TextView) findViewById(R.id.internet_status);
-        imei_status = (TextView) findViewById(R.id.imei_status);
+
         checkButton.setOnClickListener(this);
 
 
