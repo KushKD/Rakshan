@@ -1,26 +1,21 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
-
-    dexOptions {
-        javaMaxHeapSize "8g"
-    }
     compileSdkVersion 24
     buildToolsVersion "24.0.3"
+
     defaultConfig {
-        applicationId "rakshan.himachal.dit.rakshan"
         minSdkVersion 16
         targetSdkVersion 24
-        enforceUniquePackageName = false
         versionCode 1
         versionName "1.0"
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        // Enabling multidex support.
-        multiDexEnabled true
+
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -29,7 +24,8 @@ android {
 repositories {
     mavenCentral() // jcenter() works as well because it pulls from Maven Central
     jcenter()
-    if (project.hasProperty('local.repo')) {
+    if (project.hasProperty('local.repo'))
+    {
         maven { name 'glide-local'; url project.property('local.repo') }
     }
     maven { name 'glide-snapshot'; url 'http://oss.sonatype.org/content/repositories/snapshots' }
@@ -45,20 +41,9 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile project(':permissions')
-    compile project(':autoreadsms')
-    compile project(':materialhelp')
-
-
     compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:support-v4:24.2.1'
-    compile 'com.android.support:recyclerview-v7:24.2.1'
-    compile 'com.android.support:design:24.2.1'
-    compile 'com.google.android.gms:play-services:9.6.1'
-    compile 'com.android.support:multidex:1.0.0'
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:cardview-v7:24.0.0'
-    compile 'com.jakewharton:butterknife:8.4.0'
+    compile 'com.android.support:support-v4:24.0.0'
+    compile 'com.android.support:percent:24.0.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.android.support:percent:24.2.1'
 }

@@ -8,9 +8,16 @@
             android:title="Profile" />
 
         <item
+            android:id="@+id/help"
+            android:icon="@drawable/ic_media_play"
+            android:title="Tutorial" />
+
+        <item
             android:id="@+id/logout"
             android:icon="@drawable/logout"
-            android:title="Profile" />
+            android:title="logout" />
+
+
 
     </group>
 

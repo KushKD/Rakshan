@@ -2,9 +2,11 @@ package rakshan.himachal.dit.sms.Activity;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -25,6 +27,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.dit.kushkumardhawan.com.materialhelp.MaterialTutorialActivity;
+import org.dit.kushkumardhawan.com.materialhelp.TutorialItem;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -249,7 +254,29 @@ public class MainActivity_Navigation_Drawer extends AppCompatActivity
                 Toast.makeText(getApplicationContext(),"Profile Activity not able to Load",Toast.LENGTH_LONG).show();
             }
 
-        } else if(item.getItemId() == android.R.id.home){  //  use android.R.id
+        } else if(id == R.id.help){
+            try{
+                Intent load_tutorial = new Intent(MainActivity_Navigation_Drawer.this,MaterialTutorialActivity.class);
+                load_tutorial.putParcelableArrayListExtra(MaterialTutorialActivity.MATERIAL_TUTORIAL_ARG_TUTORIAL_ITEMS, getTutorialItems(this));
+
+                startActivity(load_tutorial);
+            }catch(Exception e){
+                Toast.makeText(getApplicationContext(),"Profile Activity not able to Load",Toast.LENGTH_LONG).show();
+            }
+
+
+        }else if(id == R.id.logout){
+            try{
+                Intent profile = new Intent(MainActivity_Navigation_Drawer.this,Profile.class);
+                startActivity(profile);
+            }catch(Exception e){
+                Toast.makeText(getApplicationContext(),"Profile Activity not able to Load",Toast.LENGTH_LONG).show();
+            }
+
+
+        }
+
+        else if(item.getItemId() == android.R.id.home){  //  use android.R.id
            // drawer.openDrawer(Gravity.LEFT);
             if(drawer.isDrawerOpen(Gravity.LEFT)) {
                 drawer.closeDrawer(Gravity.LEFT);
@@ -264,6 +291,29 @@ public class MainActivity_Navigation_Drawer extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private ArrayList<TutorialItem> getTutorialItems(Context context) {
+        TutorialItem tutorialItem1 = new TutorialItem(R.string.slide_1_african_story_books, R.string.slide_1_african_story_books,
+                R.color.slide_1, R.drawable.tut_page_1_front, R.drawable.tut_page_1_background);
+
+        TutorialItem tutorialItem2 = new TutorialItem(R.string.slide_2_volunteer_professionals, R.string.slide_2_volunteer_professionals_subtitle,
+                R.color.slide_2, R.drawable.tut_page_2_front, R.drawable.tut_page_2_background);
+
+        TutorialItem tutorialItem3 = new TutorialItem(context.getString(R.string.slide_3_download_and_go), null,
+                R.color.slide_3, R.drawable.tut_page_3_foreground);
+
+        TutorialItem tutorialItem4 = new TutorialItem(R.string.slide_4_different_languages, R.string.slide_4_different_languages_subtitle,
+                R.color.slide_4, R.drawable.tut_page_4_foreground, R.drawable.tut_page_4_background);
+
+        ArrayList<TutorialItem> tutorialItems = new ArrayList<>();
+        tutorialItems.add(tutorialItem1);
+        tutorialItems.add(tutorialItem2);
+        tutorialItems.add(tutorialItem3);
+        tutorialItems.add(tutorialItem4);
+
+        return tutorialItems;
+    }
+
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();

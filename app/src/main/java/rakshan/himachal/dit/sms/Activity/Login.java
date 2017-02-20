@@ -20,8 +20,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
+import org.dit.kushkumardhawan.com.materialhelp.MaterialTutorialActivity;
+import org.dit.kushkumardhawan.com.materialhelp.TutorialItem;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -45,6 +48,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -53,6 +57,7 @@ import java.util.regex.Pattern;
 public class Login extends AppCompatActivity implements AsyncTaskListener {
 
     private RakshanSmsVerifyCatcher smsVerifyCatcher;
+    private static final int REQUEST_CODE = 1234;
 
     private TextView signUpTextView;
     private EditText otp;
@@ -68,6 +73,9 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // check flag for introduvtion
+        loadTutorial();
 
         signUpTextView = (TextView) findViewById(R.id.signUpTextView);
         login = (Button) findViewById(R.id.login);
@@ -111,6 +119,44 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
 
             }
         });
+    }
+
+    public void loadTutorial() {
+        Intent mainAct = new Intent(this, MaterialTutorialActivity.class);
+        mainAct.putParcelableArrayListExtra(MaterialTutorialActivity.MATERIAL_TUTORIAL_ARG_TUTORIAL_ITEMS, getTutorialItems(this));
+        startActivityForResult(mainAct, REQUEST_CODE);
+
+    }
+
+    private ArrayList<TutorialItem> getTutorialItems(Context context) {
+        TutorialItem tutorialItem1 = new TutorialItem(R.string.slide_1_african_story_books, R.string.slide_1_african_story_books,
+                R.color.slide_1, R.drawable.tut_page_1_front, R.drawable.tut_page_1_background);
+
+        TutorialItem tutorialItem2 = new TutorialItem(R.string.slide_2_volunteer_professionals, R.string.slide_2_volunteer_professionals_subtitle,
+                R.color.slide_2, R.drawable.tut_page_2_front, R.drawable.tut_page_2_background);
+
+        TutorialItem tutorialItem3 = new TutorialItem(context.getString(R.string.slide_3_download_and_go), null,
+                R.color.slide_3, R.drawable.tut_page_3_foreground);
+
+        TutorialItem tutorialItem4 = new TutorialItem(R.string.slide_4_different_languages, R.string.slide_4_different_languages_subtitle,
+                R.color.slide_4, R.drawable.tut_page_4_foreground, R.drawable.tut_page_4_background);
+
+        ArrayList<TutorialItem> tutorialItems = new ArrayList<>();
+        tutorialItems.add(tutorialItem1);
+        tutorialItems.add(tutorialItem2);
+        tutorialItems.add(tutorialItem3);
+        tutorialItems.add(tutorialItem4);
+
+        return tutorialItems;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //    super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            Toast.makeText(this, "All Set", Toast.LENGTH_LONG).show();
+
+        }
     }
 
     private void getOtpandAadhaa() {
