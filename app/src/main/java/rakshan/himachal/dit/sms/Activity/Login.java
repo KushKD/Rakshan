@@ -129,7 +129,7 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
     }
 
     private ArrayList<TutorialItem> getTutorialItems(Context context) {
-        TutorialItem tutorialItem1 = new TutorialItem(R.string.slide_1_african_story_books, R.string.slide_1_african_story_books,
+        TutorialItem tutorialItem1 = new TutorialItem(R.string.slide_1_african_story_books, R.string.slide_1_african_story_books_Old,
                 R.color.slide_1, R.drawable.tut_page_1_front, R.drawable.tut_page_1_background);
 
         TutorialItem tutorialItem2 = new TutorialItem(R.string.slide_2_volunteer_professionals, R.string.slide_2_volunteer_professionals_subtitle,
