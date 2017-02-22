@@ -95,7 +95,10 @@
             android:name=".Activity.TravelTracking"
             android:process=":traveltracking" />
         <activity android:name=".Activity.UpdateProfile" />
-        <activity android:name=".Activity.Profile"></activity>
+        <activity android:name=".Activity.Profile" />
+        <activity
+            android:name=".Activity.SOS_Detailed"
+            android:label="@string/title_activity_sos__detailed"></activity>
     </application>
 
 </manifest>

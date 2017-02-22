@@ -96,6 +96,15 @@ public class MainActivity_Navigation_Drawer extends AppCompatActivity
             }
         });
 
+        SOS.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent i = new Intent(MainActivity_Navigation_Drawer.this, SOS_Detailed.class);
+                  startActivity(i);
+                return false;
+            }
+        });
+
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
          toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close ){
             @Override

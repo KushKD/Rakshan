@@ -86,7 +86,7 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
         imageView1 = (ImageView) findViewById(R.id.imageView1);
 
         //init RakshanSmsVerifyCatcher
-       /* smsVerifyCatcher = new RakshanSmsVerifyCatcher(this, new RakshanOnSmsCatchListener<String>() {
+        smsVerifyCatcher = new RakshanSmsVerifyCatcher(this, new RakshanOnSmsCatchListener<String>() {
             @Override
             public void onSmsCatch(String message) {
                 //String code = parseCode(message);//Parse verification code
@@ -95,10 +95,10 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
                 otp.setText(code);//set code in edit text
                 //then you can send verification code to server
             }
-        });*/     // Working
+        });     // Working
 
         //set phone number filter if needed
-        // smsVerifyCatcher.setPhoneNumberFilter("TM-HPGOVT");  working
+         smsVerifyCatcher.setPhoneNumberFilter("TM-HPGOVT");  //working
 
         signUpTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -218,13 +218,13 @@ public class Login extends AppCompatActivity implements AsyncTaskListener {
     @Override
     protected void onStart() {
         super.onStart();
-        //smsVerifyCatcher.onStart();
+        smsVerifyCatcher.onStart();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        // smsVerifyCatcher.onStop();
+         smsVerifyCatcher.onStop();
     }
 
     private void MobileNumber() {

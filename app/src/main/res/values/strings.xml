@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Rakshan</string>
+    <string name="app_name">Mahela Rakshan</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="one">Home Page</string>
     <string name="three">Social Interactions</string>
@@ -159,4 +159,5 @@
     <string name="slide_3_download_and_go_subtitle">On the bus, in a train, wherever you are - the books are there too.</string>
     <string name="slide_4_different_languages_subtitle">Just In Time Help !! Using SOS Feature</string>
     <string name="view_sample_tut">View Tutorial Example</string>
+    <string name="title_activity_sos__detailed">Map</string>
 </resources>

@@ -19,7 +19,7 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="#282a35"
+                android:background="#632c80"
                 android:textStyle="bold"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:textSize="26sp"
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/header_cover_image"
-            android:background="#282a35"
+            android:background="#632c80"
             android:elevation="4dp"
             android:paddingBottom="10dp">
 
@@ -82,7 +82,7 @@
                 android:textColor="#fff"
                 android:textSize="14sp" />
 
-            <rakshan.himachal.dit.sms.Presentation.CircleImageView
+            <ImageView
                 android:id="@+id/user_profile_photo"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
@@ -567,7 +567,7 @@
                     android:id="@+id/back"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#282a35"
+                    android:background="#632c80"
                     android:textColor="#FFFFFF"
                     android:layout_weight="1"
                     android:text="Back"
@@ -578,7 +578,7 @@
                     android:id="@+id/register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#282a35"
+                    android:background="#632c80"
                     android:textColor="#FFFFFF"
                     android:layout_weight="1"
                     android:text="Register"

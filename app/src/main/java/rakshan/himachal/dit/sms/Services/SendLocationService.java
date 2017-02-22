@@ -17,15 +17,19 @@ import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import rakshan.himachal.dit.sms.Activity.MainActivity_Navigation_Drawer;
+import rakshan.himachal.dit.sms.DatabaseHandler.DatabaseHandler;
 import rakshan.himachal.dit.sms.Enum.TaskType;
 import rakshan.himachal.dit.sms.Helper.AppStatus;
 import rakshan.himachal.dit.sms.Helper.Date_Time;
 import rakshan.himachal.dit.sms.Helper.GPSTracker;
 import rakshan.himachal.dit.sms.Interfaces.AsyncTaskListener;
 import rakshan.himachal.dit.sms.JsonManager.JsonParser;
+import rakshan.himachal.dit.sms.Presentation.Custom_Dialog;
 import rakshan.himachal.dit.sms.Utils.EConstants;
 import rakshan.himachal.dit.sms.Utils.Generic_Async_Post;
 import rakshan.himachal.dit.sms.Utils.Prefrences;
@@ -34,6 +38,9 @@ import rakshan.himachal.dit.sms.Utils.Prefrences;
 public class SendLocationService extends Service implements AsyncTaskListener{
 
     Map<String, String> map = null;
+    ArrayList<HashMap<String,String>> listDB_UserDetails = null;
+
+    DatabaseHandler DH = null;
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -41,6 +48,19 @@ public class SendLocationService extends Service implements AsyncTaskListener{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+        try{
+            DH = new DatabaseHandler(SendLocationService.this);
+            listDB_UserDetails = new ArrayList<>();
+            listDB_UserDetails = DH.GetAllData_UserDetails();
+
+        }catch(Exception ex){
+            Log.d("INFO LOC", ex.getLocalizedMessage().toString().trim());
+
+
+        }
+
+        Log.e("Photo Name",listDB_UserDetails.get(0).get(DatabaseHandler.PHOTO_NAMEDB));
 
        /*  map  = new HashMap<>();
         map = Prefrences.getStringFromPreferences(SendLocationService.this);
@@ -56,11 +76,15 @@ public class SendLocationService extends Service implements AsyncTaskListener{
         Log.e("IMEI",IMEI);*/
 
         String sent = "SMS_SENT";
-        SharedPreferences prfs = getSharedPreferences(EConstants.PREF_SHARED, Context.MODE_PRIVATE);
+       /* SharedPreferences prfs = getSharedPreferences(EConstants.PREF_SHARED, Context.MODE_PRIVATE);
 
         String name  = prfs.getString("Name","");
         String Mobile_No = prfs.getString("phonenumber","");
-        String IMEI = prfs.getString("IMEI","");
+        String IMEI = prfs.getString("IMEI","");*/
+
+        String name = listDB_UserDetails.get(0).get(DatabaseHandler.NAME_DB) ;
+        String Mobile_No = listDB_UserDetails.get(0).get(DatabaseHandler.MobileDB);
+        String IMEI = listDB_UserDetails.get(0).get(DatabaseHandler.IMEI_DB);
 
 
 
